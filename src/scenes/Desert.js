@@ -29,9 +29,11 @@ export default class Desert extends Phaser.Scene {
     this.velocityPlayer = data.velocityPlayer;
     this.enemyHp = data.enemyhp || 200;
     this.damageAmount = data.damageAmount;
+    this.cityMissionComplete = data.cityMissionComplete;
   }
 
   create() {
+  
     const map = this.make.tilemap({ key: "Desert" });
     this.tileWidth = map.tileWidth;
     this.tileHeight = map.tileHeight;
@@ -90,8 +92,11 @@ export default class Desert extends Phaser.Scene {
       hp: this.hp,
       damageAmount: this.damageAmount,
       velocityPlayer: this.velocityPlayer,
+      x: 375,
+      y: 200,
+      cityMission: this.cityMissionComplete
     };
-    this.scene.start("City",data);
+    this.scene.start("City", data);
   
     
   }

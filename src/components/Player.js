@@ -43,7 +43,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setVelocityX(this.velocity);
         this.anims.play("walkingRight", true);
         this.KeySave = "right";
-      } else if (this.cursor.space.isDown) {
+      } else if (this.cursor.up.isDown) {
         this.body.setVelocityY(-this.velocity);
         this.anims.play("walkingUp", true);
         this.KeySave = "up";

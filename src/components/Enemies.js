@@ -5,24 +5,24 @@ import Rock from "./Rock";
 
 export default class Enemies extends Phaser.GameObjects.Sprite {
   timer;
-  constructor(scene, x, y, texture, velocity, patrolArea) {
+  constructor(scene, x, y, texture, velocity, pathfinding) {
     super(scene, x, y, texture);
-    this.velocityX = velocity;
-    // this.timer = scene.time.addEvent({
-    //   delay: 1500, // Adjust as needed
-    //   loop: true,
-    //   callback: this.patrol,
-    //   callbackScope: this,
-    // });
+    this.velocity = velocity;
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.body.allowGravity = false;
-    this.velocity = velocity;
     this.targetX = 0;
     this.targetY = 0;
     this.enemyHp = 2000;
+    this.pathfinding = pathfinding;
 
+  }
+
+  update() {
+    this.findPathToTarget(this.targetX, this.targetY);
+
+    this.moveTowardsTarget();
   }
 
   takeDamage(damageAmount) {
@@ -36,6 +36,33 @@ export default class Enemies extends Phaser.GameObjects.Sprite {
         this.setActive(false).setVisible(false);
       }
     }
+  }
+
+  moveTowardsTarget() {
+    const distanceX = this.targetX - this.x;
+    const distanceY = this.targetY - this.y;
+
+    // Calculate the angle and use it to set the velocity.
+    const angle = Math.atan2(distanceY, distanceX);
+    this.setVelocityX(Math.cos(angle) * this.velocityX);
+    this.setVelocityY(Math.sin(angle) * this.velocityX);
+  }
+
+  findPathToTarget(targetX, targetY) {
+    this.pathfinding.findPath(
+      Math.floor(this.x / this.pathfinding.tileWidth),
+      Math.floor(this.y / this.pathfinding.tileHeight),
+      Math.floor(targetX / this.pathfinding.tileWidth),
+      Math.floor(targetY / this.pathfinding.tileHeight),
+      (path) => {
+        if (path !== null && path.length > 1) {
+          // Get the next tile on the path and set it as the target position.
+          const nextTile = path[1];
+          this.targetX = nextTile.x * this.pathfinding.tileWidth;
+          this.targetY = nextTile.y * this.pathfinding.tileHeight;
+        }
+      }
+    );
   }
   
 }

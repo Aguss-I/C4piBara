@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import Phaser, { Data } from "phaser";
 import EasyStar from "easystarjs";
 import events from "./EventCenter";
 import Player from "../components/Player";
@@ -7,6 +7,7 @@ import Hitbox from "../components/AttackHitbox";
 import Npc from "../components/Npc";
 import EnemiesHitbox from "../components/EnemiesHitbox";
 import Rock from "../components/Rock";
+import Pathfinding from "../components/Pathfiniding";
 //  import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 //  import { getPhrase } from "../services/translations";
 // import keys from "../enums/keys";
@@ -42,12 +43,14 @@ export default class City extends Phaser.Scene {
     this.lvl = data.lvl || 1;
     this.hp = data.hp || 200;
     this.experience = data.experience || 0;
-    this.velocityPlayer = data.velocityPlayer || 700;
+    this.velocityPlayer = data.velocityPlayer || 600;
     this.velocitySquirrel = data.velocitySquirrel || 100;
-    this.enemyHp = data.enemyhp || 2000;
-    this.damageAmount = data.damageAmount || 0;
-    this.squirrelsKilled = data.squirrelsKilled || 0;
-    this.missionComplete = false;
+    this.enemyHp = data.enemyhp || 20;
+    this.damageAmount = data.damageAmount || 300;
+    this.squirrelsKilled = data.squirrelsKilled || 8;
+    this.cityMissionComplete = data.cityMissionComplete;
+    this.positionX = data.x || 4100;
+    this.positionY = data.y || 1900;
   }
 
   create() {
@@ -61,10 +64,6 @@ export default class City extends Phaser.Scene {
     const background = map.createLayer("Ground", layerbackGround, 0, 0);
     const layerObstacle = map.addTilesetImage("TDJ2 - tileset", "Mapcity");
     const obstacle = map.createLayer("Deco", layerObstacle, 0, 0);
-
-    this.easystar = new EasyStar.js();
-    this.easystar.setGrid(this.makeGrid(map, background, obstacle));
-    this.easystar.setAcceptableTiles([0]);
 
     const objectsLayer = map.getObjectLayer("Objects");
     this.collectible = this.physics.add.group();
@@ -103,8 +102,18 @@ export default class City extends Phaser.Scene {
       }
     });
 
-    this.player = new Player(this, 4100, 1900, "C4", this.velocityPlayer);
+    this.player = new Player(this, this.positionX, this.positionY, "C4", this.velocityPlayer);
     const top = map.createLayer("Top", layerbackGround, 0, 0);
+
+    // Inside your pathfinding setup code
+const groundLayer = map.getLayer('Ground').tilemapLayer;
+const obstacleLayer = map.getLayer('Deco').tilemapLayer;
+
+groundLayer.forEachTile((tile) => {
+  const isWalkable = tile.properties.isWalkable;
+  console.log(`Tile (${tile.x}, ${tile.y}) is walkable: ${isWalkable}`);
+});
+
 
     this.playersGroup = this.physics.add.group();
     this.collectibleGroup = this.physics.add.group();
@@ -116,18 +125,26 @@ export default class City extends Phaser.Scene {
 
     this.Eagle = new Npc(this, 4550, 3290, "Eagle");
 
+    const pathfinding = new Pathfinding(this, map, background, obstacle);
+
     this.squirrels.push(
-      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel)
+      new Enemies(this, 700, 100, "Squirrel", this.velocitySquirrel, pathfinding)
     );
     this.squirrels.push(
-      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel)
+      new Enemies(this, 1000, 200, "Squirrel", this.velocitySquirrel, pathfinding)
     );
     this.squirrels.push(
-      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel)
+      new Enemies(this, 800, 300, "Squirrel", this.velocitySquirrel, pathfinding)
     );
     this.squirrels.push(
-      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel)
+      new Enemies(this, 1200, 100, "Squirrel", this.velocitySquirrel, pathfinding)
     );
+
+    for (const i in this.squirrels) {
+      this.squirrels[i].targetX = 100 + i * 300; // Adjust 300 as needed based on your spacing
+      this.squirrels[i].targetY = this.squirrels[i].y; // Keep their current Y position
+    }
+
     this.hitboxSquirrels = new EnemiesHitbox(this, this.squirrels[0]);
     this.hitboxSquirrels1 = new EnemiesHitbox(this, this.squirrels[1]);
     this.hitboxSquirrels2 = new EnemiesHitbox(this, this.squirrels[2]);
@@ -167,13 +184,17 @@ export default class City extends Phaser.Scene {
       this
     );
 
-    for (const squirrel of this.squirrels) {
-      // squirrel.patrol();
+    this.squirrels[0].targetX = Phaser.Math.Between(200, 1000);
+    this.squirrels[0].targetY = Phaser.Math.Between(100, 600);
 
-      squirrel.targetX = Phaser.Math.Between(20, 2500);
-      squirrel.targetY = Phaser.Math.Between(10, 300);
-      this.velocitySquirrel = 300;
-    }
+    this.squirrels[1].targetX = Phaser.Math.Between(200, 1000);
+    this.squirrels[1].targetY = Phaser.Math.Between(100, 600);
+
+    this.squirrels[2].targetX = Phaser.Math.Between(200, 1000);
+    this.squirrels[2].targetY = Phaser.Math.Between(100, 600);
+
+    this.squirrels[3].targetX = Phaser.Math.Between(200, 1000);
+    this.squirrels[3].targetY = Phaser.Math.Between(100, 600);
 
     console.log(this.player);
     this.physics.add.overlap(
@@ -225,80 +246,8 @@ export default class City extends Phaser.Scene {
     this.hitboxSquirrels3.update();
 
     for (const squirrel of this.squirrels) {
-      const deltaX = squirrel.targetX - squirrel.x;
-      const deltaY = squirrel.targetY - squirrel.y;
-      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-      if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        // Movimiento horizontal
-        if (deltaX > 0) {
-          squirrel.anims.play("walk-right", true);
-        } else {
-          squirrel.anims.play("walk-left", true);
-        }
-      } else {
-        // Movimiento vertical
-        if (deltaY > 0) {
-          squirrel.anims.play("walk-down", true);
-        } else {
-          squirrel.anims.play("walk-up", true);
-        }
-      }
-
-      if (distance > 2) {
-        // Calcular la dirección del movimiento
-        const directionX = deltaX / distance;
-        const directionY = deltaY / distance;
-
-        // Calcular la cantidad de movimiento en este fotograma
-        const movementX =
-          (directionX * this.velocitySquirrel * this.game.loop.delta) / 1500;
-        const movementY =
-          (directionY * this.velocitySquirrel * this.game.loop.delta) / 1500;
-
-        // Actualizar las coordenadas de la ardilla
-        squirrel.x += movementX;
-        squirrel.y += movementY;
-      } else {
-        squirrel.targetX = Phaser.Math.Between(20, 2500);
-        squirrel.targetY = Phaser.Math.Between(10, 300);
-      }
+      squirrel.findPathToTarget(squirrel.targetX, squirrel.targetY);
     }
-    for (const squirrel of this.squirrels) {
-      const startX = Math.floor(squirrel.x / this.tileWidth);
-      const startY = Math.floor(squirrel.y / this.tileHeight);
-      const endX = Math.floor(squirrel.targetX / this.tileWidth);
-      const endY = Math.floor(squirrel.targetY / this.tileHeight);
-
-      this.easystar.findPath(startX, startY, endX, endY, (path) => {
-        if (path !== null && path.length > 1) {
-          const nextTile = path[1];
-          squirrel.targetX = nextTile.x * this.tileWidth;
-          squirrel.targetY = nextTile.y * this.tileHeight;
-        }
-      });
-      this.easystar.calculate();
-    }
-  }
-
-  makeGrid(map, background, obstacle) {
-    const grid = [];
-    const walkableTiles = [0];
-
-    for (let y = 0; y < map.height; y++) {
-      const row = [];
-      for (let x = 0; x < map.width; x++) {
-        const groundTile = background.getTileAt(x, y, true, "Ground");
-        const upperTile = obstacle.getTileAt(x, y, true, "Deco");
-
-        const isWalkable = walkableTiles.includes(groundTile.index);
-
-        row.push(isWalkable ? 0 : 1);
-      }
-      grid.push(row);
-    }
-
-    return grid;
   }
 
   DamageTaken(player, squirrel) {
@@ -358,7 +307,7 @@ export default class City extends Phaser.Scene {
     this.rectangle.setVisible(true);
 
     if (this.squirrelsKilled >= 8) {
-      this.missionComplete = true;
+      this.cityMissionComplete = true;
       this.misionText.setText("Felicidades por completar la misión, el desierto lo espera")
       this.squirrelsKilled = 0;
       this.squirrelsKilledText.setText("");
@@ -377,19 +326,20 @@ export default class City extends Phaser.Scene {
      collectible.disableBody(true, true);
   }
   NextLevel() {
-    if (this.missionComplete){
+    if (this.cityMissionComplete){
     const data = {
       lvl: this.lvl,
       hp: this.hp,
       damageAmount: this.damageAmount,
       velocityPlayer: this.velocityPlayer,
+      cityMission: this.cityMissionComplete
     };
     for (const s of this.squirrels) {
       s.destroy(true, true);
     }
     // Clear the squirrels array
     this.squirrels = [];
- 
+
     this.scene.start("Desert", data);
   } 
   }
