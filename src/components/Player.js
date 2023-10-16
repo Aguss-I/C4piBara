@@ -5,7 +5,7 @@ import Hitbox from "./AttackHitbox";
 export default class Player extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, texture, velocity) {
     super(scene, x, y, texture);
-    this.setTexture("C4");
+    // this.setTexture("C4");
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -98,6 +98,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
           },
         });
       }
+    }
+  }
+
+  moveCharacter(path, map) {
+    for (var i = 0; i < path.length - 1; i++) {
+      var ex = path[i + 1].x;
+      var ey = path[i + 1].y;
+      this.scene.tweens.add({
+        targets: this,
+        x: { value: ex * map.tileWidth, duration: 200 },
+        y: { value: ey * map.tileHeight, duration: 200 },
+      });
     }
   }
 }

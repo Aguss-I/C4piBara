@@ -35,7 +35,6 @@ export default class City extends Phaser.Scene {
     this.squirrelsKilledText;
     this.damageAmount;
     this.enemyHp;
-    
   }
 
   init(data) {
@@ -54,17 +53,19 @@ export default class City extends Phaser.Scene {
     this.scene.launch("UI");
 
     const map = this.make.tilemap({ key: "City" });
+    this.map = map;
     this.tileWidth = map.tileWidth;
     this.tileHeight = map.tileHeight;
 
     const layerbackGround = map.addTilesetImage("TDJ2 - tileset", "Mapcity");
-    const background = map.createLayer("Ground", layerbackGround, 0, 0);
+    map.createLayer("Ground", layerbackGround, 0, 0);
     const layerObstacle = map.addTilesetImage("TDJ2 - tileset", "Mapcity");
     const obstacle = map.createLayer("Deco", layerObstacle, 0, 0);
 
     this.easystar = new EasyStar.js();
-    this.easystar.setGrid(this.makeGrid(map, background, obstacle));
-    this.easystar.setAcceptableTiles([0]);
+    this.easystar.setGrid(this.makeGrid(map));
+    const acceptableTiles = this.getAcceptableTiles(map, layerbackGround);
+    this.easystar.setAcceptableTiles(acceptableTiles);
 
     const objectsLayer = map.getObjectLayer("Objects");
     this.collectible = this.physics.add.group();
@@ -117,16 +118,16 @@ export default class City extends Phaser.Scene {
     this.Eagle = new Npc(this, 4550, 3290, "Eagle");
 
     this.squirrels.push(
-      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel)
+      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel, "S1")
     );
     this.squirrels.push(
-      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel)
+      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel, "S2")
     );
     this.squirrels.push(
-      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel)
+      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel, "S3")
     );
     this.squirrels.push(
-      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel)
+      new Enemies(this, 20, 50, "Squirrel", this.velocitySquirrel, "S4")
     );
     this.hitboxSquirrels = new EnemiesHitbox(this, this.squirrels[0]);
     this.hitboxSquirrels1 = new EnemiesHitbox(this, this.squirrels[1]);
@@ -167,13 +168,13 @@ export default class City extends Phaser.Scene {
       this
     );
 
-    for (const squirrel of this.squirrels) {
-      // squirrel.patrol();
+    // for (const squirrel of this.squirrels) {
+    //   // squirrel.patrol();
 
-      squirrel.targetX = Phaser.Math.Between(20, 2500);
-      squirrel.targetY = Phaser.Math.Between(10, 300);
-      squirrel.velocity = 300;
-    }
+    //   squirrel.targetX = Phaser.Math.Between(20, 2500);
+    //   squirrel.targetY = Phaser.Math.Between(10, 300);
+    //   squirrel.velocity = 300;
+    // }
 
     console.log(this.player);
     this.physics.add.overlap(
@@ -184,10 +185,15 @@ export default class City extends Phaser.Scene {
       this
     );
 
-    this.squirrelsKilledText = this.add.text(1150, 60, "Squirrels Killed: 0 / 4", {
-      fontSize: "50px",
-      fontFamily: "Roboto Mono",
-    });
+    this.squirrelsKilledText = this.add.text(
+      1150,
+      60,
+      "Squirrels Killed: 0 / 4",
+      {
+        fontSize: "50px",
+        fontFamily: "Roboto Mono",
+      }
+    );
 
     this.rectangle = this.add.image(900, 900, "rectangle");
     this.misionText = this.add
@@ -215,7 +221,11 @@ export default class City extends Phaser.Scene {
 
     this.citySounds = this.sound.add("citySFX", { loop: true, volume: 0.8 });
     this.citySounds.play();
+
+    this.input.on("pointerup", this.handleClick, this);
+    this.squirrels.forEach((s) => s.moveWithIA());
   }
+
   update() {
     this.player.update();
     this.hitbox.update();
@@ -223,81 +233,127 @@ export default class City extends Phaser.Scene {
     this.hitboxSquirrels1.update();
     this.hitboxSquirrels2.update();
     this.hitboxSquirrels3.update();
+    // this.squirrels.forEach((s) => s.update());
 
-    for (const squirrel of this.squirrels) {
-      const deltaX = squirrel.targetX - squirrel.x;
-      const deltaY = squirrel.targetY - squirrel.y;
-      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    // for (const squirrel of this.squirrels) {
+    //   const deltaX = squirrel.targetX - squirrel.x;
+    //   const deltaY = squirrel.targetY - squirrel.y;
+    //   const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-      if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        // Movimiento horizontal
-        if (deltaX > 0) {
-          squirrel.anims.play("walk-right", true);
-        } else {
-          squirrel.anims.play("walk-left", true);
-        }
-      } else {
-        // Movimiento vertical
-        if (deltaY > 0) {
-          squirrel.anims.play("walk-down", true);
-        } else {
-          squirrel.anims.play("walk-up", true);
-        }
-      }
+    //   if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    //     // Movimiento horizontal
+    //     if (deltaX > 0) {
+    //       squirrel.anims.play("walk-right", true);
+    //     } else {
+    //       squirrel.anims.play("walk-left", true);
+    //     }
+    //   } else {
+    //     // Movimiento vertical
+    //     if (deltaY > 0) {
+    //       squirrel.anims.play("walk-down", true);
+    //     } else {
+    //       squirrel.anims.play("walk-up", true);
+    //     }
+    //   }
 
-      if (distance > 2) {
-        // Calcular la dirección del movimiento
-        const directionX = deltaX / distance;
-        const directionY = deltaY / distance;
+    //   if (distance > 2) {
+    //     // Calcular la dirección del movimiento
+    //     const directionX = deltaX / distance;
+    //     const directionY = deltaY / distance;
 
-        // Calcular la cantidad de movimiento en este fotograma
-        const movementX =
-          (directionX * squirrel.velocity * this.game.loop.delta) / 1500;
-        const movementY =
-          (directionY * squirrel.velocity * this.game.loop.delta) / 1500;
+    //     // Calcular la cantidad de movimiento en este fotograma
+    //     const movementX =
+    //       (directionX * squirrel.velocity * this.game.loop.delta) / 1500;
+    //     const movementY =
+    //       (directionY * squirrel.velocity * this.game.loop.delta) / 1500;
 
-        // Actualizar las coordenadas de la ardilla
-        squirrel.x += movementX;
-        squirrel.y += movementY;
-      } else {
-        squirrel.targetX = Phaser.Math.Between(20, 2500);
-        squirrel.targetY = Phaser.Math.Between(10, 300);
-      }
-    }
-    for (const squirrel of this.squirrels) {
-      const startX = Math.floor(squirrel.x / this.tileWidth);
-      const startY = Math.floor(squirrel.y / this.tileHeight);
-      const endX = Math.floor(squirrel.targetX / this.tileWidth);
-      const endY = Math.floor(squirrel.targetY / this.tileHeight);
+    //     // Actualizar las coordenadas de la ardilla
+    //     squirrel.x += movementX;
+    //     squirrel.y += movementY;
+    //   } else {
+    //     squirrel.targetX = Phaser.Math.Between(20, 2500);
+    //     squirrel.targetY = Phaser.Math.Between(10, 300);
+    //   }
+    // }
 
-      this.easystar.findPath(startX, startY, endX, endY, (path) => {
-        if (path !== null && path.length > 1) {
-          const nextTile = path[1];
-          squirrel.targetX = nextTile.x * this.tileWidth;
-          squirrel.targetY = nextTile.y * this.tileHeight;
-        }
-      });
-      this.easystar.calculate();
-    }
+    // for (const squirrel of this.squirrels) {
+    //   const startX = Math.floor(squirrel.x / this.tileWidth);
+    //   const startY = Math.floor(squirrel.y / this.tileHeight);
+    //   const endX = Math.floor(squirrel.targetX / this.tileWidth);
+    //   const endY = Math.floor(squirrel.targetY / this.tileHeight);
+
+    //   this.easystar.findPath(startX, startY, endX, endY, (path) => {
+    //     if (path !== null && path.length > 1) {
+    //       const nextTile = path[1];
+    //       squirrel.targetX = nextTile.x * this.tileWidth;
+    //       squirrel.targetY = nextTile.y * this.tileHeight;
+    //     }
+    //   });
+    //   this.easystar.calculate();
+    // }
   }
 
-  makeGrid(map, background, obstacle) {
+  getTileID(map, x, y) {
+    var tile = map.getTileAt(x, y, false);
+    return tile?.index || 1;
+  }
+
+  getAcceptableTiles(map, tiles) {
+    var tileset = map.tilesets[0];
+    var properties = tileset.tileProperties;
+    var acceptableTiles = [];
+
+    for (var i = tileset.firstgid - 1; i < tiles.total; i++) {
+      // firstgid and total are fields from Tiled that indicate the range of IDs that the tiles can take in that tileset
+      if (!properties.hasOwnProperty(i)) {
+        // If there is no property indicated at all, it means it's a walkable tile
+        acceptableTiles.push(i + 1);
+        continue;
+      }
+      if (!properties[i].collide) acceptableTiles.push(i + 1);
+      if (properties[i].cost) {
+        this.easystar.setTileCost(i + 1, properties[i].cost); // If there is a cost attached to the tile, let's register it
+      }
+    }
+    console.log(
+      "🚀 ~ file: City.js:314 ~ City ~ getAcceptableTiles ~ acceptableTiles:",
+      acceptableTiles
+    );
+    return acceptableTiles;
+  }
+
+  handleClick(pointer) {
+    var x = this.cameras.main.scrollX + pointer.x;
+    var y = this.cameras.main.scrollY + pointer.y;
+    var toX = Math.floor(x / 50);
+    var toY = Math.floor(y / 50);
+    var fromX = Math.floor(this.player.x / 50);
+    var fromY = Math.floor(this.player.y / 50);
+    console.log(
+      "going from (" + fromX + "," + fromY + ") to (" + toX + "," + toY + ")"
+    );
+
+    this.easystar.findPath(fromX, fromY, toX, toY, (path) => {
+      if (path === null) {
+        console.warn("Path was not found.");
+      } else {
+        console.log("path", path);
+        this.player.moveCharacter(path, this.map);
+      }
+    });
+    this.easystar.calculate();
+  }
+
+  makeGrid(map) {
     const grid = [];
-    const walkableTiles = [0];
 
     for (let y = 0; y < map.height; y++) {
       const row = [];
       for (let x = 0; x < map.width; x++) {
-        const groundTile = background.getTileAt(x, y, true, "Ground");
-        const upperTile = obstacle.getTileAt(x, y, true, "Deco");
-
-        const isWalkable = walkableTiles.includes(groundTile.index);
-
-        row.push(isWalkable ? 0 : 1);
+        row.push(this.getTileID(map, x, y));
       }
       grid.push(row);
     }
-
     return grid;
   }
 
@@ -351,32 +407,32 @@ export default class City extends Phaser.Scene {
 
     if (this.squirrelsKilled >= 8) {
       this.missionComplete = true;
-      this.misionText.setText("Felicidades por completar la mision, el desierto lo espera")
+      this.misionText.setText(
+        "Felicidades por completar la mision, el desierto lo espera"
+      );
       this.squirrelsKilled = 0;
       this.squirrelsKilledText.setText("");
-      
 
       this.lvl++;
       events.emit("UpdateLVL", { lvl: this.lvl });
-      
-    
+
       this.salida.setVisible(true).setActive(true);
     }
   }
   Heal(player, collectible) {
     this.hp = this.hp + 25;
     events.emit("UpdateHP", { hp: this.hp });
-     collectible.disableBody(true, true);
+    collectible.disableBody(true, true);
   }
   NextLevel() {
-    if (this.missionComplete){
-    const data = {
-      lvl: this.lvl,
-      hp: this.hp,
-      damageAmount: this.damageAmount,
-      velocityPlayer: this.velocityPlayer,
-    };
-    this.scene.start("Desert", data);
-  }
+    if (this.missionComplete) {
+      const data = {
+        lvl: this.lvl,
+        hp: this.hp,
+        damageAmount: this.damageAmount,
+        velocityPlayer: this.velocityPlayer,
+      };
+      this.scene.start("Desert", data);
+    }
   }
 }

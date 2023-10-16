@@ -1,7 +1,5 @@
 import Phaser from "phaser";
-// // import events from "./EventCenter";
 
-// //Preload
 export default class Preload extends Phaser.Scene {
   constructor() {
     super("Preload");
@@ -13,13 +11,13 @@ export default class Preload extends Phaser.Scene {
       frameHeight: 86,
     });
 
-    this.load.image("menuBg", "assets/images/menuBg.png");
-    this.load.image("title", "assets/images/title.png");
+    this.load.image("menuBg", "assets/images/MenuBg.png");
+    this.load.image("title", "assets/images/Title.png");
     this.load.image("rectangle", "assets/images/Rectangle.png");
     this.load.image("gameover", "assets/images/Gameover.png");
-    this.load.image("desertTemp", "assets/images/desertTemp.jpg");
-    this.load.image("musicOn", "assets/images/musicOn.png");
-    this.load.image("musicOff", "assets/images/musicOff.png");
+    this.load.image("desertTemp", "assets/images/DesertTemp.jpg");
+    this.load.image("musicOn", "assets/images/MusicOn.png");
+    this.load.image("musicOff", "assets/images/MusicOff.png");
 
     this.load.image("FlechaSalida", "assets/images/Flecha.png");
     this.load.spritesheet("Eagle", "assets/images/NPC.png", {
@@ -35,20 +33,20 @@ export default class Preload extends Phaser.Scene {
       frameHeight: 169,
     });
 
-    this.load.spritesheet("C4", "assets/Images/C4.png", {
+    this.load.spritesheet("C4", "assets/images/C4.png", {
       frameWidth: 212,
       frameHeight: 200,
       // startFrame: 10
     });
 
-    this.load.tilemapTiledJSON("City", "assets/Tilemaps/City.json");
-    this.load.tilemapTiledJSON("Desert", "assets/Tilemaps/Desert.json");
-    this.load.image("Mapdesert", "assets/Images/DesertTileset.png");
-    this.load.image("Mapcity", "assets/Images/tileset.png");
+    this.load.tilemapTiledJSON("City", "assets/tilemaps/City.json");
+    this.load.tilemapTiledJSON("Desert", "assets/tilemaps/Desert.json");
+    this.load.image("Mapdesert", "assets/images/DesertTileset.png");
+    this.load.image("Mapcity", "assets/images/Tileset.png");
 
-    this.load.audio("citySFX", "assets/Audio/citySFX.mp3");
-    this.load.audio("swordAttack", "assets/Audio/swordAttack.mp3");
-    this.load.audio("menuMusic", "assets/Audio/menuMusic.mp3");
+    this.load.audio("citySFX", "assets/audios/citySFX.mp3");
+    this.load.audio("swordAttack", "assets/audios/swordAttack.mp3");
+    this.load.audio("menuMusic", "assets/audios/menuMusic.mp3");
   }
 
   create() {
