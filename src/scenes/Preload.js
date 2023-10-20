@@ -8,53 +8,52 @@ export default class Preload extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet("cura", "assets/images/Cura.png", {
+    this.load.spritesheet("cura", "./assets/images/Cura.png", {
       frameWidth: 93,
       frameHeight: 86,
     });
 
-    this.load.image("menuBg", "assets/images/menuBg.png");
-    this.load.image("title", "assets/images/title.png");
-    this.load.image("rectangle", "assets/images/Rectangle.png");
-    this.load.image("gameover", "assets/images/Gameover.png");
-    this.load.image("desertTemp", "assets/images/desertTemp.jpg");
-    this.load.image("musicOn", "assets/images/musicOn.png");
-    this.load.image("musicOff", "assets/images/musicOff.png");
+    this.load.image("menuBg", "./assets/images/menuBg.png");
+    this.load.image("title", "./assets/images/title.png");
+    this.load.image("rectangle", "./assets/images/Rectangle.png");
+    this.load.image("gameover", "./assets/images/Gameover.png");
+    this.load.image("desertTemp", "./assets/images/desertTemp.jpg");
+    this.load.image("musicOn", "./assets/images/musicOn.png");
+    this.load.image("musicOff", "./assets/images/musicOff.png");
     //
 
-    this.load.image("ArrowUp", "assets/images/ArrowUp.png");
-    this.load.image("ArrowDown", "assets/images/ArrowDown.png");
-    this.load.spritesheet("Eagle", "assets/images/NPC.png", {
+    this.load.image("ArrowUp", "./assets/images/ArrowUp.png");
+    this.load.image("ArrowDown", "./assets/images/ArrowDown.png");
+    this.load.spritesheet("Eagle", "./assets/images/NPC.png", {
       frameWidth: 230,
       frameHeight: 230,
     });
-    this.load.spritesheet("Rock", "assets/images/Rock.png", {
+    this.load.spritesheet("Rock", "./assets/images/Rock.png", {
       frameWidth: 21,
       frameHeight: 21,
     });
-    this.load.spritesheet("Squirrel", "assets/images/Squirrel.png", {
+    this.load.spritesheet("Squirrel", "./assets/images/Squirrel.png", {
       frameWidth: 221,
       frameHeight: 169,
     });
 
-    this.load.spritesheet("C4", "assets/images/C4.png", {
+    this.load.spritesheet("C4", "./assets/images/C4.png", {
       frameWidth: 212,
       frameHeight: 200,
       // startFrame: 10
     });
 
-    this.load.tilemapTiledJSON("City", "assets/Tilemaps/City.json");
-    this.load.tilemapTiledJSON("Desert", "assets/Tilemaps/Desert.json");
-    this.load.image("Mapdesert", "assets/Images/DesertTileset.png");
-    this.load.image("Mapcity", "assets/Images/tileset.png");
+    this.load.tilemapTiledJSON("City", "./assets/Tilemaps/City.json");
+    this.load.tilemapTiledJSON("Desert", "./assets/Tilemaps/Desert.json");
+    this.load.image("Mapdesert", "./assets/images/DesertTileset.png");
+    this.load.image("Mapcity", "./assets/images/Tileset.png");
 
-    this.load.audio("citySFX", "assets/Audio/citySFX.mp3");
-    this.load.audio("swordAttack", "assets/Audio/swordAttack.mp3");
-    this.load.audio("menuMusic", "assets/Audio/menuMusic.mp3");
-    this.load.spritesheet("Fox","assets/images/Fox.png",{
-      frameWidth:174,
-      frameHeight:155,
-    
+    this.load.audio("citySFX", "./assets/Audio/citySFX.mp3");
+    this.load.audio("swordAttack", "./assets/Audio/swordAttack.mp3");
+    this.load.audio("menuMusic", "./assets/Audio/menuMusic.mp3");
+    this.load.spritesheet("Fox", "./assets/images/Fox.png", {
+      frameWidth: 174,
+      frameHeight: 155,
     });
   }
 
