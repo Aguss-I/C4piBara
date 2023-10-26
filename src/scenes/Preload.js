@@ -59,12 +59,13 @@ export default class Preload extends Phaser.Scene {
 
     this.load.tilemapTiledJSON("City", "./assets/Tilemaps/City.json");
     this.load.tilemapTiledJSON("Desert", "./assets/Tilemaps/Desert.json");
-    this.load.image("Mapdesert", "./assets/images/DesertTileset.png");
+    this.load.image("Mapdesert", "./assets/images/DesertTilese
+    this.load.image("Menupause","./assets/images/MenuPausa.png");
     this.load.image("Mapcity", "./assets/images/CityTileset.png");
-
     this.load.audio("citySFX", "./assets/Audio/citySFX.mp3");
     this.load.audio("swordAttack", "./assets/Audio/swordAttack.mp3");
     this.load.audio("menuMusic", "./assets/Audio/menuMusic.mp3");
+    this.load.audio("levelup","./assets/Audio/Levelup.wav");
     this.load.spritesheet("Fox","./assets/images/Fox.png",{
       frameWidth:174,
       frameHeight:155,

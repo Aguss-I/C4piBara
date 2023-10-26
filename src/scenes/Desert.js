@@ -48,7 +48,8 @@ export default class Desert extends Phaser.Scene {
     this.initialY = 900;
     this.objectCollected = data.objectCollected || 0;
     this.missionComplete = data.missionComplete|| false
-    
+    this.pKey =this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+
   }
 
   create() {
@@ -193,6 +194,10 @@ export default class Desert extends Phaser.Scene {
       this.rectangle.setVisible(false);
       this.mensajeAdicional.setVisible(false);
     });
+    this.input.keyboard.on('keydown-P',()=>{
+      this.scene.launch("Menupause");
+      this.scene.pause("Desert");
+    })
     this.cobraGroup = this.physics.add.group();
 
     for (let i = 0; i < 6; i++) {
@@ -314,6 +319,11 @@ export default class Desert extends Phaser.Scene {
     this.mision2Text.setVisible(true);
     this.mensajeAdicional.setVisible(true);
     this.rectangle.setVisible(true);
+    setTimeout(() => {
+      this.mision2Text.setVisible(false);
+      this.rectangle.setVisible(false);
+      this.mensajeAdicional.setVisible(false);
+    }, 2000);
     if (this.objectCollected >= 3) {
       if (this.cobrasKilled >= 6) {
         for (const c of this.cobras) {
@@ -410,7 +420,7 @@ export default class Desert extends Phaser.Scene {
 
   }
   damage(player, biting ,cobra){
-      this.hp = this.hp - 15
+      this.hp = this.hp - 30
       events.emit("UpdateHP", { hp: this.hp });
       this.scene.get("UI").updateHealthBar();
       biting.destroy(true);

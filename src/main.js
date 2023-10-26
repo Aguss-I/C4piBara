@@ -1,6 +1,4 @@
  import Phaser from "phaser";
-
-  
  import Preload from "./scenes/Preload";
  import MainMenu from "./scenes/MainMenu";
  import City from "./scenes/City";
@@ -9,8 +7,8 @@
  import GameEnd from "./scenes/GameEnd";
  import Credits from "./scenes/Credits";
  import Language from "./scenes/LanguagesSelector";
- 
 import GameWin from "./scenes/GameWin";
+import MenuPause from "./scenes/PauseMenu";
 
 
 
@@ -37,7 +35,7 @@ import GameWin from "./scenes/GameWin";
        debug: false,
      },
    },
-   scene: [Preload, MainMenu, Credits, Language, City, Desert, GameEnd,GameWin, UI]
+   scene: [Preload, MainMenu, Credits, Language, City, Desert, GameEnd,GameWin,MenuPause, UI]
  };
 
 const game= new Phaser.Game(config);

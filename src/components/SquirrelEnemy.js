@@ -96,6 +96,8 @@ export default class Enemies extends Phaser.GameObjects.Sprite {
        this.scene.exp=this.scene.exp + 200
        if(this.scene.exp>=1200){
         this.scene.lvl ++
+        this.levelUpSound = this.scene.sound.add("levelup");
+          this.levelUpSound.play();
         this.scene.maxHp += 25;
         this.scene.exp = 0
         events.emit("UpdateMaxHp", { maxHp: this.scene.maxHp });
