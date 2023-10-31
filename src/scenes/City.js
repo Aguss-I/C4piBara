@@ -53,6 +53,7 @@ export default class City extends Phaser.Scene {
     this.initialX = 1000;
     this.initialY = 2700;
     this.pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+   
   }
 
   create() {
@@ -120,7 +121,7 @@ export default class City extends Phaser.Scene {
     this.squirrelGroup = this.physics.add.group();
 
     this.createRocks();
-    this.attackSound = this.sound.add("swordAttack", { volume: 0.5 });
+    
 
     this.hitbox = new Hitbox(this, this.player);
 
@@ -147,6 +148,7 @@ export default class City extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.squirrels);
     this.physics.add.overlap(this.squirrels, this.player);
     this.physics.add.collider(this.squirrels, obstacle);
+   
     this.tutorial = this.add.image(1000, 500, "Tutorial").setScale(2);
     this.moverseText = this.add.text(980, 600, "Moverse", {
       color: "000000",
@@ -167,7 +169,8 @@ export default class City extends Phaser.Scene {
     this.atacarText.setScrollFactor(0, 0);
     this.saltarText.setScrollFactor(0, 0);
     this.tutorial.setScrollFactor(0, 0);
-
+    
+    
     this.physics.add.overlap(
       this.player,
       this.collectible,
@@ -248,6 +251,17 @@ export default class City extends Phaser.Scene {
     this.DesignUI2.setScrollFactor(0);
     this.citySounds = this.sound.add("citySFX", { loop: true, volume: 0.8 });
     this.citySounds.play();
+    this.input.keyboard.on('keydown-F', () => {
+      const fullscreenElement = this.scale.fullscreenTarget;
+      
+      if (this.scale.isFullscreen) {
+          this.scale.stopFullscreen();
+      } else {
+          this.scale.startFullscreen();
+      }
+  });
+  this.scale.fullscreenTarget = this.game.canvas;
+
   }
 
   update() {
@@ -341,6 +355,7 @@ export default class City extends Phaser.Scene {
 
   NextLevel() {
     if (this.missionComplete) {
+      this.tutorial.setVisible(false)
       const data = {
         lvl: this.lvl,
         hp: this.hp,

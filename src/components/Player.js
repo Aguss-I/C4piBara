@@ -17,7 +17,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     
 
     this.xKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
-
+    this.xKeyIsPressed = false;
     this.KeySave = null;
     this.facingDirection = null;
 
@@ -71,7 +71,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
     }
 
-    if (this.xKey.isDown) {
+    if (this.xKey.isDown && !this.xKeyIsPressed) {
+      this.attackSwordSound = this.scene.sound.add("swordAttack2");
+      this.attackSwordSound.play()
+      this.xKeyIsPressed = true
+      setTimeout(() => {
+        this.xKeyIsPressed=false
+      },400 );
+      
       if (this.playerState !== "attacking") {
         this.playerState = "attacking";
         switch (this.facingDirection) {
@@ -94,6 +101,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
           default:
             this.anims.play("AttackDown");
         }
+       
+        }
+        
         this.idleTimer = this.scene.time.addEvent({
           delay: 300,
           callback: () => {
@@ -103,4 +113,4 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
     }
   }
-}
+

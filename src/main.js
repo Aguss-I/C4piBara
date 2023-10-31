@@ -9,6 +9,7 @@
  import Language from "./scenes/LanguagesSelector";
 import GameWin from "./scenes/GameWin";
 import MenuPause from "./scenes/PauseMenu";
+import FirebasePlugin from "./plugins/FireBasePlugin";
 
 
 
@@ -35,7 +36,18 @@ import MenuPause from "./scenes/PauseMenu";
        debug: false,
      },
    },
-   scene: [Preload, MainMenu, Credits, Language, City, Desert, GameEnd,GameWin,MenuPause, UI]
+   scene: [Preload, MainMenu, Credits, Language, City, Desert, GameEnd,GameWin,MenuPause, UI],
+   plugins: {
+    global: [
+      {
+        key: "FirebasePlugin",
+        plugin: FirebasePlugin,
+        start: true,
+        mapping: "firebase",
+      },
+    ],
+  },
  };
+
 
 const game= new Phaser.Game(config);

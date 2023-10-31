@@ -132,6 +132,16 @@ export default class MainMenu extends Phaser.Scene {
         isMusicMuted = true;
       }
     });
+    this.input.keyboard.on('keydown-F', () => {
+      const fullscreenElement = this.scale.fullscreenTarget;
+      
+      if (this.scale.isFullscreen) {
+          this.scale.stopFullscreen();
+      } else {
+          this.scale.startFullscreen();
+      }
+  });
+  this.scale.fullscreenTarget = this.game.canvas;
   }
 
   update() {

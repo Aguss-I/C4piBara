@@ -18,7 +18,7 @@ export default class Hitbox extends Phaser.GameObjects.Rectangle {
     this.setActive(false).setVisible(false);
 
     this.facingDirection = null;
-    this.damageAmount = 100;
+    this.damageAmount = 200;
     // this.attackSound = attackSound;
     // this.isAttackSoundPlaying = false;
     // this.isAttacking = false;

@@ -232,6 +232,16 @@ export default class Desert extends Phaser.Scene {
       null,
       this
     );
+    this.input.keyboard.on('keydown-F', () => {
+      const fullscreenElement = this.scale.fullscreenTarget;
+      
+      if (this.scale.isFullscreen) {
+          this.scale.stopFullscreen();
+      } else {
+          this.scale.startFullscreen();
+      }
+  });
+  this.scale.fullscreenTarget = this.game.canvas;
   }
 
   update() {
@@ -420,7 +430,7 @@ export default class Desert extends Phaser.Scene {
 
   }
   damage(player, biting ,cobra){
-      this.hp = this.hp - 30
+      this.hp = this.hp - 25
       events.emit("UpdateHP", { hp: this.hp });
       this.scene.get("UI").updateHealthBar();
       biting.destroy(true);
