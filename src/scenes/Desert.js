@@ -4,7 +4,7 @@ import Player from "../components/Player";
 import Enemies2 from "../components/CobraEnemy";
 import Hitbox from "../components/AttackHitbox";
 import Npc from "../components/Npc";
-import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
+import { TODO } from "../enums/status";
 import { getPhrase } from "../services/translations";
 import keys from "../enums/keys";
 
@@ -13,8 +13,15 @@ import keys from "../enums/keys";
 // //has fast enemies
 // //save station
 export default class Desert extends Phaser.Scene {
+  #wasChangedLanguage = TODO;
   constructor() {
     super("Desert");
+    const { cobrasKill } = keys.Enemy;
+    this.deadCobra = cobrasKill;
+    const { desertMissionBegin, desertMissionEnd, collect } = keys.DesertText
+    this.desertBegin = desertMissionBegin;
+    this.desertEnd = desertMissionEnd;
+    this.partCollected = collect;
     this.lvl;
     this.hp;
     this.maxHp;
@@ -25,6 +32,7 @@ export default class Desert extends Phaser.Scene {
     this.velocityCobra;
     this.objectCollected;
     this.missionComplete;
+    this.missionDesertComplete;
     this.inAttackRange = false;
     this.cobras = [];
   }
@@ -36,7 +44,7 @@ export default class Desert extends Phaser.Scene {
     this.exp = data.exp || 0;
     this.velocityPlayer = data.velocityPlayer;
     this.velocityCobra = data.velocityCobra || 350;
-    this.enemyCobraHp = data.enemyCobrahp || 200;
+    this.enemyCobraHp = data.enemyCobrahp || 2000;
     this.damageAmount = data.damageAmount;
     this.missionComplete = data.missionComplete;
     this.squirrelsKilled = data.squirrelsKilled;
@@ -47,8 +55,8 @@ export default class Desert extends Phaser.Scene {
     this.initialX = 500;
     this.initialY = 900;
     this.objectCollected = data.objectCollected || 0;
-    this.missionComplete = data.missionComplete|| false
-    this.pKey =this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+    this.missionDesertComplete = data.missionDesertComplete|| false
+    this.pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
 
   }
 
@@ -141,15 +149,15 @@ export default class Desert extends Phaser.Scene {
     this.DesignUI2.setVisible(false);
     this.DesignUI2.setScrollFactor(0);
     this.physics.add.overlap(this.player, this.fox, this.mision2, null, this);
-    this.cobrasKilledText = this.add.text(1350, 30, "Cobras Killed", {
-      fontSize: "50px",
+    this.cobrasKilledText = this.add.text(1350, 30, getPhrase(this.deadCobra), {
+      fontSize: "35px",
       fontFamily: "Roboto Mono",
     });
     this.cobrasKilledText.setVisible(false);
     this.cobrasKilledText.setActive(false);
     this.cobrasKilledText.setScrollFactor(0);
-    this.objectCollectedText = this.add.text(1350, 130, "Objects collected", {
-      fontSize: "50px",
+    this.objectCollectedText = this.add.text(1350, 130, getPhrase(this.partCollected), {
+      fontSize: "35px",
       fontFamily: "Roboto Mono",
     });
     this.objectCollectedText.setVisible(false);
@@ -160,7 +168,7 @@ export default class Desert extends Phaser.Scene {
       .text(
         60,
         800,
-        "C4, te estaba esperando. Nos han robado partes de un arma que estamos construyendo. Ve a recuperarlas y ten cuidado.",
+        getPhrase(this.desertBegin),
         {
           fontSize: "40px",
           fontFamily: "Roboto Mono",
@@ -170,29 +178,18 @@ export default class Desert extends Phaser.Scene {
       .setInteractive();
       this.rectangle.scaleX=1.1
     this.mision2Text.setWordWrapWidth(this.rectangle.width);
-    this.mensajeAdicional = this.add.text( 
-      690,
-      950,
-      "Toca espacio para cerrar este mensaje",
-      {
-        fontSize: "35px",
-        fontFamily: "Roboto Mono",
-        color: "000000",
-      }
-    );
-    this.mensajeAdicional.setScrollFactor(0);
-    this.mensajeAdicional.setVisible(false);
+
+   
+   
     this.rectangle.setScrollFactor(0);
     this.rectangle.setVisible(false);
     this.mision2Text.setVisible(false);
     this.mision2Text.setActive(false);
     this.mision2Text.setScrollFactor(0);
-    this.mensajeAdicional.setScrollFactor(0);
     this.input.keyboard.on("keydown-SPACE", () => {
       // This code will be executed when the spacebar is pressed
       this.mision2Text.setVisible(false);
       this.rectangle.setVisible(false);
-      this.mensajeAdicional.setVisible(false);
     });
     this.input.keyboard.on('keydown-P',()=>{
       this.scene.launch("Menupause");
@@ -282,19 +279,10 @@ export default class Desert extends Phaser.Scene {
     }
   }
   
-  takeDamage(damageAmount, biting, cobra) {
-    this.enemyCobraHp -= damageAmount;
-    console.log("daño");
-    if (this.enemyCobraHp <= 0) {
-      cobra.setActive(false).setVisible(false);
-      cobra.anims.stop();
-    }
-  }
   ObjectCollected(player, collectible) {
     this.objectCollected = this.objectCollected + 1;
     this.objectCollectedText.setText(
-      "Objects collected: " + this.objectCollected + "/4"
-    );
+      `${getPhrase(this.partCollected)}: ${this.objectCollected} /4`);
 
     collectible.disableBody(true, true);
   }
@@ -307,10 +295,13 @@ export default class Desert extends Phaser.Scene {
       exp: this.exp,
       damageAmount: this.damageAmount,
       velocityPlayer: this.velocityPlayer,
-      x: 30,
-      y: 300,
-      missionComplete: this.missionComplete,
+      x: 1300,
+      y: 200,
+      missionDesertComplete: this.missionDesertComplete,
+      missionComplete:this.missionComplete,
       squirrelsKilled: this.squirrelsKilled,
+      showtutorial:false
+     
     };
     for (const c of this.cobras) {
       c.destroy(true, true);
@@ -321,34 +312,42 @@ export default class Desert extends Phaser.Scene {
 
   }
   mision2(player, fox) {
+    this.mision2Text.setVisible(true);
+    this.rectangle.setVisible(true);
     this.cobrasKilledText.setVisible(true);
     this.cobrasKilledText.setActive(true);
     this.objectCollectedText.setVisible(true);
     this.objectCollectedText.setActive(true);
     this.DesignUI2.setVisible(true);
-    this.mision2Text.setVisible(true);
-    this.mensajeAdicional.setVisible(true);
-    this.rectangle.setVisible(true);
+  
     setTimeout(() => {
       this.mision2Text.setVisible(false);
       this.rectangle.setVisible(false);
-      this.mensajeAdicional.setVisible(false);
     }, 2000);
     if (this.objectCollected >= 3) {
       if (this.cobrasKilled >= 6) {
+        this.lvl++;
+     this.maxHp+=25
+     events.emit("UpdateMaxHp", { maxHp: this.maxHp });
+      this.levelUpSound = this.sound.add("levelup");
+      this.levelUpSound.play();
+      this.maxHp += 25;
+      this.damageAmount += Math.round(this.damageAmount * 0.2);
+      events.emit("UpdateMaxHp", { maxHp: this.maxHp });
+      events.emit("UpdateLVL", { lvl: this.lvl });
+      this.cobrasKilledText.setText("");
+      this.objectCollectedText.setText("");
         for (const c of this.cobras) {
           c.destroy(true, true);
         }
         this.cobras = [];
-        this.missionComplete = true;
+        this.missionDesertComplete = true;
       }
-      if ((this.missionComplete = true)) {
-        this.scene.launch("GameWin");
-        this.scene.pause("Desert");
-        this.scene.stop("UI");
-        this.mision2Text.setText("");
-        this.rectangle.setVisible(false);
-        this.mensajeAdicional.setVisible(false);
+      if ((this.missionDesertComplete = true)) {
+     
+        this.mision2Text.setText(getPhrase(this.desertEnd));
+        this.DesignUI2.setVisible(false);
+  
       }
     }
   }
@@ -445,6 +444,7 @@ export default class Desert extends Phaser.Scene {
         c.destroy(true, true);
       }
       this.cobras = [];
+      this.scene.stop("UI");
       this.scene.launch("GameEnd", { fromScene: "Desert" });
       this.scene.pause("Desert");
       

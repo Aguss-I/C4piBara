@@ -1,42 +1,26 @@
 import Phaser from "phaser";
-import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
-import { getPhrase } from "../services/translations";
-import keys from "../enums/keys";
-
-// //ending cutscenes
-// //Credits
 export default class GameWin extends Phaser.Scene {
-  #wasChangedLanguage = TODO;
   constructor() {
     super("GameWin");
-    const { retry, dead, menu } = keys.GameEnd;
-    this.retry = retry;
-    
-    this.menu = menu;
   }
 
   create() {
-    this.add.image(0,0, "gameover").setOrigin(0);
-    this.add.text(500,190,"Has Ganado, Felicidades",{
-      fontSize: "100px",
-      fontFamily: "Trebuchet MS",
-    });
-    this.buttonM = this.add.text(850,750,getPhrase(this.menu),{
-      fontFamily: "Roboto Mono",
-      fontSize: "50px",
+    const canvasWidth = this.sys.game.config.width;
+    const canvasHeight = this.sys.game.config.height;
 
-    }).setInteractive();
-    this.buttonM.on("pointerdown", () => {
-      this.scene.stop("UI");
-      this.scene.stop("Desert");
-      this.scene.start("MainMenu");
+    const theEnd = this.add.video(960, 500, "Ending").setInteractive().setDepth(1);
+    theEnd.setScale(1.5);
+    theEnd.setPosition(canvasWidth / 2, canvasHeight / 2);
+    theEnd.setVolume(0.5)
+    theEnd.play();
+    theEnd.on('complete', () => {
+    location.reload();
+    
     });
-  }
-
-  update() {
-    if (this.#wasChangedLanguage === FETCHED) {
-      this.died.setText(getPhrase(this.dead));
-      this.buttonM.setText(getPhrase(this.menu));
+    theEnd.on("pointerdown", () => {
+      location.reload();
+    });
+ 
     }
-  }
+  
 }

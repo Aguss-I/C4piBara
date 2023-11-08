@@ -24,10 +24,9 @@ export default class Enemies2 extends Phaser.GameObjects.Sprite {
     this.velocityCobra = 350;
     this.patrolling = true;
     this.timeToBite = 0;
-
   }
-  
-  update(){
+
+  update() {
     if (this.patrolling) {
       const distanceX = this.targetX - this.x;
       const distanceY = this.targetY - this.y;
@@ -84,32 +83,30 @@ export default class Enemies2 extends Phaser.GameObjects.Sprite {
     this.patrolling = true;
   }
 
-
   takeDamage(damageAmount) {
     if (this.active) {
       this.enemyCobraHp = this.enemyCobraHp - damageAmount;
-
       if (this.enemyCobraHp <= 0) {
-        this.scene.exp=this.scene.exp +200
-if (this.scene.exp>=1200){
-  this.scene.lvl++
-  this.levelUpSound = this.scene.sound.add("levelup");
-  this.levelUpSound.play();
-  this.scene.exp=0
-  this.scene.maxHp += 25;
-  events.emit("UpdateMaxHp", { maxHp: this.scene.maxHp });
-  events.emit("UpdateLVL", {lvl: this.scene.lvl });
-  this.scene.damageAmount += Math.round(this.scene.damageAmount * 0.2);
+        this.scene.exp = this.scene.exp + 200;
+        console.log("xp awarded ", this.scene.exp);
+        if (this.scene.exp >= 1200) {
+          this.scene.lvl++;
+          this.levelUpSound = this.scene.sound.add("levelup");
+          this.levelUpSound.play();
+          this.scene.maxHp += 25;
+          this.scene.exp = 0;
+          events.emit("UpdateMaxHp", { maxHp: this.scene.maxHp });
+          events.emit("UpdateLVL", { lvl: this.scene.lvl });
+          this.scene.damageAmount += Math.round(this.scene.damageAmount * 0.2);
+        }
 
-}
         this.scene.cobrasKilled++;
         this.scene.cobrasKilledText.setText(
-        `${getPhrase(this.deadCobra)}: ${this.scene.cobrasKilled} /6`
-      );
-        
-        this.setActive(false).setVisible(false);
-      
-        
+          `${getPhrase(this.deadCobra)}: ${this.scene.cobrasKilled} / 6`
+        );
+
+        this.setVisible(false);
+        this.setActive(false);
       }
     }
   }

@@ -25,6 +25,8 @@ export default class LanguageSelector extends Phaser.Scene {
   }
 
   create() {
+    this.click = this.sound.add("click", { volume: 0.3 });
+    
     const { width, height } = this.scale;
 
     const canvasWidth = this.sys.game.config.width;
@@ -45,6 +47,7 @@ export default class LanguageSelector extends Phaser.Scene {
       })
       .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+        this.click.play();
         this.getTranslations(ES_AR);
       })
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
@@ -62,6 +65,7 @@ export default class LanguageSelector extends Phaser.Scene {
       })
       .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+        this.click.play();
         this.getTranslations(EN_UK);
       })
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {
@@ -79,6 +83,7 @@ export default class LanguageSelector extends Phaser.Scene {
       })
       .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
+        this.click.play();
         this.scene.start("MainMenu", { language: this.language });
       })
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_OVER, () => {

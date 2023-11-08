@@ -87,17 +87,18 @@ export default class Enemies extends Phaser.GameObjects.Sprite {
 
 
   takeDamage(damageAmount) {
+
     if (this.active) {
       this.enemyHp = this.enemyHp - damageAmount;
-      console.log("🚀 ~ file: SquirrelEnemy.js:92 ~ Enemies ~ takeDamage ~ damageAmount:", damageAmount)
-      console.log("🚀 ~ file: SquirrelEnemy.js:92 ~ Enemies ~ takeDamage ~ this.enemyHp:", this.enemyHp)
-
+     
       if (this.enemyHp <= 0) {
+        this.anims.play("explosion",true);
        this.scene.exp=this.scene.exp + 200
+       console.log("xp awarded ", this.scene.exp)
        if(this.scene.exp>=1200){
         this.scene.lvl ++
         this.levelUpSound = this.scene.sound.add("levelup");
-          this.levelUpSound.play();
+        this.levelUpSound.play();
         this.scene.maxHp += 25;
         this.scene.exp = 0
         events.emit("UpdateMaxHp", { maxHp: this.scene.maxHp });
@@ -105,15 +106,13 @@ export default class Enemies extends Phaser.GameObjects.Sprite {
         this.scene.damageAmount += Math.round(this.scene.damageAmount * 0.2);
        }
         
-        console.log("Ardilla morida");
+        
         this.scene.squirrelsKilled++;
         this.scene.squirrelsKilledText.setText(
         `${getPhrase(this.deadSquirrel)}: ${this.scene.squirrelsKilled} /4`);
 
-        
-        this.setActive(false).setVisible(false);
-
-
+        this.setVisible(false)
+        this.setActive(false)
     }
   }
 }

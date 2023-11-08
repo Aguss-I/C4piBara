@@ -1,24 +1,27 @@
 import Phaser from "phaser";
-import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
+import { TODO } from "../enums/status";
 import { getPhrase } from "../services/translations";
 import keys from "../enums/keys";
-//  starts the game
-//  Continue game
-//  credits
-//  Language selector
+
 export default class MainMenu extends Phaser.Scene {
   #wasChangedLanguage = TODO;
   constructor() {
     super("MainMenu");
-    const { play, credits, languagesSelec } = keys.MainMenu;
+    const { play, credits, languagesSelec, loader } = keys.MainMenu;
     this.play = play;
     this.credits = credits;
     this.languagesSelec = languagesSelec;
+    this.loadGame = loader;
   }
 
   create() {
-    this.menuMusic = this.sound.add("menuMusic", { loop: true, volume: 0.3 });
+    this.menuMusic = this.sound.add("menuMusic", { loop: true, volume: 0.2 });
     this.menuMusic.play();
+
+    this.click = this.sound.add("click", { volume: 0.3 });
+    
+
+    this.user = this.firebase.getUser();
 
     const canvasWidth = this.sys.game.config.width;
     const canvasHeight = this.sys.game.config.height;
@@ -33,7 +36,9 @@ export default class MainMenu extends Phaser.Scene {
 
     this.add.image(990, 300, "title").setScale(1.8);
 
-    let spaceIntro = this.add.video(400, 300, "introScene").setInteractive().setDepth(1);
+    const startY = 500;
+
+    const spaceIntro = this.add.video(400, 300, "introScene").setInteractive().setDepth(1);
     spaceIntro.visible = false;
     spaceIntro.setScale(
       canvasWidth / bgImage.width,
@@ -41,12 +46,12 @@ export default class MainMenu extends Phaser.Scene {
     );
     spaceIntro.setPosition(canvasWidth / 2, canvasHeight / 2);
 
-    let startButton = this.add
-      .text(860, 500, getPhrase(this.play), {
+    const startButton = this.add
+      .text(canvasWidth / 2, startY, getPhrase(this.play), {
         fontSize: "90px",
         fontFamily: "Trebuchet MS",
         fill: "FFFF00",
-      })
+      }).setOrigin(0.5)
       .setInteractive();
 
     startButton.on("pointerover", () => {
@@ -58,6 +63,7 @@ export default class MainMenu extends Phaser.Scene {
     });
 
     startButton.on("pointerdown", () => {
+      this.click.play();
       this.menuMusic.stop();
       spaceIntro.visible = true;
       spaceIntro.play();
@@ -67,17 +73,62 @@ export default class MainMenu extends Phaser.Scene {
       });
     });
 
+    const loadButton = this.add
+    .text(canvasWidth / 2, startY + 100, getPhrase(this.loadGame), {
+      fontSize: "90px",
+      fontFamily: "Trebuchet MS",
+      fill: "FFFF00",
+    }).setOrigin(0.5)
+    .setInteractive()
+
+  loadButton.on("pointerover", () => {
+    loadButton.setFill("#F3E5AB");
+  });
+
+  loadButton.on("pointerout", () => {
+    loadButton.setFill("FFFF00");
+  });
+
+  loadButton.on("pointerdown", () => {
+    this.click.play();
+    this.menuMusic.stop();
+    this.firebase.loadGameData(this.user.uid).then(data => {
+      this.scene.start("City", {
+      lvl: data.lvl,
+      hp: data.hp,
+      exp: data.exp,
+      maxHp: data.maxHp,
+      damageAmount: data.damageAmount,
+      missionComplete: data.missionComplete,
+      squirrelsKilled: data.squirrelsKilled,
+      x: 4500,
+      y: 3000,
+      timeStamp: new Date(),
+      
+    });
+
+    this.scene.launch("UI", {
+      lvl: data.lvl,
+      hp: data.hp,
+      maxHp: data.maxHp,
+    });
+  });
+});
+
+    
+
     spaceIntro.on("pointerdown", () => {
+
       this.scene.launch("UI");
       this.scene.start("City");
     });
 
-    let creditButton = this.add
-      .text(830, 640, getPhrase(this.credits), {
+    const creditButton = this.add
+      .text(canvasWidth / 2, startY + 300, getPhrase(this.credits), {
         fontSize: "80px",
         fontFamily: "Trebuchet MS",
         fill: "FFFF00",
-      })
+      }).setOrigin(0.5)
       .setInteractive();
 
     creditButton.on("pointerover", () => {
@@ -89,17 +140,17 @@ export default class MainMenu extends Phaser.Scene {
     });
 
     creditButton.on("pointerdown", () => {
-      // this.menuMusic.pause();
+      this.click.play();
       this.scene.pause("MainMenu");
       this.scene.launch("Credits");
     });
 
-    let languageButton = this.add
-      .text(785, 780, getPhrase(this.languagesSelec), {
+    const languageButton = this.add
+      .text(canvasWidth / 2, startY + 200, getPhrase(this.languagesSelec), {
         fontSize: "80px",
         fontFamily: "Trebuchet MS",
         fill: "FFFF00",
-      })
+      }).setOrigin(0.5)
       .setInteractive();
 
     languageButton.on("pointerover", () => {
@@ -111,12 +162,15 @@ export default class MainMenu extends Phaser.Scene {
     });
 
     languageButton.on("pointerdown", () => {
+      this.click.play();
       this.menuMusic.pause();
       this.scene.start("LanguageSelector");
     });
 
+    
+
     let isMusicMuted = false;
-    let musicOn = this.add
+    const musicOn = this.add
       .image(1790, 980, "musicOn")
       .setInteractive()
       .setScale(2);
@@ -132,9 +186,7 @@ export default class MainMenu extends Phaser.Scene {
         isMusicMuted = true;
       }
     });
-    this.input.keyboard.on('keydown-F', () => {
-      const fullscreenElement = this.scale.fullscreenTarget;
-      
+    this.input.keyboard.on('keydown-F', () => {      
       if (this.scale.isFullscreen) {
           this.scale.stopFullscreen();
       } else {
@@ -142,13 +194,8 @@ export default class MainMenu extends Phaser.Scene {
       }
   });
   this.scale.fullscreenTarget = this.game.canvas;
+
+
   }
 
-  update() {
-    if (this.#wasChangedLanguage === FETCHED) {
-      this.play.setText(getPhrase(this.play));
-      this.credits.setText(getPhrase(this.credits));
-      this.languagesSelec.setText(getPhrase(this.languagesSelec));
-    }
-  }
 }
