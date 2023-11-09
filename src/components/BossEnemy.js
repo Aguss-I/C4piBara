@@ -33,17 +33,13 @@ export default class BearEnemy extends Phaser.GameObjects.Sprite {
       const distanceX = this.targetX - this.x;
       const distanceY = this.targetY - this.y;
 
-      // Calculate the angle to the target position
       const angle = Math.atan2(distanceY, distanceX);
 
-      // Calculate the velocity components based on the angle and velocitySquirrel
       const velocityX = Math.cos(angle) * this.bossVelocity;
       const velocityY = Math.sin(angle) * this.bossVelocity;
 
-      // Set the squirrel's velocity
       this.body.setVelocity(velocityX, velocityY);
 
-      // Determine which direction the squirrel is moving and set the appropriate animation
       if (Math.abs(velocityX) > Math.abs(velocityY)) {
         if (velocityX > 0) {
           this.anims.play("BearRight", true);
@@ -58,7 +54,6 @@ export default class BearEnemy extends Phaser.GameObjects.Sprite {
         }
       }
 
-      // Check if the squirrel has reached its target position
       const distanceToTarget = Phaser.Math.Distance.Between(
         this.x,
         this.y,
@@ -67,20 +62,17 @@ export default class BearEnemy extends Phaser.GameObjects.Sprite {
       );
 
       if (distanceToTarget < 2) {
-        // Set a new random target position within the area
         this.targetX = Phaser.Math.Between(1000, 2000);
         this.targetY = Phaser.Math.Between(1000, 1800);
       }
     }
   }
 
-  // Add a new method to stop the squirrel's movement
   stopMovement() {
     this.patrolling = false;
     this.body.setVelocity(0, 0);
   }
 
-  // Add a new method to resume the squirrel's movement
   resumeMovement() {
     this.patrolling = true;
   }

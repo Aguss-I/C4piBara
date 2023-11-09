@@ -1,7 +1,4 @@
 import Phaser from "phaser";
-// // import events from "./EventCenter";
-
-// //Preload
 export default class Preload extends Phaser.Scene {
   constructor() {
     super("Preload");
@@ -73,7 +70,6 @@ export default class Preload extends Phaser.Scene {
     this.load.spritesheet("C4", "./assets/images/C4.png", {
       frameWidth: 212,
       frameHeight: 200,
-      // startFrame: 10
     });
 this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
   frameWidth:264,
@@ -94,6 +90,8 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
     this.load.audio("menuMusic", "./assets/Audio/menuMusic.mp3");
     this.load.audio("levelup","./assets/Audio/Levelup.wav");
     this.load.audio("click","./assets/Audio/buttonClick.mp3");
+    this.load.audio("owlSound","./assets/Audio/OwlSound.mp3");
+    this.load.audio("collectibleSound","./assets/Audio/Collectible.mp3");
 
     this.load.spritesheet("Fox","./assets/images/Fox.png",{
       frameWidth:174,
@@ -108,6 +106,11 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
   }
 
   create() {
+    let logosScene = this.add.video(960, 500, "logos").setInteractive();
+    logosScene.setScale(1.1);
+
+    logosScene.play() 
+
     this.anims.create({
       key: "BoulderLeft",
       frames: [{ key: "Boulder", frame: 0 }],
@@ -280,7 +283,7 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
         end: 11,
       }),
       frameRate: 5,
-      repeat: -1, // Repetir indefinidamente
+      repeat: -1, 
     });
 
     this.anims.create({
@@ -313,7 +316,7 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
         end: 14,
       }),
       frameRate: 5,
-      repeat: -1, // Repetir indefinidamente
+      repeat: -1, 
     });
 
     this.anims.create({
@@ -398,7 +401,7 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
         end: 17,
       }),
       frameRate: 5,
-      repeat: -1, // Repetir indefinidamente
+      repeat: -1,
     });
 
     this.anims.create({
@@ -458,13 +461,6 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
       frameRate: 10,
       repeat: 0,
     });
-
-    console.log("firebase", this.firebase);
-    
-    let logosScene = this.add.video(960, 500, "logos").setInteractive();
-    logosScene.setScale(1.1);
-
-    logosScene.play() 
 
     logosScene.on('complete', () => {
       this.scene.start("Login");

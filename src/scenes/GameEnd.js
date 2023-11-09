@@ -3,8 +3,6 @@ import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 import { getPhrase } from "../services/translations";
 import keys from "../enums/keys";
 
-// //ending cutscenes
-// //Credits
 export default class GameEnd extends Phaser.Scene {
   #wasChangedLanguage = TODO;
   constructor() {
@@ -27,7 +25,7 @@ export default class GameEnd extends Phaser.Scene {
     this.buttonR = this.add
     .text(canvasWidth / 2, 550, getPhrase(this.retry), {
       fontSize: "50px",
-      fontFamily: "Roboto Mono",
+      fontFamily: "Trebuchet MS",
     }).setOrigin(0.5)
     .setInteractive();
 
@@ -45,7 +43,7 @@ export default class GameEnd extends Phaser.Scene {
      
     });
     this.buttonM = this.add.text(canvasWidth / 2, 750,getPhrase(this.menu),{
-      fontFamily: "Roboto Mono",
+      fontFamily: "Trebuchet MS",
       fontSize: "50px",
     }).setOrigin(0.5)
     .setInteractive();

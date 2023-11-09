@@ -1,4 +1,3 @@
-// keys usadas en las traducciones... podemos agregar separacion logica en el armado
 const Enemy = {
     squirrelsKill: 'Ardillas derrotadas',
     cobrasKill: 'Cobras derrotadas'
@@ -39,7 +38,7 @@ const CityText = {
     cityMissionEnd: 'Bien hecho, eso será suficiente por aqui. Nos han informado desde el desierto que requieren asistencia, ve y habla con Fenec.',
     savePoint: 'Apretar "E" para guardar',
     owlNoise: 'Se oyen sonidos de búho en la distancia',
-    owlMesseage: "¿Alguna vez te has preguntado cómo es el mundo detrás de la venda? He estado desde el comienzo, desde las primeras máquinas, y puedo decirte que no todo es como parece. Abre los ojos C4 y no dejes cegar.",
+    owlMesseage: "¿Alguna vez te has preguntado cómo es el mundo detrás de la venda? He estado aquí desde el comienzo, desde las primeras máquinas, y puedo decirte que no todo es como parece. Abre los ojos C4 y no te dejes cegar.",
 }
 
 const DesertText = {

@@ -31,17 +31,13 @@ export default class Enemies2 extends Phaser.GameObjects.Sprite {
       const distanceX = this.targetX - this.x;
       const distanceY = this.targetY - this.y;
 
-      // Calculate the angle to the target position
       const angle = Math.atan2(distanceY, distanceX);
 
-      // Calculate the velocity components based on the angle and velocitySquirrel
       const velocityX = Math.cos(angle) * this.velocityCobra;
       const velocityY = Math.sin(angle) * this.velocityCobra;
 
-      // Set the squirrel's velocity
       this.body.setVelocity(velocityX, velocityY);
 
-      // Determine which direction the squirrel is moving and set the appropriate animation
       if (Math.abs(velocityX) > Math.abs(velocityY)) {
         if (velocityX > 0) {
           this.anims.play("CobraRight", true);
@@ -56,7 +52,6 @@ export default class Enemies2 extends Phaser.GameObjects.Sprite {
         }
       }
 
-      // Check if the squirrel has reached its target position
       const distanceToTarget = Phaser.Math.Distance.Between(
         this.x,
         this.y,
@@ -65,30 +60,26 @@ export default class Enemies2 extends Phaser.GameObjects.Sprite {
       );
 
       if (distanceToTarget < 5) {
-        // Set a new random target position within the area
         this.targetX = Phaser.Math.Between(500, 1400);
         this.targetY = Phaser.Math.Between(400, 1000);
       }
     }
   }
 
-  // Add a new method to stop the squirrel's movement
   stopMovement() {
     this.patrolling = false;
     this.body.setVelocity(0, 0);
   }
 
-  // Add a new method to resume the squirrel's movement
   resumeMovement() {
     this.patrolling = true;
   }
 
   takeDamage(damageAmount) {
     if (this.active) {
-      this.enemyCobraHp = this.enemyCobraHp - damageAmount;
+      this.enemyCobraHp = this.enemyCobraHp - this.scene.damageAmount;
       if (this.enemyCobraHp <= 0) {
         this.scene.exp = this.scene.exp + 200;
-        console.log("xp awarded ", this.scene.exp);
         if (this.scene.exp >= 1200) {
           this.scene.lvl++;
           this.levelUpSound = this.scene.sound.add("levelup");
@@ -97,7 +88,7 @@ export default class Enemies2 extends Phaser.GameObjects.Sprite {
           this.scene.exp = 0;
           events.emit("UpdateMaxHp", { maxHp: this.scene.maxHp });
           events.emit("UpdateLVL", { lvl: this.scene.lvl });
-          this.scene.damageAmount += Math.round(this.scene.damageAmount * 0.2);
+          this.scene.damageAmount += 100;
         }
 
         this.scene.cobrasKilled++;

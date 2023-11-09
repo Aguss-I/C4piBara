@@ -7,11 +7,6 @@ import Npc from "../components/Npc";
 import { TODO } from "../enums/status";
 import { getPhrase } from "../services/translations";
 import keys from "../enums/keys";
-
-// //Second unlocked biome, after completing some tasks, unlocks forest
-// //holds secret collectibles
-// //has fast enemies
-// //save station
 export default class Desert extends Phaser.Scene {
   #wasChangedLanguage = TODO;
   constructor() {
@@ -110,13 +105,10 @@ export default class Desert extends Phaser.Scene {
     this.salidaDesierto = this.physics.add.group();
     this.salidaDesierto.allowGravity = false;
     objectsLayer.objects.forEach((objData) => {
-      //console.log(objData.name, objData.type, objData.x, objData.y);
       const { x = 0, y = 0, name } = objData;
 
       switch (name) {
         case "ciudad": {
-          // add star to scene
-          // console.log("estrella agregada: ", x, y);
           let salida = this.salidaDesierto
             .create(x, y, "ArrowDown")
             .setScale(1)
@@ -151,14 +143,14 @@ export default class Desert extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.fox, this.mision2, null, this);
     this.cobrasKilledText = this.add.text(1350, 30, getPhrase(this.deadCobra), {
       fontSize: "35px",
-      fontFamily: "Roboto Mono",
+      fontFamily: "Trebuchet MS",
     });
     this.cobrasKilledText.setVisible(false);
     this.cobrasKilledText.setActive(false);
     this.cobrasKilledText.setScrollFactor(0);
     this.objectCollectedText = this.add.text(1350, 130, getPhrase(this.partCollected), {
       fontSize: "35px",
-      fontFamily: "Roboto Mono",
+      fontFamily: "Trebuchet MS",
     });
     this.objectCollectedText.setVisible(false);
     this.objectCollectedText.setActive(false);
@@ -171,7 +163,7 @@ export default class Desert extends Phaser.Scene {
         getPhrase(this.desertBegin),
         {
           fontSize: "40px",
-          fontFamily: "Roboto Mono",
+          fontFamily: "Trebuchet MS",
           color: "FFFF00",
         }
       )
@@ -187,7 +179,6 @@ export default class Desert extends Phaser.Scene {
     this.mision2Text.setActive(false);
     this.mision2Text.setScrollFactor(0);
     this.input.keyboard.on("keydown-SPACE", () => {
-      // This code will be executed when the spacebar is pressed
       this.mision2Text.setVisible(false);
       this.rectangle.setVisible(false);
     });
@@ -312,13 +303,14 @@ export default class Desert extends Phaser.Scene {
 
   }
   mision2(player, fox) {
+    this.DesignUI2.setVisible(true);
     this.mision2Text.setVisible(true);
     this.rectangle.setVisible(true);
     this.cobrasKilledText.setVisible(true);
     this.cobrasKilledText.setActive(true);
     this.objectCollectedText.setVisible(true);
     this.objectCollectedText.setActive(true);
-    this.DesignUI2.setVisible(true);
+   
   
     setTimeout(() => {
       this.mision2Text.setVisible(false);
@@ -332,9 +324,11 @@ export default class Desert extends Phaser.Scene {
       this.levelUpSound = this.sound.add("levelup");
       this.levelUpSound.play();
       this.maxHp += 25;
-      this.damageAmount += Math.round(this.damageAmount * 0.2);
+      this.damageAmount += 100;
       events.emit("UpdateMaxHp", { maxHp: this.maxHp });
       events.emit("UpdateLVL", { lvl: this.lvl });
+      this.cobrasKilled = 0
+      this.objectCollected = 0
       this.cobrasKilledText.setText("");
       this.objectCollectedText.setText("");
         for (const c of this.cobras) {
@@ -342,15 +336,13 @@ export default class Desert extends Phaser.Scene {
         }
         this.cobras = [];
         this.missionDesertComplete = true;
-      }
-      if ((this.missionDesertComplete = true)) {
-     
-        this.mision2Text.setText(getPhrase(this.desertEnd));
-        this.DesignUI2.setVisible(false);
-  
-      }
+      } 
     }
+    if (this.missionDesertComplete) {
+      this.DesignUI2.setVisible(false);
+      this.mision2Text.setText(getPhrase(this.desertEnd));
   }
+  };
 
   createBites() {
     this.biteGroup = this.physics.add.group({
@@ -423,7 +415,6 @@ export default class Desert extends Phaser.Scene {
     if (biting) {
       biting.setActive(true);
       biting.setVisible(true);
-      console.log("vel piedra", velocityX);
       this.physics.moveTo(biting, player.x, player.y, Math.abs(velocityX));
     }
 

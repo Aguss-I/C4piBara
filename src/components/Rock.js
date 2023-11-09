@@ -9,13 +9,10 @@ export default class Rock extends Phaser.GameObjects.Sprite {
       
       this.setScale(1); 
       this.velocity = 700;
-      scene.physics.world.enable(this) // Velocidad de la piedra
+      scene.physics.world.enable(this) 
       
     }
     setVelocity(x,y) {
-        // Configura la velocidad de acuerdo a los valores proporcionados
-        // Esto podría variar dependiendo de tu implementación y cómo manejas la física de la piedra en tu juego
-        // Puedes usar this.body para acceder al cuerpo físico de la piedra y configurar su velocidad
         this.body.velocity.x = x;
         this.body.velocity.y = y;
       }

@@ -104,15 +104,18 @@ export default class BossArena extends Phaser.Scene {
         this.boss.push(boss);
       }
 
-      // Create the black background bar
-    const bossMaxHpBar = this.add.rectangle(0, 0, 1000, 60, 0x000000);
+    this.DesignUI = this.add.image(100, 1050,"UIRectangle");
+    this.DesignUI.scaleX = 10;
+    this.DesignUI.scaleY = 1;
+    this.DesignUI.setScrollFactor(0, 0);
+
+    const bossMaxHpBar = this.add.rectangle(0, 0, 1700, 30, 0x000000);
     bossMaxHpBar.setOrigin(0, 0);
-    bossMaxHpBar.setPosition(50, this.game.config.height - 50);
+    bossMaxHpBar.setPosition(100, 1000);
     
-    // Create the red front bar
-    const bossCurrentHpBar = this.add.rectangle(0, 0, 1000, 60, 0xff0000);
+    const bossCurrentHpBar = this.add.rectangle(0, 0, 1700, 30, 0xff0000);
     bossCurrentHpBar.setOrigin(0, 0);
-    bossCurrentHpBar.setPosition(50, this.game.config.height - 50);
+    bossCurrentHpBar.setPosition(100, 1000);
 
     this.bossHpBars = this.add.group([bossMaxHpBar, bossCurrentHpBar]);
     this.bossHpBars.setDepth(1); 
@@ -168,19 +171,19 @@ playerHitEnemy(hitbox, boss) {
   }
 }
 takeDamage(damageAmount,boss) {
-  if(this.missionComplete===true && this.missionDesertComplete===true){
-    this.bossEnemyHp=6000
+  if(this.missionComplete === true && this.missionDesertComplete === true){
+    this.bossEnemyHp = 6000
   }
 
-    this.bossEnemyHp = this.bossEnemyHp - damageAmount;
+    this.bossEnemyHp = this.bossEnemyHp - this.damageAmount;
 
     if (this.bossEnemyHp <= 0) {
       this.scene.stop("UI");
       this.scene.start("GameWin");
       this.scene.stop("BossArena");
       }
-    const maxWidth = 1000; // Adjust this value to fit your screen
-    const currentHpWidth = (this.bossEnemyHp / 10000) * maxWidth; // Assuming max HP is 10000
+    const maxWidth = 1700;
+    const currentHpWidth = (this.bossEnemyHp / 10000) * maxWidth;
     this.bossHpBars.getChildren()[1].setScale(currentHpWidth / maxWidth, 1);
   }
 createBoulder() {
@@ -204,6 +207,7 @@ createBoulder() {
     this.boulderGroup.children.entries.forEach((bullet) => {
       bullet.setCollideWorldBounds(true);
       bullet.body.onWorldBounds = true;
+      bullet.setSize(150,150);
       bullet.body.world.on(
         "worldbounds",
         function (body) {

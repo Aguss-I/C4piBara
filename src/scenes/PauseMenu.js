@@ -46,7 +46,7 @@ export default class MenuPause extends Phaser.Scene {
   });
 
   let buttonM = this.add.text(canvasWidth / 2,500,getPhrase(this.menu),{
-    fontFamily: "Roboto Mono",
+    fontFamily: "Trebuchet MS",
     fontSize: "90px",
     fill: "#FFFFFF",
   }).setOrigin(0.5)

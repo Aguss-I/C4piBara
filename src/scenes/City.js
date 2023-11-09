@@ -33,6 +33,7 @@ export default class City extends Phaser.Scene {
     this.damageAmount;
     this.enemyHp;
     this.showtutorial=true
+    this.owlSoundCanHear=false
   }
 
   init(data) {
@@ -47,7 +48,7 @@ export default class City extends Phaser.Scene {
     this.damageAmount = data.damageAmount || 100;
     this.squirrelsKilled = data.squirrelsKilled || 0;
     this.missionComplete = data.missionComplete || false;
-    this.missionDesertComplete=data.missionDesertComplete;
+    this.missionDesertComplete = data.missionDesertComplete;
     this.playerX = data.x || 3700;
     this.playerY = data.y || 2300;
     this.initialX = 1000;
@@ -175,22 +176,22 @@ if(this.showtutorial){
   this.moverseText = this.add.text(480, 600, "Moverse", {
     color: "000000",
     fontSize: "35px",
-    fontFamily: "Roboto Mono",
+    fontFamily: "Trebuchet MS",
   });
   this.atacarText = this.add.text(880, 600, "Atacar", {
     color: "000000",
     fontSize: "35px",
-    fontFamily: "Roboto Mono",
+    fontFamily: "Trebuchet MS",
   });
   this.fullScreentext = this.add.text(1360, 600, "Pantalla Completa", {
     color: "000000",
     fontSize: "35px",
-    fontFamily: "Roboto Mono",
+    fontFamily: "Trebuchet MS",
   });
   this.pauseText = this.add.text(1165, 600, "Pausa", {
     color: "000000",
     fontSize: "35px",
-    fontFamily: "Roboto Mono",
+    fontFamily: "Trebuchet MS",
   });
   this.moverseText.setScrollFactor(0, 0);
   this.atacarText.setScrollFactor(0, 0);
@@ -262,14 +263,14 @@ if(this.showtutorial){
       getPhrase(this.deadSquirrel),
       {
         fontSize: "35px",
-        fontFamily: "Roboto Mono",
+        fontFamily: "Trebuchet MS",
       }
     );
 
     this.misionText = this.add
       .text(60, 800, getPhrase(this.begin), {
         fontSize: "40px",
-        fontFamily: "Roboto Mono",
+        fontFamily: "Trebuchet MS",
         color: "FFFF00",
       })
       .setInteractive();
@@ -301,7 +302,7 @@ if(this.showtutorial){
 
     this.saveText = this.add.text(4200, 2850, getPhrase(this.save), {
       fontSize: "40px",
-      fontFamily: "Roboto Mono",
+      fontFamily: "Trebuchet MS",
       color: "FFFF00",
     });
     this.saveText.setVisible(false);
@@ -322,13 +323,13 @@ if(this.showtutorial){
     this.owlText=this.add.text(60,800,getPhrase(this.hoot),{
       fontSize:"50px",
       color: "FFFF00",
-      fontFamily:"Roboto Mono",
+      fontFamily:"Trebuchet MS",
     });
     this.owlText.setScrollFactor(0,0)
     this.owlText.setVisible(false);
     this.owlText.setWordWrapWidth(this.rectangle.width);
 
-    this.physics.add.overlap(this.player,this.owl,this.owlInteraction,null,this);
+    this.physics.add.overlap(this.player,this.owl,this.owlInteraction,() => {this.owlSoundCanHear===true} ,this);
   }
   update() {
     this.player.update();
@@ -424,7 +425,7 @@ if(this.showtutorial){
       this.levelUpSound = this.sound.add("levelup");
       this.levelUpSound.play();
       this.maxHp += 25;
-      this.damageAmount += Math.round(this.damageAmount * 0.2);
+      this.damageAmount += 100;
       events.emit("UpdateMaxHp", { maxHp: this.maxHp });
       events.emit("UpdateLVL", { lvl: this.lvl });
       this.missionComplete = true;
@@ -439,6 +440,9 @@ if(this.showtutorial){
   }
 
   Heal(player, collectible) {
+    this.collectibleSound=this.sound.add("collectibleSound");
+    this.collectibleSound.play();
+    
     if (this.hp < this.maxHp) {
       this.hp = this.hp + 50;
 
@@ -508,6 +512,15 @@ if(this.showtutorial){
     });
   }
   owlInteraction(player,owl){
+    if(!this.owlSoundCanHear){
+      this.owlSound=this.sound.add("owlSound")
+      this.owlSound.play()
+      this.owlSoundCanHear=true
+    }
+    setTimeout(() => {
+    this.owlSound.stop()
+      this.owlSoundCanHear=false
+    }, 1000);
     this.owlText.setVisible(true)
     this.rectangle.setVisible(true)
     setTimeout(() => {

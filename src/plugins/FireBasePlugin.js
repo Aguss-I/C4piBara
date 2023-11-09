@@ -24,9 +24,6 @@ import {
   signOut,
 } from "firebase/auth";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
 const firebaseConfig = {
   apiKey: "AIzaSyBhEEa4afz2xC5EzTIOQWac_Bz5RgCKM3E",
 
@@ -60,10 +57,8 @@ export default class FirebasePlugin extends Phaser.Plugins.BasePlugin {
     const auth = getAuth();
     signOut(auth)
       .then(() => {
-        // Sign-out successful.
       })
       .catch((error) => {
-        // An error happened.
       });
   }
 
