@@ -35,7 +35,7 @@ import BossArena from "./scenes/BossArena"
      default: "arcade",
      arcade: {
        gravity: { y: 0 },
-       debug: true,
+       debug: false,
      },
    },
    scene: [Preload, Login, MainMenu, Credits, Language, City,BossArena, Desert, GameEnd,GameWin,MenuPause, UI],
