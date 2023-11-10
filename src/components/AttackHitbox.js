@@ -1,5 +1,6 @@
 import Phaser from "phaser";
-import Enemies from "./Enemies";
+import Enemies from "./CobraEnemy";
+import Enemies2 from "./SquirrelEnemy";
 import Player from "./Player";
 
 export default class Hitbox extends Phaser.GameObjects.Rectangle {
@@ -18,9 +19,6 @@ export default class Hitbox extends Phaser.GameObjects.Rectangle {
 
     this.facingDirection = null;
     this.damageAmount = 100;
-    // this.attackSound = attackSound;
-    // this.isAttackSoundPlaying = false;
-    // this.isAttacking = false;
   }
 
   update() {
@@ -43,25 +41,25 @@ export default class Hitbox extends Phaser.GameObjects.Rectangle {
           case "left":
             this.width = 150;
             this.height = 200;
-            this.setPosition(this.player.x - 175, this.player.y);
+            this.setPosition(this.player.x - 90, this.player.y);
             this.attack();
             break;
           case "right":
             this.width = 150;
             this.height = 200;
-            this.setPosition(this.player.x + 175, this.player.y);
+            this.setPosition(this.player.x + 90, this.player.y);
             this.attack();
             break;
           case "up":
             this.width = 212;
             this.height = 150;
-            this.setPosition(this.player.x, this.player.y - 168);
+            this.setPosition(this.player.x, this.player.y - 87);
             this.attack();
             break;
           case "down":
             this.width = 212;
             this.height = 150;
-            this.setPosition(this.player.x, this.player.y + 168);
+            this.setPosition(this.player.x, this.player.y + 87);
             this.attack();
             break;
         }
@@ -72,21 +70,9 @@ export default class Hitbox extends Phaser.GameObjects.Rectangle {
   }
 
   attack() {
-    console.log("Player attacked");
     this.setActive(true).setVisible(true);
     setTimeout(() => {
-      // Deactivate or hide the hitbox after a delay
       this.setActive(false).setVisible(false);
     }, 100);
   }
-
-  // stopAttack() {
-  //   setTimeout(() => {
-  //     if (this.isAttackSoundPlaying){
-  //       this.attackSound.stop();
-  //       this.isAttackSoundPlaying = false;
-  //     }
-  //   }, 400);
-  //   this.setActive(false).setVisible(false);
-  // }
 }

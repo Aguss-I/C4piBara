@@ -1,5 +1,6 @@
 import Phaser from "phaser";
-import Enemies from "../components/Enemies";
+import Enemies from "../components/CobraEnemy";
+import Enemies2 from "../components/SquirrelEnemy";
 import Hitbox from "./AttackHitbox";
 
 export default class Player extends Phaser.GameObjects.Sprite {
@@ -13,13 +14,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     this.body.allowGravity = false;
     this.velocity = velocity;
     this.cursor = scene.input.keyboard.createCursorKeys();
+    
 
     this.xKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
-
+    this.xKeyIsPressed = false;
     this.KeySave = null;
     this.facingDirection = null;
-
-    this.damageAmount = 100;
 
     this.playerState = "idle";
 
@@ -29,9 +29,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
       up: "upStop",
       down: "downStop",
     };
+    this.body.setCollideWorldBounds(true);
+
   }
 
   update() {
+    this.body.setSize(120,150);
     this.body.setVelocity(0);
 
     if (this.playerState !== "attacking") {
@@ -68,7 +71,14 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
     }
 
-    if (this.xKey.isDown) {
+    if (this.xKey.isDown && !this.xKeyIsPressed) {
+      this.attackSwordSound = this.scene.sound.add("swordAttack2");
+      this.attackSwordSound.play()
+      this.xKeyIsPressed = true
+      setTimeout(() => {
+        this.xKeyIsPressed=false
+      },400 );
+      
       if (this.playerState !== "attacking") {
         this.playerState = "attacking";
         switch (this.facingDirection) {
@@ -91,6 +101,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
           default:
             this.anims.play("AttackDown");
         }
+       
+        }
+        
         this.idleTimer = this.scene.time.addEvent({
           delay: 300,
           callback: () => {
@@ -100,4 +113,4 @@ export default class Player extends Phaser.GameObjects.Sprite {
       }
     }
   }
-}
+

@@ -1,14 +1,17 @@
  import Phaser from "phaser";
-
-  
  import Preload from "./scenes/Preload";
  import MainMenu from "./scenes/MainMenu";
  import City from "./scenes/City";
+ import Desert from "./scenes/Desert";
  import UI from "./scenes/UI";
  import GameEnd from "./scenes/GameEnd";
  import Credits from "./scenes/Credits";
  import Language from "./scenes/LanguagesSelector";
- import Desert from "./scenes/Desert";
+import GameWin from "./scenes/GameWin";
+import MenuPause from "./scenes/PauseMenu";
+import FirebasePlugin from "./plugins/FireBasePlugin";
+import Login from "./scenes/Login";
+import BossArena from "./scenes/BossArena"
 
 
 
@@ -35,7 +38,18 @@
        debug: false,
      },
    },
-   scene: [Preload, MainMenu, Credits, Language, City, Desert, GameEnd, UI]
+   scene: [Preload, Login, MainMenu, Credits, Language, City,BossArena, Desert, GameEnd,GameWin,MenuPause, UI],
+   plugins: {
+    global: [
+      {
+        key: "FirebasePlugin",
+        plugin: FirebasePlugin,
+        start: true,
+        mapping: "firebase",
+      },
+    ],
+  },
  };
 
- export default new Phaser.Game(config);
+
+const game= new Phaser.Game(config);
