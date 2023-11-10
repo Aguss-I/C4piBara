@@ -100,7 +100,6 @@ export default class City extends Phaser.Scene {
 
     const objectsLayer = map.getObjectLayer("Objects");
     this.collectible = this.physics.add.group();
-    //this.savePlace = this.physics.add.group()
     this.collectible.allowGravity = false;
     this.door = this.physics.add.group();
     this.door.allowGravity = false;
@@ -141,6 +140,10 @@ export default class City extends Phaser.Scene {
     if (!this.missionComplete) {
       this.salida.setVisible(false).setActive(false);
     }
+    this.savePlace = this.physics.add.sprite(4300, 2850, "savePoint")
+    setTimeout(() => {
+     this.savePlace.anims.play("SavePoint",true);
+    }, 2000);
     this.jefeDoor = this.add.image(1600, 3900, "BossDoor");
 
     this.player = new Player(
@@ -273,10 +276,7 @@ export default class City extends Phaser.Scene {
       null,
       this
     );
-   this.savePlace = this.physics.add.sprite(4300, 2850, "savePoint")
-   setTimeout(() => {
-    this.savePlace.anims.play("SavePoint",true);
-   }, 2000);
+  
    
    
     this.rectangle = this.add.image(957, 900, "rectangle");
