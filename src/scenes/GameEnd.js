@@ -30,8 +30,12 @@ export default class GameEnd extends Phaser.Scene {
     .setInteractive();
 
     this.buttonR.on("pointerdown", () => {
-      this.scene.get("UI").updateHealthBar()
-      this.scene.launch("UI");
+      this.scene.get("UI").updateHealthBar();
+      this.scene.launch("UI", {
+      lvl: data.lvl,
+      hp: data.hp,
+      maxHp: data.maxHp,
+      });
       if (data.fromScene === "City") {
         this.scene.start("City");
       } else if (data.fromScene === "Desert") {

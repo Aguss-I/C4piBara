@@ -40,6 +40,11 @@ export default class BossArena extends Phaser.Scene {
        
     }
  create(){
+    this.scene.launch("UI", {
+      lvl: this.lvl,
+      hp: this.hp,
+      maxHp: this.maxHp,
+    });
     const map = this.make.tilemap({ key: "BossArena" });
 
     const layerbackGround = map.addTilesetImage("BossAreaTileset", "BossAreaTileset");
@@ -152,6 +157,10 @@ export default class BossArena extends Phaser.Scene {
 
 }
 heal(player,Collectible){
+  this.collectibleSound = this.sound.add("collectibleSound");
+    if(this.hp<this.maxHp){
+      this.collectibleSound.play();
+    }
   if (this.hp < this.maxHp) {
     this.hp = this.hp + 75;
 
@@ -171,10 +180,6 @@ playerHitEnemy(hitbox, boss) {
   }
 }
 takeDamage(damageAmount,boss) {
-  if(this.missionComplete === true && this.missionDesertComplete === true){
-    this.bossEnemyHp = 6000
-  }
-
     this.bossEnemyHp = this.bossEnemyHp - this.damageAmount;
 
     if (this.bossEnemyHp <= 0) {
@@ -277,14 +282,12 @@ ThrowBoulder(player,boss){
     if (Boulder) {
       Boulder.setActive(true);
       Boulder.setVisible(true);
-      console.log("vel piedra", velocityX);
       this.physics.moveTo(Boulder, player.x, player.y, Math.abs(velocityX));
     }
 
 
 }
 damage(player,Boulder,boss){
-  console.log("daño");
   this.hp = this.hp - 75;
   events.emit("UpdateHP", { hp: this.hp });
   this.scene.get("UI").updateHealthBar();

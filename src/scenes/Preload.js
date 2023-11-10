@@ -38,6 +38,10 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 221,
       frameHeight:191,
     });
+    this.load.spritesheet("savePoint","./assets/images/SavePointSprites.png",{
+      frameWidth: 211.5,
+      frameHeight: 270,
+    });
     this.load.image("savePoint", "./assets/images/PointSave.png");
 
     this.load.spritesheet("Eagle", "./assets/images/NPC.png", {
@@ -90,9 +94,10 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
     this.load.audio("menuMusic", "./assets/Audio/menuMusic.mp3");
     this.load.audio("levelup","./assets/Audio/Levelup.wav");
     this.load.audio("click","./assets/Audio/buttonClick.mp3");
-    this.load.audio("owlSound","./assets/Audio/OwlSound.mp3");
     this.load.audio("collectibleSound","./assets/Audio/Collectible.mp3");
 
+    this.load.audio("owlSound","./assets/Audio/OwlSound.mp3");
+    this.load.audio("eagleSound","./assets/Audio/eagleSound.mp3");
     this.load.spritesheet("Fox","./assets/images/Fox.png",{
       frameWidth:174,
       frameHeight:155,
@@ -140,6 +145,15 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
       }),
       frameRate: 15,
       repeat: 0,
+    });
+    this.anims.create({
+      key: "SavePoint",
+      frames: this.anims.generateFrameNumbers("savePoint", {
+        start: 0,
+        end: 3,
+      }),
+      frameRate: 5,
+      repeat: -1,
     });
     this.anims.create({
       key: "gear-anim",

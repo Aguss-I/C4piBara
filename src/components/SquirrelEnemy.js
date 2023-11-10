@@ -86,7 +86,6 @@ export default class Enemies extends Phaser.GameObjects.Sprite {
       if (this.enemyHp <= 0) {
         this.anims.play("explosion",true);
        this.scene.exp=this.scene.exp + 200
-       console.log("xp awarded ", this.scene.exp)
        if(this.scene.exp>=1200){
         this.scene.lvl ++
         this.levelUpSound = this.scene.sound.add("levelup");
@@ -95,7 +94,7 @@ export default class Enemies extends Phaser.GameObjects.Sprite {
         this.scene.exp = 0
         events.emit("UpdateMaxHp", { maxHp: this.scene.maxHp });
         events.emit("UpdateLVL", {lvl: this.scene.lvl });
-        this.scene.damageAmount += 100;
+        this.scene.damageAmount += 50;
        }
         
         

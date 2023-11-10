@@ -30,6 +30,7 @@ export default class Desert extends Phaser.Scene {
     this.missionDesertComplete;
     this.inAttackRange = false;
     this.cobras = [];
+
   }
 
   init(data) {
@@ -52,10 +53,18 @@ export default class Desert extends Phaser.Scene {
     this.objectCollected = data.objectCollected || 0;
     this.missionDesertComplete = data.missionDesertComplete|| false
     this.pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
+    
 
   }
 
   create() {
+
+    this.scene.launch("UI", {
+      lvl: this.lvl,
+      hp: this.hp,
+      maxHp: this.maxHp,
+    });
+
     const map = this.make.tilemap({ key: "Desert" });
     const layerbackGround = map.addTilesetImage("desertTileset", "Mapdesert");
     const background = map.createLayer("Ground", layerbackGround, 0, 0);
@@ -324,7 +333,7 @@ export default class Desert extends Phaser.Scene {
       this.levelUpSound = this.sound.add("levelup");
       this.levelUpSound.play();
       this.maxHp += 25;
-      this.damageAmount += 100;
+      this.damageAmount += 50;
       events.emit("UpdateMaxHp", { maxHp: this.maxHp });
       events.emit("UpdateLVL", { lvl: this.lvl });
       this.cobrasKilled = 0
@@ -443,6 +452,10 @@ export default class Desert extends Phaser.Scene {
   }
   
   heal(player, Collectible) {
+    this.collectibleSound = this.sound.add("collectibleSound");
+    if(this.hp<this.maxHp){
+      this.collectibleSound.play();
+    }
     if (this.hp < this.maxHp) {
       this.hp = this.hp + 50;
 

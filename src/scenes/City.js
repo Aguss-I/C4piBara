@@ -13,12 +13,18 @@ export default class City extends Phaser.Scene {
     super("City");
     const { squirrelsKill } = keys.Enemy;
     this.deadSquirrel = squirrelsKill;
-    const { cityMissionBegin, cityMissionEnd, savePoint, owlNoise, owlMesseage } = keys.CityText;
+    const {
+      cityMissionBegin,
+      cityMissionEnd,
+      savePoint,
+      owlNoise,
+      owlMesseage,
+    } = keys.CityText;
     this.begin = cityMissionBegin;
     this.end = cityMissionEnd;
     this.save = savePoint;
     this.hoot = owlNoise;
-    this.owlTruth= owlMesseage;
+    this.owlTruth = owlMesseage;
 
     this.lvl;
     this.hp;
@@ -32,8 +38,9 @@ export default class City extends Phaser.Scene {
     this.squirrelsKilledText;
     this.damageAmount;
     this.enemyHp;
-    this.showtutorial=true
-    this.owlSoundCanHear=false
+    this.showtutorial = true;
+    this.owlSoundCanHear = false;
+    this.eagleSoundCanHear = false;
   }
 
   init(data) {
@@ -56,7 +63,7 @@ export default class City extends Phaser.Scene {
     this.pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
     this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     this.user = this.firebase.getUser();
-    this.showtutorial= data.showtutorial === false ? false : true;
+    this.showtutorial = data.showtutorial === false ? false : true;
   }
 
   create() {
@@ -72,17 +79,28 @@ export default class City extends Phaser.Scene {
       y: 3000,
       timeStamp: new Date(),
     });
+    this.scene.launch("UI", {
+      lvl: this.lvl,
+      hp: this.hp,
+      maxHp: this.maxHp,
+   });
+
+    this.scene.launch("UI", {
+      lvl: this.lvl,
+      hp: this.hp,
+      maxHp: this.maxHp,
+    });
 
     const map = this.make.tilemap({ key: "City" });
 
     const layerbackGround = map.addTilesetImage("TDJ2 - tileset", "Mapcity");
     const background = map.createLayer("Ground", layerbackGround, 0, 0);
     const layerObstacle = map.addTilesetImage("TDJ2 - tileset", "Mapcity");
-    const layerObstacle2 = map.addTilesetImage("BossEntrance", "BossDoor");
     const obstacle = map.createLayer("Deco", layerObstacle, 0, 0);
 
     const objectsLayer = map.getObjectLayer("Objects");
     this.collectible = this.physics.add.group();
+    //this.savePlace = this.physics.add.group()
     this.collectible.allowGravity = false;
     this.door = this.physics.add.group();
     this.door.allowGravity = false;
@@ -171,53 +189,50 @@ export default class City extends Phaser.Scene {
       null,
       this
     );
-if(this.showtutorial){
-  this.tutorial = this.add.image(950, 500, "Tutorial").setScale(2);
-  this.moverseText = this.add.text(480, 600, "Moverse", {
-    color: "000000",
-    fontSize: "35px",
-    fontFamily: "Trebuchet MS",
-  });
-  this.atacarText = this.add.text(880, 600, "Atacar", {
-    color: "000000",
-    fontSize: "35px",
-    fontFamily: "Trebuchet MS",
-  });
-  this.fullScreentext = this.add.text(1360, 600, "Pantalla Completa", {
-    color: "000000",
-    fontSize: "35px",
-    fontFamily: "Trebuchet MS",
-  });
-  this.pauseText = this.add.text(1165, 600, "Pausa", {
-    color: "000000",
-    fontSize: "35px",
-    fontFamily: "Trebuchet MS",
-  });
-  this.moverseText.setScrollFactor(0, 0);
-  this.atacarText.setScrollFactor(0, 0);
-  this.fullScreentext.setScrollFactor(0, 0);
-  this.pauseText.setScrollFactor(0, 0);
+    if (this.showtutorial) {
+      this.tutorial = this.add.image(950, 500, "Tutorial").setScale(2);
+      this.moverseText = this.add.text(480, 600, "Moverse", {
+        color: "000000",
+        fontSize: "35px",
+        fontFamily: "Trebuchet MS",
+      });
+      this.atacarText = this.add.text(880, 600, "Atacar", {
+        color: "000000",
+        fontSize: "35px",
+        fontFamily: "Trebuchet MS",
+      });
+      this.fullScreentext = this.add.text(1360, 600, "Pantalla Completa", {
+        color: "000000",
+        fontSize: "35px",
+        fontFamily: "Trebuchet MS",
+      });
+      this.pauseText = this.add.text(1165, 600, "Pausa", {
+        color: "000000",
+        fontSize: "35px",
+        fontFamily: "Trebuchet MS",
+      });
+      this.moverseText.setScrollFactor(0, 0);
+      this.atacarText.setScrollFactor(0, 0);
+      this.fullScreentext.setScrollFactor(0, 0);
+      this.pauseText.setScrollFactor(0, 0);
 
-  this.tutorial.setScrollFactor(0, 0).setInteractive();
-  setTimeout(() => {
-    this.moverseText.setVisible(false);
-    this.atacarText.setVisible(false);
-    this.fullScreentext.setVisible(false);
-    this.pauseText.setVisible(false);
-    this.tutorial.setVisible(false);
-  }, 2000);
+      this.tutorial.setScrollFactor(0, 0).setInteractive();
+      setTimeout(() => {
+        this.moverseText.setVisible(false);
+        this.atacarText.setVisible(false);
+        this.fullScreentext.setVisible(false);
+        this.pauseText.setVisible(false);
+        this.tutorial.setVisible(false);
+      }, 2000);
 
-  this.tutorial.on("pointerdown", () => {
-    this.moverseText.setVisible(false);
-    this.atacarText.setVisible(false);
-    this.fullScreentext.setVisible(false);
-    this.pauseText.setVisible(false);
-    this.tutorial.setVisible(false);
-  });
-}
-
-   
-   
+      this.tutorial.on("pointerdown", () => {
+        this.moverseText.setVisible(false);
+        this.atacarText.setVisible(false);
+        this.fullScreentext.setVisible(false);
+        this.pauseText.setVisible(false);
+        this.tutorial.setVisible(false);
+      });
+    }
 
     this.physics.add.overlap(
       this.player,
@@ -226,7 +241,15 @@ if(this.showtutorial){
       null,
       this
     );
-    this.physics.add.overlap(this.player, this.Eagle, this.mision, null, this);
+    this.physics.add.overlap(
+      this.player,
+      this.Eagle,
+      this.mision,
+      () => {
+        this.eagleSoundCanHear === true;
+      },
+      this
+    );
     this.physics.add.overlap(
       this.player,
       this.salida,
@@ -250,8 +273,12 @@ if(this.showtutorial){
       null,
       this
     );
-    this.savePlace = this.physics.add.image(4300, 2850, "savePoint");
-
+   this.savePlace = this.physics.add.sprite(4300, 2850, "savePoint")
+   setTimeout(() => {
+    this.savePlace.anims.play("SavePoint",true);
+   }, 2000);
+   
+   
     this.rectangle = this.add.image(957, 900, "rectangle");
     this.rectangle.scaleX = 1.1;
     this.DesignUI2 = this.add.image(1700, 57, "UIRectangle");
@@ -277,7 +304,7 @@ if(this.showtutorial){
     this.misionText.setWordWrapWidth(this.rectangle.width);
 
     this.input.keyboard.on("keydown-P", () => {
-      this.citySounds.stop();	
+      this.citySounds.stop();
       this.scene.bringToTop("Menupause");
       this.scene.launch("Menupause");
       this.scene.pause("City");
@@ -300,36 +327,46 @@ if(this.showtutorial){
     });
     this.scale.fullscreenTarget = this.game.canvas;
 
-    this.saveText = this.add.text(4200, 2850, getPhrase(this.save), {
+    this.saveText = this.add.text(4150, 2820, getPhrase(this.save), {
       fontSize: "40px",
       fontFamily: "Trebuchet MS",
-      color: "FFFF00",
+      color: "#FFFFFF",
     });
+    this.DesignUI = this.add.image(
+      this.saveText.x + 145,
+      this.saveText.y + 20,
+      "UIRectangle"
+    );
+    this.DesignUI.setVisible(false);
+    this.DesignUI.scaleY = 0.8;
     this.saveText.setVisible(false);
     this.saveText.setDepth(1);
-    this.owl=new Npc(
-      this,
-      3700,
-      120,
-      "Owl",
-    )
+    this.owl = new Npc(this, 3700, 120, "Owl");
 
-    this.owl.setVisible(false)
-    if(this.missionComplete===true){
-      if(this.missionDesertComplete===true){
+    this.owl.setVisible(false);
+    if (this.missionComplete === true) {
+      if (this.missionDesertComplete === true) {
         this.owl.setVisible(true);
       }
     }
-    this.owlText=this.add.text(60,800,getPhrase(this.hoot),{
-      fontSize:"50px",
+    this.owlText = this.add.text(60, 800, getPhrase(this.hoot), {
+      fontSize: "50px",
       color: "FFFF00",
-      fontFamily:"Trebuchet MS",
+      fontFamily: "Trebuchet MS",
     });
-    this.owlText.setScrollFactor(0,0)
+    this.owlText.setScrollFactor(0, 0);
     this.owlText.setVisible(false);
     this.owlText.setWordWrapWidth(this.rectangle.width);
 
-    this.physics.add.overlap(this.player,this.owl,this.owlInteraction,() => {this.owlSoundCanHear===true} ,this);
+    this.physics.add.overlap(
+      this.player,
+      this.owl,
+      this.owlInteraction,
+      () => {
+        this.owlSoundCanHear === true;
+      },
+      this
+    );
   }
   update() {
     this.player.update();
@@ -369,6 +406,7 @@ if(this.showtutorial){
 
   showSaveText() {
     if (!this.saveText.visible) {
+      this.DesignUI.setVisible(true);
       this.saveText.setVisible(true);
       this.input.keyboard.on("keydown-E", () => {
         this.firebase.saveGameData(this.user.uid, {
@@ -387,27 +425,34 @@ if(this.showtutorial){
     }
 
     setTimeout(() => {
+      this.DesignUI.setVisible(false);
       this.saveText.setVisible(false);
     }, 100);
   }
 
   playerHitEnemy(hitbox, squirrel) {
     if (squirrel.active && hitbox.active) {
-      
       squirrel.anims.play("Damage", true);
       squirrel.takeDamage(this.hitbox.damageAmount);
-   
+
       squirrel.stopMovement();
 
       setTimeout(() => {
         squirrel.resumeMovement();
-        
       }, 700);
     }
   }
 
-
   mision(player, Eagle) {
+    if (!this.eagleSoundCanHear) {
+      this.eagleSound = this.sound.add("eagleSound");
+      this.eagleSound.play();
+      this.eagleSoundCanHear = true;
+    }
+    setTimeout(() => {
+      this.eagleSound.stop();
+      this.eagleSoundCanHear = false;
+    }, 1000);
     this.DesignUI2.setVisible(true);
     this.squirrelsKilledText.setVisible(true);
     this.misionText.setVisible(true);
@@ -420,12 +465,12 @@ if(this.showtutorial){
 
     if (this.squirrelsKilled >= 4) {
       this.lvl++;
-     this.maxHp+=25
-     events.emit("UpdateMaxHp", { maxHp: this.maxHp });
+      this.maxHp += 25;
+      events.emit("UpdateMaxHp", { maxHp: this.maxHp });
       this.levelUpSound = this.sound.add("levelup");
       this.levelUpSound.play();
       this.maxHp += 25;
-      this.damageAmount += 100;
+      this.damageAmount += 50;
       events.emit("UpdateMaxHp", { maxHp: this.maxHp });
       events.emit("UpdateLVL", { lvl: this.lvl });
       this.missionComplete = true;
@@ -440,9 +485,13 @@ if(this.showtutorial){
   }
 
   Heal(player, collectible) {
-    this.collectibleSound=this.sound.add("collectibleSound");
-    this.collectibleSound.play();
+    this.collectibleSound = this.sound.add("collectibleSound");
+    if(this.hp<this.maxHp){
+      this.collectibleSound.play();
+    }
     
+
+
     if (this.hp < this.maxHp) {
       this.hp = this.hp + 50;
 
@@ -511,28 +560,26 @@ if(this.showtutorial){
       );
     });
   }
-  owlInteraction(player,owl){
-    if(!this.owlSoundCanHear){
-      this.owlSound=this.sound.add("owlSound")
-      this.owlSound.play()
-      this.owlSoundCanHear=true
+  owlInteraction(player, owl) {
+    if (!this.owlSoundCanHear) {
+      this.owlSound = this.sound.add("owlSound");
+      this.owlSound.play();
+      this.owlSoundCanHear = true;
     }
     setTimeout(() => {
-    this.owlSound.stop()
-      this.owlSoundCanHear=false
+      this.owlSound.stop();
+      this.owlSoundCanHear = false;
     }, 1000);
-    this.owlText.setVisible(true)
-    this.rectangle.setVisible(true)
+    this.owlText.setVisible(true);
+    this.rectangle.setVisible(true);
     setTimeout(() => {
       this.owlText.setVisible(false);
       this.rectangle.setVisible(false);
     }, 2000);
 
-    if(this.missionComplete===true && this.missionDesertComplete===true){
-
+    if (this.missionComplete === true && this.missionDesertComplete === true) {
       this.owlText.setText(getPhrase(this.owlTruth));
     }
-
   }
 
   throwRockAtPlayer(player, squirrel) {
@@ -581,8 +628,8 @@ if(this.showtutorial){
       exp: this.exp,
       damageAmount: this.damageAmount,
       velocityPlayer: this.velocityPlayer,
-      missionComplete:this.missionComplete,
-      missionDesertComplete:this.missionDesertComplete
+      missionComplete: this.missionComplete,
+      missionDesertComplete: this.missionDesertComplete,
     };
     for (const s of this.squirrels) {
       s.destroy(true, true);
@@ -593,7 +640,7 @@ if(this.showtutorial){
     this.scene.pause("City");
   }
 
-  damage(player, rock, squirrel,) {
+  damage(player, rock, squirrel) {
     this.hp = this.hp - 25;
     events.emit("UpdateHP", { hp: this.hp });
     this.scene.get("UI").updateHealthBar();
