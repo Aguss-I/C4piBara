@@ -7,11 +7,10 @@ export default class Login extends Phaser.Scene {
   #wasChangedLanguage = TODO;
   constructor() {
     super("Login");
-    const { login, guest, user, logout } = keys.LoginMenu;
+    const { login, guest, user, } = keys.LoginMenu;
     this.login = login;
     this.guest = guest;
     this.user = user;
-    this.out = logout;
   }
 
   create() {
@@ -87,25 +86,5 @@ export default class Login extends Phaser.Scene {
         this.userText.setFill("FFFF00");
       });
 
-      this.logOutText = this.add.text(canvasWidth / 2, 700, getPhrase(this.out), {
-        fontSize: "60px",
-        fontFamily: "Trebuchet MS",
-        fill: "FFFF00",
-      })
-      .setOrigin(0.5)
-      .setInteractive()
-      .on("pointerdown", () => {
-        this.click.play();
-        this.firebase.logOut()
-      });
-      this.logOutText.on("pointerover", () => {
-        this.logOutText.setFill("#F3E5AB");
-      });
-  
-      this.logOutText.on("pointerout", () => {
-        this.logOutText.setFill("FFFF00");
-      });
-
-    
   }
 }
