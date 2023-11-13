@@ -31,7 +31,7 @@ export default class BossArena extends Phaser.Scene {
         this.missionComplete = data.missionComplete || false;
         this.damageAmount = data.damageAmount || 100;
         this.Bossvelocity = 200
-        this.bossEnemyHp = data.bossEnemyHp || 10000;
+        this.bossEnemyHp = data.bossEnemyHp || 30000;
         this.initialX = 1500;
         this.initialY = 900;
         this.velocityBoulder = data.velocityBoulder || 900;
