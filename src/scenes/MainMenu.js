@@ -68,7 +68,7 @@ export default class MainMenu extends Phaser.Scene {
       spaceIntro.visible = true;
       spaceIntro.play();
       spaceIntro.on('complete', () => {
-        this.scene.launch("UI");
+       // this.scene.launch("UI");
         this.scene.start("City");
       });
     });
@@ -107,11 +107,11 @@ export default class MainMenu extends Phaser.Scene {
       
     });
 
-    this.scene.launch("UI", {
-      lvl: data.lvl,
-      hp: data.hp,
-      maxHp: data.maxHp,
-    });
+     this.scene.launch("UI", {
+       lvl: data.lvl,
+       hp: data.hp,
+       maxHp: data.maxHp,
+     });
   });
 });
 

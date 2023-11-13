@@ -21,7 +21,6 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
   GithubAuthProvider,
-  signOut,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -53,14 +52,6 @@ export default class FirebasePlugin extends Phaser.Plugins.BasePlugin {
     });
   }
 
-  logOut() {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-      })
-      .catch((error) => {
-      });
-  }
 
   destroy() {
     this.authStateChangedUnsubscribe();

@@ -84,13 +84,6 @@ export default class City extends Phaser.Scene {
       hp: this.hp,
       maxHp: this.maxHp,
    });
-
-    this.scene.launch("UI", {
-      lvl: this.lvl,
-      hp: this.hp,
-      maxHp: this.maxHp,
-    });
-
     const map = this.make.tilemap({ key: "City" });
 
     const layerbackGround = map.addTilesetImage("TDJ2 - tileset", "Mapcity");

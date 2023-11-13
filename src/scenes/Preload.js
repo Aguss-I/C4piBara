@@ -24,7 +24,7 @@ export default class Preload extends Phaser.Scene {
     });
     this.load.spritesheet("BossAttack","./assets/images/BearAttack.png",{
       frameWidth: 791,
-      frameHeight:600,
+      frameHeight: 600,
     });
 
     this.load.video("introScene", "./assets/videos/spaceIntro.mp4");
