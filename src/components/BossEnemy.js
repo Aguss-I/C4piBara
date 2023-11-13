@@ -21,7 +21,7 @@ export default class BearEnemy extends Phaser.GameObjects.Sprite {
     this.velocity = velocity;
     this.targetX = 1500;
     this.targetY = 900;
-    this.bossEnemyHp = 10000;
+    this.bossEnemyHp = 30000;
     this.bossVelocity = 200;
     this.timeToThrowBoulder = 0;
 
