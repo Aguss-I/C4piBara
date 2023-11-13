@@ -188,7 +188,7 @@ takeDamage(damageAmount,boss) {
       this.scene.stop("BossArena");
       }
     const maxWidth = 1700;
-    const currentHpWidth = (this.bossEnemyHp / 10000) * maxWidth;
+    const currentHpWidth = (this.bossEnemyHp / 30000) * maxWidth;
     this.bossHpBars.getChildren()[1].setScale(currentHpWidth / maxWidth, 1);
   }
 createBoulder() {
