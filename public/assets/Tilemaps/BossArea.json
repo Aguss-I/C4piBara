@@ -144,7 +144,7 @@
                 {
                  "height":0,
                  "id":2,
-                 "name":"cura",
+                 "name":"health",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -156,7 +156,7 @@
                 {
                  "height":0,
                  "id":3,
-                 "name":"cura",
+                 "name":"health",
                  "point":true,
                  "rotation":0,
                  "type":"",

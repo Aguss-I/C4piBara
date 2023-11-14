@@ -19,7 +19,6 @@ export default class MainMenu extends Phaser.Scene {
     this.menuMusic.play();
 
     this.click = this.sound.add("click", { volume: 0.3 });
-    
 
     this.user = this.firebase.getUser();
 
@@ -38,7 +37,10 @@ export default class MainMenu extends Phaser.Scene {
 
     const startY = 500;
 
-    const spaceIntro = this.add.video(400, 300, "introScene").setInteractive().setDepth(1);
+    const spaceIntro = this.add
+      .video(400, 300, "introScene")
+      .setInteractive()
+      .setDepth(1);
     spaceIntro.visible = false;
     spaceIntro.setScale(
       canvasWidth / bgImage.width,
@@ -51,7 +53,8 @@ export default class MainMenu extends Phaser.Scene {
         fontSize: "90px",
         fontFamily: "Trebuchet MS",
         fill: "FFFF00",
-      }).setOrigin(0.5)
+      })
+      .setOrigin(0.5)
       .setInteractive();
 
     startButton.on("pointerover", () => {
@@ -67,58 +70,54 @@ export default class MainMenu extends Phaser.Scene {
       this.menuMusic.stop();
       spaceIntro.visible = true;
       spaceIntro.play();
-      spaceIntro.on('complete', () => {
-       // this.scene.launch("UI");
+      spaceIntro.on("complete", () => {
         this.scene.start("City");
       });
     });
 
     const loadButton = this.add
-    .text(canvasWidth / 2, startY + 100, getPhrase(this.loadGame), {
-      fontSize: "90px",
-      fontFamily: "Trebuchet MS",
-      fill: "FFFF00",
-    }).setOrigin(0.5)
-    .setInteractive()
+      .text(canvasWidth / 2, startY + 100, getPhrase(this.loadGame), {
+        fontSize: "90px",
+        fontFamily: "Trebuchet MS",
+        fill: "FFFF00",
+      })
+      .setOrigin(0.5)
+      .setInteractive();
 
-  loadButton.on("pointerover", () => {
-    loadButton.setFill("#F3E5AB");
-  });
-
-  loadButton.on("pointerout", () => {
-    loadButton.setFill("FFFF00");
-  });
-
-  loadButton.on("pointerdown", () => {
-    this.click.play();
-    this.menuMusic.stop();
-    this.firebase.loadGameData(this.user.uid).then(data => {
-      this.scene.start("City", {
-      lvl: data.lvl,
-      hp: data.hp,
-      exp: data.exp,
-      maxHp: data.maxHp,
-      damageAmount: data.damageAmount,
-      missionComplete: data.missionComplete,
-      squirrelsKilled: data.squirrelsKilled,
-      x: 4500,
-      y: 3000,
-      timeStamp: new Date(),
-      
+    loadButton.on("pointerover", () => {
+      loadButton.setFill("#F3E5AB");
     });
 
-     this.scene.launch("UI", {
-       lvl: data.lvl,
-       hp: data.hp,
-       maxHp: data.maxHp,
-     });
-  });
-});
+    loadButton.on("pointerout", () => {
+      loadButton.setFill("FFFF00");
+    });
 
-    
+    loadButton.on("pointerdown", () => {
+      this.click.play();
+      this.menuMusic.stop();
+      this.firebase.loadGameData(this.user.uid).then((data) => {
+        this.scene.start("City", {
+          lvl: data.lvl,
+          hp: data.hp,
+          exp: data.exp,
+          maxHp: data.maxHp,
+          damageAmount: data.damageAmount,
+          missionComplete: data.missionComplete,
+          squirrelsKilled: data.squirrelsKilled,
+          x: 4500,
+          y: 3000,
+          timeStamp: new Date(),
+        });
+
+        this.scene.launch("UI", {
+          lvl: data.lvl,
+          hp: data.hp,
+          maxHp: data.maxHp,
+        });
+      });
+    });
 
     spaceIntro.on("pointerdown", () => {
-
       this.scene.launch("UI");
       this.scene.start("City");
     });
@@ -128,7 +127,8 @@ export default class MainMenu extends Phaser.Scene {
         fontSize: "80px",
         fontFamily: "Trebuchet MS",
         fill: "FFFF00",
-      }).setOrigin(0.5)
+      })
+      .setOrigin(0.5)
       .setInteractive();
 
     creditButton.on("pointerover", () => {
@@ -150,7 +150,8 @@ export default class MainMenu extends Phaser.Scene {
         fontSize: "80px",
         fontFamily: "Trebuchet MS",
         fill: "FFFF00",
-      }).setOrigin(0.5)
+      })
+      .setOrigin(0.5)
       .setInteractive();
 
     languageButton.on("pointerover", () => {
@@ -166,8 +167,6 @@ export default class MainMenu extends Phaser.Scene {
       this.menuMusic.pause();
       this.scene.start("LanguageSelector");
     });
-
-    
 
     let isMusicMuted = false;
     const musicOn = this.add
@@ -186,16 +185,13 @@ export default class MainMenu extends Phaser.Scene {
         isMusicMuted = true;
       }
     });
-    this.input.keyboard.on('keydown-F', () => {      
+    this.input.keyboard.on("keydown-F", () => {
       if (this.scale.isFullscreen) {
-          this.scale.stopFullscreen();
+        this.scale.stopFullscreen();
       } else {
-          this.scale.startFullscreen();
+        this.scale.startFullscreen();
       }
-  });
-  this.scale.fullscreenTarget = this.game.canvas;
-
-
+    });
+    this.scale.fullscreenTarget = this.game.canvas;
   }
-
 }

@@ -14,7 +14,7 @@ export default class Credits extends Phaser.Scene {
 
   create() {
     this.click = this.sound.add("click", { volume: 0.3 });
-    
+
     const canvasWidth = this.sys.game.config.width;
     const canvasHeight = this.sys.game.config.height;
 
@@ -25,31 +25,41 @@ export default class Credits extends Phaser.Scene {
     );
     bgImage.setPosition(canvasWidth / 2, canvasHeight / 2);
 
-    this.add.text(canvasWidth / 2, 160, getPhrase(this.programmers), {
-      fontSize: "128px",
-      fontFamily: "Trebuchet MS",
-      fill: "FFFF00",
-    }).setOrigin(0.5);
-    this.add.text(canvasWidth / 2, 520, getPhrase(this.artist), {
-      fontSize: "128px",
-      fontFamily: "Trebuchet MS",
-      fill: "FFFF00",
-    }).setOrigin(0.5);
-    this.add.text(canvasWidth / 2, 300, "Sebastian Faetani", {
-      fontSize: "50px",
-      fontFamily: "Trebuchet MS",
-      fill: "FFFF00",
-    }).setOrigin(0.5);
-    this.add.text(canvasWidth / 2, 400, "Agustin Iñiguez", {
-      fontSize: "50px",
-      fontFamily: "Trebuchet MS",
-      fill: "FFFF00",
-    }).setOrigin(0.5);
-    this.add.text(canvasWidth / 2, 630, "Sasha Flory", {
-      fontSize: "50px",
-      fontFamily: "Trebuchet MS",
-      fill: "FFFF00",
-    }).setOrigin(0.5);
+    this.add
+      .text(canvasWidth / 2, 160, getPhrase(this.programmers), {
+        fontSize: "128px",
+        fontFamily: "Trebuchet MS",
+        fill: "FFFF00",
+      })
+      .setOrigin(0.5);
+    this.add
+      .text(canvasWidth / 2, 520, getPhrase(this.artist), {
+        fontSize: "128px",
+        fontFamily: "Trebuchet MS",
+        fill: "FFFF00",
+      })
+      .setOrigin(0.5);
+    this.add
+      .text(canvasWidth / 2, 300, "Sebastian Faetani", {
+        fontSize: "50px",
+        fontFamily: "Trebuchet MS",
+        fill: "FFFF00",
+      })
+      .setOrigin(0.5);
+    this.add
+      .text(canvasWidth / 2, 400, "Agustin Iñiguez", {
+        fontSize: "50px",
+        fontFamily: "Trebuchet MS",
+        fill: "FFFF00",
+      })
+      .setOrigin(0.5);
+    this.add
+      .text(canvasWidth / 2, 630, "Sasha Flory", {
+        fontSize: "50px",
+        fontFamily: "Trebuchet MS",
+        fill: "FFFF00",
+      })
+      .setOrigin(0.5);
 
     let buttonV = this.add
       .text(10, 10, getPhrase(this.back), {

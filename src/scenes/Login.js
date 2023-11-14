@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
+import { TODO } from "../enums/status";
 import { getPhrase } from "../services/translations";
 import keys from "../enums/keys";
 
@@ -7,7 +7,7 @@ export default class Login extends Phaser.Scene {
   #wasChangedLanguage = TODO;
   constructor() {
     super("Login");
-    const { login, guest, user, } = keys.LoginMenu;
+    const { login, guest, user } = keys.LoginMenu;
     this.login = login;
     this.guest = guest;
     this.user = user;
@@ -15,7 +15,6 @@ export default class Login extends Phaser.Scene {
 
   create() {
     this.click = this.sound.add("click", { volume: 0.3 });
-    
 
     const canvasWidth = this.sys.game.config.width;
     const canvasHeight = this.sys.game.config.height;
@@ -27,7 +26,7 @@ export default class Login extends Phaser.Scene {
       canvasHeight / bgImage.height
     );
     bgImage.setPosition(canvasWidth / 2, canvasHeight / 2);
-    
+
     this.add
       .text(canvasWidth / 2, 200, getPhrase(this.login), {
         fontSize: "90px",
@@ -35,8 +34,9 @@ export default class Login extends Phaser.Scene {
         fill: "FFFF00",
       })
       .setOrigin(0.5);
-    
-    this.guestText = this.add.text(canvasWidth / 2, 400, getPhrase(this.guest), {
+
+    this.guestText = this.add
+      .text(canvasWidth / 2, 400, getPhrase(this.guest), {
         fontSize: "60px",
         fontFamily: "Trebuchet MS",
         fill: "FFFF00",
@@ -50,18 +50,17 @@ export default class Login extends Phaser.Scene {
           .then(() => {
             this.scene.start("MainMenu");
           })
-          .catch((error) => {
-          });
       });
-      this.guestText.on("pointerover", () => {
-        this.guestText.setFill("#F3E5AB");
-      });
-  
-      this.guestText.on("pointerout", () => {
-        this.guestText.setFill("FFFF00");
-      });
+    this.guestText.on("pointerover", () => {
+      this.guestText.setFill("#F3E5AB");
+    });
 
-    this.userText = this.add.text(canvasWidth / 2, 500, getPhrase(this.user), {
+    this.guestText.on("pointerout", () => {
+      this.guestText.setFill("FFFF00");
+    });
+
+    this.userText = this.add
+      .text(canvasWidth / 2, 500, getPhrase(this.user), {
         fontSize: "60px",
         fontFamily: "Trebuchet MS",
         fill: "FFFF00",
@@ -75,16 +74,13 @@ export default class Login extends Phaser.Scene {
           .then(() => {
             this.scene.start("MainMenu");
           })
-          .catch((error) => {
-          });
       });
-      this.userText.on("pointerover", () => {
-        this.userText.setFill("#F3E5AB");
-      });
-  
-    this.userText.on("pointerout", () => {
-        this.userText.setFill("FFFF00");
-      });
+    this.userText.on("pointerover", () => {
+      this.userText.setFill("#F3E5AB");
+    });
 
+    this.userText.on("pointerout", () => {
+      this.userText.setFill("FFFF00");
+    });
   }
 }

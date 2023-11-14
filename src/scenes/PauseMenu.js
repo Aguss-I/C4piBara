@@ -14,9 +14,7 @@ export default class MenuPause extends Phaser.Scene {
   }
 
   create() {
-
     const canvasWidth = this.sys.game.config.width;
-    
 
     this.keys = this.input.keyboard.addKeys({
       p: Phaser.Input.Keyboard.KeyCodes.P,
@@ -25,44 +23,47 @@ export default class MenuPause extends Phaser.Scene {
     this.add.image(963, 538, "gameover");
 
     const loadButton = this.add
-    .text(canvasWidth / 2, 300, getPhrase(this.continueGame), {
-      fontSize: "90px",
-      fontFamily: "Trebuchet MS",
-      fill: "#FFFFFF",
-    }).setOrigin(0.5)
-    .setInteractive();
+      .text(canvasWidth / 2, 300, getPhrase(this.continueGame), {
+        fontSize: "90px",
+        fontFamily: "Trebuchet MS",
+        fill: "#FFFFFF",
+      })
+      .setOrigin(0.5)
+      .setInteractive();
 
-  loadButton.on("pointerover", () => {
-    loadButton.setFill("#F3E5AB");
-  });
+    loadButton.on("pointerover", () => {
+      loadButton.setFill("#F3E5AB");
+    });
 
-  loadButton.on("pointerout", () => {
-    loadButton.setFill("#FFFFFF");
-  });
+    loadButton.on("pointerout", () => {
+      loadButton.setFill("#FFFFFF");
+    });
 
-  loadButton.on("pointerdown", () => {
-    this.scene.resume(this.obtenerNivelEnPausa());
-    this.scene.stop("Menupause");
-  });
+    loadButton.on("pointerdown", () => {
+      this.scene.resume(this.obtenerNivelEnPausa());
+      this.scene.stop("Menupause");
+    });
 
-  let buttonM = this.add.text(canvasWidth / 2,500,getPhrase(this.menu),{
-    fontFamily: "Trebuchet MS",
-    fontSize: "90px",
-    fill: "#FFFFFF",
-  }).setOrigin(0.5)
-  .setInteractive();
+    let buttonM = this.add
+      .text(canvasWidth / 2, 500, getPhrase(this.menu), {
+        fontFamily: "Trebuchet MS",
+        fontSize: "90px",
+        fill: "#FFFFFF",
+      })
+      .setOrigin(0.5)
+      .setInteractive();
 
-  buttonM.on("pointerover", () => {
-    buttonM.setFill("#F3E5AB");
-  });
+    buttonM.on("pointerover", () => {
+      buttonM.setFill("#F3E5AB");
+    });
 
-  buttonM.on("pointerout", () => {
-    buttonM.setFill("#FFFFFF");
-  });
+    buttonM.on("pointerout", () => {
+      buttonM.setFill("#FFFFFF");
+    });
 
-  buttonM.on("pointerdown", () => {
-    location.reload();
-  });
+    buttonM.on("pointerdown", () => {
+      location.reload();
+    });
 
     this.input.keyboard.on("keydown-P", () => {
       this.scene.resume(this.obtenerNivelEnPausa());
