@@ -52,7 +52,6 @@ export default class FirebasePlugin extends Phaser.Plugins.BasePlugin {
     });
   }
 
-
   destroy() {
     this.authStateChangedUnsubscribe();
     super.destroy();

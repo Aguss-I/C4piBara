@@ -5,7 +5,7 @@ export default class Preload extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet("cura", "./assets/images/Cura.png", {
+    this.load.spritesheet("health", "./assets/images/Cura.png", {
       frameWidth: 93,
       frameHeight: 86,
     });
@@ -17,42 +17,41 @@ export default class Preload extends Phaser.Scene {
     this.load.image("desertTemp", "./assets/images/desertTemp.jpg");
     this.load.image("musicOn", "./assets/images/onMusic.png");
     this.load.image("musicOff", "./assets/images/offMusic.png");
-    this.load.image("UIRectangle","./assets/images/UIRectangle.png");
-    this.load.spritesheet("Boss","./assets/images/BossWalk.png",{
+    this.load.image("UIRectangle", "./assets/images/UIRectangle.png");
+    this.load.spritesheet("Boss", "./assets/images/BossWalk.png", {
       frameWidth: 629,
       frameHeight: 501,
     });
-    this.load.spritesheet("BossAttack","./assets/images/BearAttack.png",{
+    this.load.spritesheet("BossAttack", "./assets/images/BearAttack.png", {
       frameWidth: 791,
       frameHeight: 600,
     });
 
     this.load.video("introScene", "./assets/videos/spaceIntro.mp4");
     this.load.video("logos", "./assets/videos/IntroLogos.mp4");
-    this.load.video("Ending","./assets/videos/C4pyFinal.mp4");
+    this.load.video("Ending", "./assets/videos/C4pyFinal.mp4");
 
     this.load.image("ArrowUp", "./assets/images/ArrowUp.png");
     this.load.image("ArrowDown", "./assets/images/ArrowDown.png");
     this.load.image("BossDoor", "./assets/images/BossEntrada.png");
-    this.load.spritesheet("explosion","./assets/images/EnemyDeath.png",{
+    this.load.spritesheet("explosion", "./assets/images/EnemyDeath.png", {
       frameWidth: 221,
-      frameHeight:191,
+      frameHeight: 191,
     });
-    this.load.spritesheet("savePoint","./assets/images/SavePointSprites.png",{
+    this.load.spritesheet("savePoint", "./assets/images/SavePointSprites.png", {
       frameWidth: 211.5,
       frameHeight: 270,
     });
-    this.load.image("savePoint", "./assets/images/PointSave.png");
 
     this.load.spritesheet("Eagle", "./assets/images/NPC.png", {
       frameWidth: 230,
       frameHeight: 230,
     });
-    this.load.spritesheet("Owl","./assets/images/Owl.png",{
+    this.load.spritesheet("Owl", "./assets/images/Owl.png", {
       frameWidth: 129,
       frameHeight: 234,
     });
-    this.load.image("Tutorial","./assets/images/TutorialImage.png");
+    this.load.image("Tutorial", "./assets/images/TutorialImage.png");
     this.load.spritesheet("Rock", "./assets/images/Rock.png", {
       frameWidth: 21,
       frameHeight: 21,
@@ -66,47 +65,45 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 221,
       frameHeight: 169,
     });
-    this.load.spritesheet("Cobra","./assets/images/Cobra.png",{
-      frameWidth : 270,
-      frameHeight: 198
-    })
+    this.load.spritesheet("Cobra", "./assets/images/Cobra.png", {
+      frameWidth: 270,
+      frameHeight: 198,
+    });
 
     this.load.spritesheet("C4", "./assets/images/C4.png", {
       frameWidth: 212,
       frameHeight: 200,
     });
-this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
-  frameWidth:264,
-  frameHeight:254,
-});
+    this.load.spritesheet("Boulder", "./assets/images/BearAttackRock.png", {
+      frameWidth: 264,
+      frameHeight: 254,
+    });
 
     this.load.tilemapTiledJSON("City", "./assets/Tilemaps/City.json");
     this.load.tilemapTiledJSON("Desert", "./assets/Tilemaps/Desert.json");
-    this.load.tilemapTiledJSON("BossArena","./assets/Tilemaps/BossArea.json");
+    this.load.tilemapTiledJSON("BossArena", "./assets/Tilemaps/BossArea.json");
     this.load.image("Mapdesert", "./assets/images/TilesetDesert.png");
     this.load.image("Mapcity", "./assets/images/CityTileset.png");
-    this.load.image("BossAreaTileset","./assets/images/BossAreaTileset.png");
-    this.load.image("Menupause","./assets/images/MenuPausa.png");
+    this.load.image("BossAreaTileset", "./assets/images/BossAreaTileset.png");
+    this.load.image("Menupause", "./assets/images/MenuPausa.png");
     this.load.image("Mapcity", "./assets/images/CityTileset.png");
 
     this.load.audio("citySFX", "./assets/Audio/citySFX.mp3");
     this.load.audio("swordAttack2", "./assets/Audio/swordAttack.wav");
     this.load.audio("menuMusic", "./assets/Audio/menuMusic.mp3");
-    this.load.audio("levelup","./assets/Audio/Levelup.wav");
-    this.load.audio("click","./assets/Audio/buttonClick.mp3");
-    this.load.audio("collectibleSound","./assets/Audio/Collectible.mp3");
+    this.load.audio("levelup", "./assets/Audio/Levelup.wav");
+    this.load.audio("click", "./assets/Audio/buttonClick.mp3");
+    this.load.audio("collectibleSound", "./assets/Audio/Collectible.mp3");
 
-    this.load.audio("owlSound","./assets/Audio/OwlSound.mp3");
-    this.load.audio("eagleSound","./assets/Audio/eagleSound.mp3");
-    this.load.spritesheet("Fox","./assets/images/Fox.png",{
-      frameWidth:174,
-      frameHeight:155,
-    
+    this.load.audio("owlSound", "./assets/Audio/OwlSound.mp3");
+    this.load.audio("eagleSound", "./assets/Audio/eagleSound.mp3");
+    this.load.spritesheet("Fox", "./assets/images/Fox.png", {
+      frameWidth: 174,
+      frameHeight: 155,
     });
-    this.load.spritesheet("Gear","./assets/images/ObjetoMision.png",{
-      frameWidth:113,
-      frameHeight:86,
-    
+    this.load.spritesheet("Gear", "./assets/images/ObjetoMision.png", {
+      frameWidth: 113,
+      frameHeight: 86,
     });
   }
 
@@ -114,7 +111,7 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
     let logosScene = this.add.video(960, 500, "logos").setInteractive();
     logosScene.setScale(1.1);
 
-    logosScene.play() 
+    logosScene.play();
 
     this.anims.create({
       key: "BoulderLeft",
@@ -162,8 +159,8 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
       repeat: -1,
     });
     this.anims.create({
-      key: "cura-anim",
-      frames: this.anims.generateFrameNumbers("cura", { start: 0, end: 1 }),
+      key: "health-anim",
+      frames: this.anims.generateFrameNumbers("health", { start: 0, end: 1 }),
       frameRate: 4,
       repeat: -1,
     });
@@ -297,7 +294,7 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
         end: 11,
       }),
       frameRate: 5,
-      repeat: -1, 
+      repeat: -1,
     });
 
     this.anims.create({
@@ -330,7 +327,7 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
         end: 14,
       }),
       frameRate: 5,
-      repeat: -1, 
+      repeat: -1,
     });
 
     this.anims.create({
@@ -385,7 +382,6 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
       frameRate: 15,
       repeat: -1,
     });
-   
 
     this.anims.create({
       key: "AttackDownCobra",
@@ -407,7 +403,7 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
       frames: [{ key: "Boss", frame: 18 }],
       frameRate: 1,
     });
-    
+
     this.anims.create({
       key: "BearUp",
       frames: this.anims.generateFrameNumbers("Boss", {
@@ -443,46 +439,60 @@ this.load.spritesheet("Boulder","./assets/images/BearAttackRock.png",{
     });
     this.anims.create({
       key: "AttackLeftBear",
-      frames: this.anims.generateFrameNumbers("BossAttack", { start: 0, end: 2 }),
+      frames: this.anims.generateFrameNumbers("BossAttack", {
+        start: 0,
+        end: 2,
+      }),
       frameRate: 15,
       repeat: 0,
     });
 
     this.anims.create({
       key: "AttackRightBear",
-      frames: this.anims.generateFrameNumbers("BossAttack", { start: 3, end: 5 }),
+      frames: this.anims.generateFrameNumbers("BossAttack", {
+        start: 3,
+        end: 5,
+      }),
       frameRate: 15,
       repeat: 0,
     });
 
     this.anims.create({
       key: "AttackUpBear",
-      frames: this.anims.generateFrameNumbers("BossAttack", { start: 9, end:11 }),
+      frames: this.anims.generateFrameNumbers("BossAttack", {
+        start: 9,
+        end: 11,
+      }),
       frameRate: 15,
       repeat: 0,
     });
 
     this.anims.create({
       key: "AttackDownBear",
-      frames: this.anims.generateFrameNumbers("BossAttack", { start: 6, end: 8 }),
+      frames: this.anims.generateFrameNumbers("BossAttack", {
+        start: 6,
+        end: 8,
+      }),
       frameRate: 15,
       repeat: 0,
     });
 
     this.anims.create({
       key: "explosion",
-      frames: this.anims.generateFrameNumbers("explosion", { start: 0, end: 3 }),
+      frames: this.anims.generateFrameNumbers("explosion", {
+        start: 0,
+        end: 3,
+      }),
       frameRate: 10,
       repeat: 0,
     });
 
-    logosScene.on('complete', () => {
+    logosScene.on("complete", () => {
       this.scene.start("Login");
     });
 
-    logosScene.on('pointerdown', () => {
+    logosScene.on("pointerdown", () => {
       this.scene.start("Login");
     });
-
   }
 }

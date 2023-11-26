@@ -1,19 +1,8 @@
 import Phaser, { Scene } from "phaser";
-import Player from "./Player";
-import Rock from "./Rock";
-import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
-import { getPhrase } from "../services/translations";
-import keys from "../enums/keys";
-
-import events from "../scenes/EventCenter";
 export default class BearEnemy extends Phaser.GameObjects.Sprite {
   timer;
-  #wasChangedLanguage = TODO;
   constructor(scene, x, y, texture, velocity) {
     super(scene, x, y, texture);
-    const { squirrelsKill } = keys.Enemy;
-    this.deadSquirrel = squirrelsKill;
-    this.squirrelsKill = squirrelsKill;
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -76,7 +65,4 @@ export default class BearEnemy extends Phaser.GameObjects.Sprite {
   resumeMovement() {
     this.patrolling = true;
   }
-
-  
-  }
-
+}

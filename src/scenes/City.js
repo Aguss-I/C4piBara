@@ -25,19 +25,7 @@ export default class City extends Phaser.Scene {
     this.save = savePoint;
     this.hoot = owlNoise;
     this.owlTruth = owlMesseage;
-
-    this.lvl;
-    this.hp;
-    this.maxHp;
-    this.exp;
-    this.player;
-    this.velocityPlayer;
     this.squirrels = [];
-
-    this.squirrelsKilled;
-    this.squirrelsKilledText;
-    this.damageAmount;
-    this.enemyHp;
     this.showtutorial = true;
     this.owlSoundCanHear = false;
     this.eagleSoundCanHear = false;
@@ -83,7 +71,7 @@ export default class City extends Phaser.Scene {
       lvl: this.lvl,
       hp: this.hp,
       maxHp: this.maxHp,
-   });
+    });
     const map = this.make.tilemap({ key: "City" });
 
     const layerbackGround = map.addTilesetImage("TDJ2 - tileset", "Mapcity");
@@ -101,24 +89,24 @@ export default class City extends Phaser.Scene {
       const { x = 0, y = 0, name } = objData;
 
       switch (name) {
-        case "cura": {
+        case "health": {
           let collectible1 = this.collectible
-            .create(x, y, "cura")
+            .create(x, y, "health")
             .setScale(1)
             .setSize(200, 200);
-          collectible1.anims.play("cura-anim", true);
+          collectible1.anims.play("health-anim", true);
 
           break;
         }
-        case "desierto": {
-          this.salida = this.physics.add
+        case "desert": {
+          this.exit = this.physics.add
             .image(x, y, "ArrowUp")
             .setScale(1)
             .setSize(200, 200);
           break;
         }
-        case "jefe": {
-          let jefe = this.door
+        case "boss": {
+          let boss = this.door
             .create(x, y, "ArrowDown")
             .setScale(1)
             .setSize(200, 200)
@@ -131,11 +119,11 @@ export default class City extends Phaser.Scene {
     });
 
     if (!this.missionComplete) {
-      this.salida.setVisible(false).setActive(false);
+      this.exit.setVisible(false).setActive(false);
     }
-    this.savePlace = this.physics.add.sprite(4300, 2850, "savePoint")
+    this.savePlace = this.physics.add.sprite(4300, 2850, "savePoint");
     setTimeout(() => {
-     this.savePlace.anims.play("SavePoint",true);
+      this.savePlace.anims.play("SavePoint", true);
     }, 2000);
     this.jefeDoor = this.add.image(1600, 3900, "BossDoor");
 
@@ -248,7 +236,7 @@ export default class City extends Phaser.Scene {
     );
     this.physics.add.overlap(
       this.player,
-      this.salida,
+      this.exit,
       this.NextLevel,
       null,
       this
@@ -269,9 +257,7 @@ export default class City extends Phaser.Scene {
       null,
       this
     );
-  
-   
-   
+
     this.rectangle = this.add.image(957, 900, "rectangle");
     this.rectangle.scaleX = 1.1;
     this.DesignUI2 = this.add.image(1700, 57, "UIRectangle");
@@ -473,17 +459,15 @@ export default class City extends Phaser.Scene {
     }
     if (this.missionComplete) {
       this.DesignUI2.setVisible(false);
-      this.salida.setVisible(true).setActive(true);
+      this.exit.setVisible(true).setActive(true);
     }
   }
 
   Heal(player, collectible) {
     this.collectibleSound = this.sound.add("collectibleSound");
-    if(this.hp<this.maxHp){
+    if (this.hp < this.maxHp) {
       this.collectibleSound.play();
     }
-    
-
 
     if (this.hp < this.maxHp) {
       this.hp = this.hp + 50;
@@ -531,7 +515,7 @@ export default class City extends Phaser.Scene {
       frame: 0,
       visible: false,
       active: false,
-      repeat: 50,
+      repeat: 75,
       setXY: {
         x: 1500,
         y: 1200,

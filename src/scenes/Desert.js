@@ -13,24 +13,12 @@ export default class Desert extends Phaser.Scene {
     super("Desert");
     const { cobrasKill } = keys.Enemy;
     this.deadCobra = cobrasKill;
-    const { desertMissionBegin, desertMissionEnd, collect } = keys.DesertText
+    const { desertMissionBegin, desertMissionEnd, collect } = keys.DesertText;
     this.desertBegin = desertMissionBegin;
     this.desertEnd = desertMissionEnd;
     this.partCollected = collect;
-    this.lvl;
-    this.hp;
-    this.maxHp;
-    this.exp, this.player;
-    this.velocityPlayer;
-    this.damageAmount;
-    this.enemyCobraHp;
-    this.velocityCobra;
-    this.objectCollected;
-    this.missionComplete;
-    this.missionDesertComplete;
     this.inAttackRange = false;
     this.cobras = [];
-
   }
 
   init(data) {
@@ -51,14 +39,11 @@ export default class Desert extends Phaser.Scene {
     this.initialX = 500;
     this.initialY = 900;
     this.objectCollected = data.objectCollected || 0;
-    this.missionDesertComplete = data.missionDesertComplete|| false
+    this.missionDesertComplete = data.missionDesertComplete || false;
     this.pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
-    
-
   }
 
   create() {
-
     this.scene.launch("UI", {
       lvl: this.lvl,
       hp: this.hp,
@@ -83,7 +68,7 @@ export default class Desert extends Phaser.Scene {
       const { x = 0, y = 0, name } = objData;
 
       switch (name) {
-        case "recolectable": {
+        case "collectible": {
           let CollectibleMision1 = this.CollectibleMision.create(x, y, "Gear")
             .setScale(1)
             .setSize(200, 200);
@@ -91,17 +76,23 @@ export default class Desert extends Phaser.Scene {
 
           break;
         }
-        case "cura": {
-          let collectible1 = this.Collectible.create(x, y, "cura")
+        case "health": {
+          let collectible1 = this.Collectible.create(x, y, "health")
             .setScale(1)
             .setSize(200, 200);
-          collectible1.anims.play("cura-anim", true);
+          collectible1.anims.play("health-anim", true);
 
           break;
         }
       }
     });
-    this.player = new Player(this, this.playerX, this.playerY, "C4", this.velocityPlayer);
+    this.player = new Player(
+      this,
+      this.playerX,
+      this.playerY,
+      "C4",
+      this.velocityPlayer
+    );
     const top = map.createLayer("Top", layerbackGround, 0, 0);
     obstacle.setCollisionByProperty({ colision: true });
     this.playersGroup = this.physics.add.group();
@@ -144,7 +135,7 @@ export default class Desert extends Phaser.Scene {
       null,
       this
     );
-    this.DesignUI2 = this.add.image(1700,105,"UIRectangle");
+    this.DesignUI2 = this.add.image(1700, 105, "UIRectangle");
     this.DesignUI2.scaleX = 2.2;
     this.DesignUI2.scaleY = 1.1;
     this.DesignUI2.setVisible(false);
@@ -157,31 +148,29 @@ export default class Desert extends Phaser.Scene {
     this.cobrasKilledText.setVisible(false);
     this.cobrasKilledText.setActive(false);
     this.cobrasKilledText.setScrollFactor(0);
-    this.objectCollectedText = this.add.text(1350, 130, getPhrase(this.partCollected), {
-      fontSize: "35px",
-      fontFamily: "Trebuchet MS",
-    });
+    this.objectCollectedText = this.add.text(
+      1350,
+      130,
+      getPhrase(this.partCollected),
+      {
+        fontSize: "35px",
+        fontFamily: "Trebuchet MS",
+      }
+    );
     this.objectCollectedText.setVisible(false);
     this.objectCollectedText.setActive(false);
     this.objectCollectedText.setScrollFactor(0);
     this.rectangle = this.add.image(957, 900, "rectangle");
     this.mision2Text = this.add
-      .text(
-        60,
-        800,
-        getPhrase(this.desertBegin),
-        {
-          fontSize: "40px",
-          fontFamily: "Trebuchet MS",
-          color: "FFFF00",
-        }
-      )
+      .text(60, 800, getPhrase(this.desertBegin), {
+        fontSize: "40px",
+        fontFamily: "Trebuchet MS",
+        color: "FFFF00",
+      })
       .setInteractive();
-      this.rectangle.scaleX=1.1
+    this.rectangle.scaleX = 1.1;
     this.mision2Text.setWordWrapWidth(this.rectangle.width);
 
-   
-   
     this.rectangle.setScrollFactor(0);
     this.rectangle.setVisible(false);
     this.mision2Text.setVisible(false);
@@ -191,10 +180,10 @@ export default class Desert extends Phaser.Scene {
       this.mision2Text.setVisible(false);
       this.rectangle.setVisible(false);
     });
-    this.input.keyboard.on('keydown-P',()=>{
+    this.input.keyboard.on("keydown-P", () => {
       this.scene.launch("Menupause");
       this.scene.pause("Desert");
-    })
+    });
     this.cobraGroup = this.physics.add.group();
 
     for (let i = 0; i < 6; i++) {
@@ -229,16 +218,16 @@ export default class Desert extends Phaser.Scene {
       null,
       this
     );
-    this.input.keyboard.on('keydown-F', () => {
+    this.input.keyboard.on("keydown-F", () => {
       const fullscreenElement = this.scale.fullscreenTarget;
-      
+
       if (this.scale.isFullscreen) {
-          this.scale.stopFullscreen();
+        this.scale.stopFullscreen();
       } else {
-          this.scale.startFullscreen();
+        this.scale.startFullscreen();
       }
-  });
-  this.scale.fullscreenTarget = this.game.canvas;
+    });
+    this.scale.fullscreenTarget = this.game.canvas;
   }
 
   update() {
@@ -265,12 +254,9 @@ export default class Desert extends Phaser.Scene {
         cobra.timeToBite -= 1;
 
         this.cobras[i] = cobra;
-
       }
     }
   }
-
-  
 
   playerHitEnemy(hitbox, cobra) {
     if (cobra.active && hitbox.active) {
@@ -278,11 +264,12 @@ export default class Desert extends Phaser.Scene {
       cobra.anims.play("cobraDamage", true);
     }
   }
-  
+
   ObjectCollected(player, collectible) {
     this.objectCollected = this.objectCollected + 1;
     this.objectCollectedText.setText(
-      `${getPhrase(this.partCollected)}: ${this.objectCollected} /4`);
+      `${getPhrase(this.partCollected)}: ${this.objectCollected} /4`
+    );
 
     collectible.disableBody(true, true);
   }
@@ -298,18 +285,16 @@ export default class Desert extends Phaser.Scene {
       x: 1300,
       y: 200,
       missionDesertComplete: this.missionDesertComplete,
-      missionComplete:this.missionComplete,
+      missionComplete: this.missionComplete,
       squirrelsKilled: this.squirrelsKilled,
-      showtutorial:false
-     
+      showtutorial: false,
     };
     for (const c of this.cobras) {
       c.destroy(true, true);
     }
     this.cobras = [];
 
-      this.scene.start("City", data);
-
+    this.scene.start("City", data);
   }
   mision2(player, fox) {
     this.DesignUI2.setVisible(true);
@@ -319,8 +304,7 @@ export default class Desert extends Phaser.Scene {
     this.cobrasKilledText.setActive(true);
     this.objectCollectedText.setVisible(true);
     this.objectCollectedText.setActive(true);
-   
-  
+
     setTimeout(() => {
       this.mision2Text.setVisible(false);
       this.rectangle.setVisible(false);
@@ -328,30 +312,30 @@ export default class Desert extends Phaser.Scene {
     if (this.objectCollected >= 3) {
       if (this.cobrasKilled >= 6) {
         this.lvl++;
-     this.maxHp+=25
-     events.emit("UpdateMaxHp", { maxHp: this.maxHp });
-      this.levelUpSound = this.sound.add("levelup");
-      this.levelUpSound.play();
-      this.maxHp += 25;
-      this.damageAmount += 50;
-      events.emit("UpdateMaxHp", { maxHp: this.maxHp });
-      events.emit("UpdateLVL", { lvl: this.lvl });
-      this.cobrasKilled = 0
-      this.objectCollected = 0
-      this.cobrasKilledText.setText("");
-      this.objectCollectedText.setText("");
+        this.maxHp += 25;
+        events.emit("UpdateMaxHp", { maxHp: this.maxHp });
+        this.levelUpSound = this.sound.add("levelup");
+        this.levelUpSound.play();
+        this.maxHp += 25;
+        this.damageAmount += 50;
+        events.emit("UpdateMaxHp", { maxHp: this.maxHp });
+        events.emit("UpdateLVL", { lvl: this.lvl });
+        this.cobrasKilled = 0;
+        this.objectCollected = 0;
+        this.cobrasKilledText.setText("");
+        this.objectCollectedText.setText("");
         for (const c of this.cobras) {
           c.destroy(true, true);
         }
         this.cobras = [];
         this.missionDesertComplete = true;
-      } 
+      }
     }
     if (this.missionDesertComplete) {
       this.DesignUI2.setVisible(false);
       this.mision2Text.setText(getPhrase(this.desertEnd));
+    }
   }
-  };
 
   createBites() {
     this.biteGroup = this.physics.add.group({
@@ -385,9 +369,7 @@ export default class Desert extends Phaser.Scene {
         bullet
       );
     });
-
   }
-
 
   bite(player, cobra) {
     const directionX = player.x - cobra.x;
@@ -426,19 +408,16 @@ export default class Desert extends Phaser.Scene {
       biting.setVisible(true);
       this.physics.moveTo(biting, player.x, player.y, Math.abs(velocityX));
     }
-
   }
-  damage(player, biting ,cobra){
-      this.hp = this.hp - 25
-      events.emit("UpdateHP", { hp: this.hp });
-      this.scene.get("UI").updateHealthBar();
-      biting.destroy(true);
-      biting.setVisible(false);
+  damage(player, biting, cobra) {
+    this.hp = this.hp - 25;
+    events.emit("UpdateHP", { hp: this.hp });
+    this.scene.get("UI").updateHealthBar();
+    biting.destroy(true);
+    biting.setVisible(false);
 
     if (this.hp <= 0) {
-    
       this.player.setVisible(false).setActive(false);
-
 
       for (const c of this.cobras) {
         c.destroy(true, true);
@@ -447,13 +426,12 @@ export default class Desert extends Phaser.Scene {
       this.scene.stop("UI");
       this.scene.launch("GameEnd", { fromScene: "Desert" });
       this.scene.pause("Desert");
-      
     }
   }
-  
+
   heal(player, Collectible) {
     this.collectibleSound = this.sound.add("collectibleSound");
-    if(this.hp<this.maxHp){
+    if (this.hp < this.maxHp) {
       this.collectibleSound.play();
     }
     if (this.hp < this.maxHp) {
@@ -467,4 +445,3 @@ export default class Desert extends Phaser.Scene {
     }
   }
 }
-

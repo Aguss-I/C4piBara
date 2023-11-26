@@ -27,8 +27,8 @@ export default class Enemies extends Phaser.GameObjects.Sprite {
 
     this.patrolling = true;
   }
-  
-  update(){
+
+  update() {
     if (this.patrolling) {
       const distanceX = this.targetX - this.x;
       const distanceY = this.targetY - this.y;
@@ -38,7 +38,7 @@ export default class Enemies extends Phaser.GameObjects.Sprite {
       const velocityX = Math.cos(angle) * this.velocitySquirrel;
       const velocityY = Math.sin(angle) * this.velocitySquirrel;
 
-      this.body.setVelocity(velocityX, velocityY);  
+      this.body.setVelocity(velocityX, velocityY);
 
       if (Math.abs(velocityX) > Math.abs(velocityY)) {
         if (velocityX > 0) {
@@ -77,34 +77,32 @@ export default class Enemies extends Phaser.GameObjects.Sprite {
     this.patrolling = true;
   }
 
-
   takeDamage(damageAmount) {
-
     if (this.active) {
       this.enemyHp = this.enemyHp - this.scene.damageAmount;
-     
+
       if (this.enemyHp <= 0) {
-        this.anims.play("explosion",true);
-       this.scene.exp=this.scene.exp + 200
-       if(this.scene.exp>=1200){
-        this.scene.lvl ++
-        this.levelUpSound = this.scene.sound.add("levelup");
-        this.levelUpSound.play();
-        this.scene.maxHp += 25;
-        this.scene.exp = 0
-        events.emit("UpdateMaxHp", { maxHp: this.scene.maxHp });
-        events.emit("UpdateLVL", {lvl: this.scene.lvl });
-        this.scene.damageAmount += 50;
-       }
-        
-        
+        this.anims.play("explosion", true);
+        this.scene.exp = this.scene.exp + 200;
+        if (this.scene.exp >= 1200) {
+          this.scene.lvl++;
+          this.levelUpSound = this.scene.sound.add("levelup");
+          this.levelUpSound.play();
+          this.scene.maxHp += 25;
+          this.scene.exp = 0;
+          events.emit("UpdateMaxHp", { maxHp: this.scene.maxHp });
+          events.emit("UpdateLVL", { lvl: this.scene.lvl });
+          this.scene.damageAmount += 50;
+        }
+
         this.scene.squirrelsKilled++;
         this.scene.squirrelsKilledText.setText(
-        `${getPhrase(this.deadSquirrel)}: ${this.scene.squirrelsKilled} /4`);
+          `${getPhrase(this.deadSquirrel)}: ${this.scene.squirrelsKilled} /4`
+        );
 
-        this.setVisible(false)
-        this.setActive(false)
+        this.setVisible(false);
+        this.setActive(false);
+      }
     }
   }
-}
 }
