@@ -26,7 +26,7 @@ export default class City extends Phaser.Scene {
     this.hoot = owlNoise;
     this.owlTruth = owlMesseage;
     this.squirrels = [];
-    this.showtutorial = true;
+    this.showTutorial = true;
     this.owlSoundCanHear = false;
     this.eagleSoundCanHear = false;
   }
@@ -51,7 +51,7 @@ export default class City extends Phaser.Scene {
     this.pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
     this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     this.user = this.firebase.getUser();
-    this.showtutorial = data.showtutorial === false ? false : true;
+    this.showTutorial = data.showTutorial === false ? false : true;
   }
 
   create() {
@@ -173,7 +173,7 @@ export default class City extends Phaser.Scene {
       null,
       this
     );
-    if (this.showtutorial) {
+    if (this.showTutorial) {
       this.tutorial = this.add.image(950, 500, "Tutorial").setScale(2);
       this.moverseText = this.add.text(480, 600, "Moverse", {
         color: "000000",

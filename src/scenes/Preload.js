@@ -92,13 +92,10 @@ export default class Preload extends Phaser.Scene {
       frameHeight: 254,
     });
 
-    
-
     this.load.image("Mapdesert", "./assets/images/TilesetDesert.png");
     this.load.image("Mapcity", "./assets/images/CityTileset.png");
     this.load.image("BossAreaTileset", "./assets/images/BossAreaTileset.png");
     this.load.image("Menupause", "./assets/images/MenuPausa.png");
-    this.load.image("Mapcity", "./assets/images/CityTileset.png");
 
     this.load.audio("citySFX", "./assets/Audio/citySFX.mp3");
     this.load.audio("swordAttack2", "./assets/Audio/swordAttack.wav");
@@ -106,13 +103,14 @@ export default class Preload extends Phaser.Scene {
     this.load.audio("levelup", "./assets/Audio/Levelup.wav");
     this.load.audio("click", "./assets/Audio/buttonClick.mp3");
     this.load.audio("collectibleSound", "./assets/Audio/Collectible.mp3");
-
     this.load.audio("owlSound", "./assets/Audio/OwlSound.mp3");
     this.load.audio("eagleSound", "./assets/Audio/eagleSound.mp3");
+
     this.load.spritesheet("Fox", "./assets/images/Fox.png", {
       frameWidth: 174,
       frameHeight: 155,
     });
+
     this.load.spritesheet("Gear", "./assets/images/ObjetoMision.png", {
       frameWidth: 113,
       frameHeight: 86,

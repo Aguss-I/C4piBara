@@ -123,6 +123,11 @@ export default class BossArena extends Phaser.Scene {
       );
       this.boss.push(boss);
     }
+    this.input.keyboard.on("keydown-P", () => {
+      this.scene.bringToTop("Menupause");
+      this.scene.launch("Menupause");
+      this.scene.pause("BossArena");
+    });
 
     this.designUI = this.add.image(100, 1050, "UIRectangle");
     this.designUI.scaleX = 10;
@@ -166,7 +171,7 @@ export default class BossArena extends Phaser.Scene {
       }
     }
   }
-  heal(player, Collectible) {
+  heal(player, collectible) {
     this.collectibleSound = this.sound.add("collectibleSound");
     if (this.hp < this.maxHp) {
       this.collectibleSound.play();
@@ -178,7 +183,7 @@ export default class BossArena extends Phaser.Scene {
         this.hp = this.maxHp;
       }
       events.emit("UpdateHP", { hp: this.hp });
-      Collectible.disableBody(true, true);
+      collectible.disableBody(true, true);
     }
   }
 
