@@ -5,6 +5,10 @@ export default class Preload extends Phaser.Scene {
   }
 
   preload() {
+    this.load.tilemapTiledJSON("City", "./assets/Tilemaps/City.json");
+    this.load.tilemapTiledJSON("Desert", "./assets/Tilemaps/Desert.json");
+    this.load.tilemapTiledJSON("BossArena", "./assets/Tilemaps/BossArea.json");
+
     this.load.spritesheet("health", "./assets/images/Cura.png", {
       frameWidth: 93,
       frameHeight: 86,
@@ -22,6 +26,7 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 629,
       frameHeight: 501,
     });
+
     this.load.spritesheet("BossAttack", "./assets/images/BearAttack.png", {
       frameWidth: 791,
       frameHeight: 600,
@@ -34,10 +39,12 @@ export default class Preload extends Phaser.Scene {
     this.load.image("ArrowUp", "./assets/images/ArrowUp.png");
     this.load.image("ArrowDown", "./assets/images/ArrowDown.png");
     this.load.image("BossDoor", "./assets/images/BossEntrada.png");
+
     this.load.spritesheet("explosion", "./assets/images/EnemyDeath.png", {
       frameWidth: 221,
       frameHeight: 191,
     });
+
     this.load.spritesheet("savePoint", "./assets/images/SavePointSprites.png", {
       frameWidth: 211.5,
       frameHeight: 270,
@@ -47,15 +54,19 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 230,
       frameHeight: 230,
     });
+
     this.load.spritesheet("Owl", "./assets/images/Owl.png", {
       frameWidth: 129,
       frameHeight: 234,
     });
+
     this.load.image("Tutorial", "./assets/images/TutorialImage.png");
+
     this.load.spritesheet("Rock", "./assets/images/Rock.png", {
       frameWidth: 21,
       frameHeight: 21,
     });
+
     this.load.spritesheet("BigBite", "./assets/images/imaginaryAttack.png", {
       frameWidth: 50,
       frameHeight: 50,
@@ -65,6 +76,7 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 221,
       frameHeight: 169,
     });
+
     this.load.spritesheet("Cobra", "./assets/images/Cobra.png", {
       frameWidth: 270,
       frameHeight: 198,
@@ -74,14 +86,14 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 212,
       frameHeight: 200,
     });
+
     this.load.spritesheet("Boulder", "./assets/images/BearAttackRock.png", {
       frameWidth: 264,
       frameHeight: 254,
     });
 
-    this.load.tilemapTiledJSON("City", "./assets/Tilemaps/City.json");
-    this.load.tilemapTiledJSON("Desert", "./assets/Tilemaps/Desert.json");
-    this.load.tilemapTiledJSON("BossArena", "./assets/Tilemaps/BossArea.json");
+    
+
     this.load.image("Mapdesert", "./assets/images/TilesetDesert.png");
     this.load.image("Mapcity", "./assets/images/CityTileset.png");
     this.load.image("BossAreaTileset", "./assets/images/BossAreaTileset.png");

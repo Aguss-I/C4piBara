@@ -1,7 +1,5 @@
-import Phaser, { Scene } from "phaser";
-import Player from "./Player";
-import Rock from "./Rock";
-import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
+import Phaser from "phaser";
+import { TODO } from "../enums/status";
 import { getPhrase } from "../services/translations";
 import keys from "../enums/keys";
 
@@ -77,7 +75,7 @@ export default class Enemies extends Phaser.GameObjects.Sprite {
     this.patrolling = true;
   }
 
-  takeDamage(damageAmount) {
+  takeDamage() {
     if (this.active) {
       this.enemyHp = this.enemyHp - this.scene.damageAmount;
 

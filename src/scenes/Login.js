@@ -45,11 +45,9 @@ export default class Login extends Phaser.Scene {
       .setInteractive()
       .on("pointerdown", () => {
         this.click.play();
-        this.firebase
-          .signInAnonymously()
-          .then(() => {
-            this.scene.start("MainMenu");
-          })
+        this.firebase.signInAnonymously().then(() => {
+          this.scene.start("MainMenu");
+        });
       });
     this.guestText.on("pointerover", () => {
       this.guestText.setFill("#F3E5AB");
@@ -69,11 +67,9 @@ export default class Login extends Phaser.Scene {
       .setInteractive()
       .on("pointerdown", () => {
         this.click.play();
-        this.firebase
-          .signInWithGoogle()
-          .then(() => {
-            this.scene.start("MainMenu");
-          })
+        this.firebase.signInWithGoogle().then(() => {
+          this.scene.start("MainMenu");
+        });
       });
     this.userText.on("pointerover", () => {
       this.userText.setFill("#F3E5AB");

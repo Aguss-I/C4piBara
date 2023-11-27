@@ -1,7 +1,4 @@
 import Phaser from "phaser";
-import Enemies from "./CobraEnemy";
-import Enemies2 from "./SquirrelEnemy";
-import Player from "./Player";
 
 export default class Hitbox extends Phaser.GameObjects.Rectangle {
   constructor(scene, player) {
@@ -36,36 +33,34 @@ export default class Hitbox extends Phaser.GameObjects.Rectangle {
     }
 
     if (this.xKey.isDown && this.facingDirection !== null) {
-      if (!this.isAttacking) {
-        switch (this.facingDirection) {
-          case "left":
-            this.width = 150;
-            this.height = 200;
-            this.setPosition(this.player.x - 90, this.player.y);
-            this.attack();
-            break;
-          case "right":
-            this.width = 150;
-            this.height = 200;
-            this.setPosition(this.player.x + 90, this.player.y);
-            this.attack();
-            break;
-          case "up":
-            this.width = 212;
-            this.height = 150;
-            this.setPosition(this.player.x, this.player.y - 87);
-            this.attack();
-            break;
-          case "down":
-            this.width = 212;
-            this.height = 150;
-            this.setPosition(this.player.x, this.player.y + 87);
-            this.attack();
-            break;
-        }
-      } else {
-        this.setActive(false).setVisible(false);
+      switch (this.facingDirection) {
+        case "left":
+          this.width = 150;
+          this.height = 200;
+          this.setPosition(this.player.x - 90, this.player.y);
+          this.attack();
+          break;
+        case "right":
+          this.width = 150;
+          this.height = 200;
+          this.setPosition(this.player.x + 90, this.player.y);
+          this.attack();
+          break;
+        case "up":
+          this.width = 212;
+          this.height = 150;
+          this.setPosition(this.player.x, this.player.y - 87);
+          this.attack();
+          break;
+        case "down":
+          this.width = 212;
+          this.height = 150;
+          this.setPosition(this.player.x, this.player.y + 87);
+          this.attack();
+          break;
       }
+    } else {
+      this.setActive(false).setVisible(false);
     }
   }
 

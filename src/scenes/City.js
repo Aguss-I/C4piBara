@@ -75,7 +75,7 @@ export default class City extends Phaser.Scene {
     const map = this.make.tilemap({ key: "City" });
 
     const layerbackGround = map.addTilesetImage("TDJ2 - tileset", "Mapcity");
-    const background = map.createLayer("Ground", layerbackGround, 0, 0);
+    map.createLayer("Ground", layerbackGround, 0, 0);
     const layerObstacle = map.addTilesetImage("TDJ2 - tileset", "Mapcity");
     const obstacle = map.createLayer("Deco", layerObstacle, 0, 0);
 
@@ -106,7 +106,7 @@ export default class City extends Phaser.Scene {
           break;
         }
         case "boss": {
-          let boss = this.door
+          this.door
             .create(x, y, "ArrowDown")
             .setScale(1)
             .setSize(200, 200)
@@ -134,7 +134,7 @@ export default class City extends Phaser.Scene {
       "C4",
       this.velocityPlayer
     );
-    const top = map.createLayer("Top", layerbackGround, 0, 0);
+    map.createLayer("Top", layerbackGround, 0, 0);
     this.playersGroup = this.physics.add.group();
     this.collectibleGroup = this.physics.add.group();
     this.squirrelGroup = this.physics.add.group();
@@ -143,7 +143,7 @@ export default class City extends Phaser.Scene {
 
     this.hitbox = new Hitbox(this, this.player);
 
-    this.Eagle = new Npc(this, 4550, 3290, "Eagle");
+    this.eagle = new Npc(this, 4550, 3290, "Eagle");
 
     for (let i = 0; i < 6; i++) {
       const squirrel = new Enemies(
@@ -169,7 +169,7 @@ export default class City extends Phaser.Scene {
     this.physics.add.overlap(
       this.player,
       this.door,
-      this.BossEntrance,
+      this.bossEntrance,
       null,
       this
     );
@@ -221,13 +221,13 @@ export default class City extends Phaser.Scene {
     this.physics.add.overlap(
       this.player,
       this.collectible,
-      this.Heal,
+      this.heal,
       null,
       this
     );
     this.physics.add.overlap(
       this.player,
-      this.Eagle,
+      this.eagle,
       this.mision,
       () => {
         this.eagleSoundCanHear === true;
@@ -260,9 +260,9 @@ export default class City extends Phaser.Scene {
 
     this.rectangle = this.add.image(957, 900, "rectangle");
     this.rectangle.scaleX = 1.1;
-    this.DesignUI2 = this.add.image(1700, 57, "UIRectangle");
-    this.DesignUI2.scaleX = 2.2;
-    this.DesignUI2.setVisible(false);
+    this.designUI2 = this.add.image(1700, 57, "UIRectangle");
+    this.designUI2.scaleX = 2.2;
+    this.designUI2.setVisible(false);
     this.squirrelsKilledText = this.add.text(
       1340,
       60,
@@ -294,7 +294,7 @@ export default class City extends Phaser.Scene {
     this.rectangle.setVisible(false);
     this.squirrelsKilledText.setVisible(false);
     this.squirrelsKilledText.setScrollFactor(0);
-    this.DesignUI2.setScrollFactor(0);
+    this.designUI2.setScrollFactor(0);
     this.citySounds = this.sound.add("citySFX", { loop: true, volume: 0.8 });
     this.citySounds.play();
     this.input.keyboard.on("keydown-F", () => {
@@ -311,13 +311,13 @@ export default class City extends Phaser.Scene {
       fontFamily: "Trebuchet MS",
       color: "#FFFFFF",
     });
-    this.DesignUI = this.add.image(
+    this.designUI = this.add.image(
       this.saveText.x + 145,
       this.saveText.y + 20,
       "UIRectangle"
     );
-    this.DesignUI.setVisible(false);
-    this.DesignUI.scaleY = 0.8;
+    this.designUI.setVisible(false);
+    this.designUI.scaleY = 0.8;
     this.saveText.setVisible(false);
     this.saveText.setDepth(1);
     this.owl = new Npc(this, 3700, 120, "Owl");
@@ -385,7 +385,7 @@ export default class City extends Phaser.Scene {
 
   showSaveText() {
     if (!this.saveText.visible) {
-      this.DesignUI.setVisible(true);
+      this.designUI.setVisible(true);
       this.saveText.setVisible(true);
       this.input.keyboard.on("keydown-E", () => {
         this.firebase.saveGameData(this.user.uid, {
@@ -404,7 +404,7 @@ export default class City extends Phaser.Scene {
     }
 
     setTimeout(() => {
-      this.DesignUI.setVisible(false);
+      this.designUI.setVisible(false);
       this.saveText.setVisible(false);
     }, 100);
   }
@@ -422,7 +422,7 @@ export default class City extends Phaser.Scene {
     }
   }
 
-  mision(player, Eagle) {
+  mision() {
     if (!this.eagleSoundCanHear) {
       this.eagleSound = this.sound.add("eagleSound");
       this.eagleSound.play();
@@ -432,7 +432,7 @@ export default class City extends Phaser.Scene {
       this.eagleSound.stop();
       this.eagleSoundCanHear = false;
     }, 1000);
-    this.DesignUI2.setVisible(true);
+    this.designUI2.setVisible(true);
     this.squirrelsKilledText.setVisible(true);
     this.misionText.setVisible(true);
     this.rectangle.setVisible(true);
@@ -458,12 +458,12 @@ export default class City extends Phaser.Scene {
       this.squirrelsKilledText.setText("");
     }
     if (this.missionComplete) {
-      this.DesignUI2.setVisible(false);
+      this.designUI2.setVisible(false);
       this.exit.setVisible(true).setActive(true);
     }
   }
 
-  Heal(player, collectible) {
+  heal(player, collectible) {
     this.collectibleSound = this.sound.add("collectibleSound");
     if (this.hp < this.maxHp) {
       this.collectibleSound.play();
@@ -537,7 +537,7 @@ export default class City extends Phaser.Scene {
       );
     });
   }
-  owlInteraction(player, owl) {
+  owlInteraction() {
     if (!this.owlSoundCanHear) {
       this.owlSound = this.sound.add("owlSound");
       this.owlSound.play();
@@ -597,7 +597,7 @@ export default class City extends Phaser.Scene {
       this.physics.moveTo(rock, player.x, player.y, Math.abs(velocityX));
     }
   }
-  BossEntrance() {
+  bossEntrance() {
     const data = {
       lvl: this.lvl,
       hp: this.hp,
