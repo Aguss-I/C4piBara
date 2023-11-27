@@ -1,8 +1,4 @@
 import Phaser from "phaser";
-import Enemies from "./CobraEnemy";
-import Enemies2 from "./SquirrelEnemy";
-import Player from "./Player";
-
 export default class Hitbox extends Phaser.GameObjects.Rectangle {
   constructor(scene, player) {
     super(scene, player.x, player.y);
@@ -36,7 +32,7 @@ export default class Hitbox extends Phaser.GameObjects.Rectangle {
     }
 
     if (this.xKey.isDown && this.facingDirection !== null) {
-      if (!this.isAttacking) {
+     
         switch (this.facingDirection) {
           case "left":
             this.width = 150;
@@ -65,7 +61,7 @@ export default class Hitbox extends Phaser.GameObjects.Rectangle {
         }
       } else {
         this.setActive(false).setVisible(false);
-      }
+      
     }
   }
 

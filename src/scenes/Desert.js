@@ -59,25 +59,25 @@ export default class Desert extends Phaser.Scene {
 
     const objectsLayer = map.getObjectLayer("Objects");
 
-    this.CollectibleMision = this.physics.add.group();
-    this.CollectibleMision.allowGravity = false;
+    this.collectibleMision = this.physics.add.group();
+    this.collectibleMision.allowGravity = false;
     this.createBites();
-    this.Collectible = this.physics.add.group();
-    this.Collectible.allowGravity = false;
+    this.collectible = this.physics.add.group();
+    this.collectible.allowGravity = false;
     objectsLayer.objects.forEach((objData) => {
       const { x = 0, y = 0, name } = objData;
 
       switch (name) {
         case "collectible": {
-          let CollectibleMision1 = this.CollectibleMision.create(x, y, "Gear")
+          let collectibleMision1 = this.collectibleMision.create(x, y, "Gear")
             .setScale(1)
             .setSize(200, 200);
-          CollectibleMision1.anims.play("gear-anim", true);
+          collectibleMision1.anims.play("gear-anim", true);
 
           break;
         }
         case "health": {
-          let collectible1 = this.Collectible.create(x, y, "health")
+          let collectible1 = this.collectible.create(x, y, "health")
             .setScale(1)
             .setSize(200, 200);
           collectible1.anims.play("health-anim", true);
@@ -135,11 +135,11 @@ export default class Desert extends Phaser.Scene {
       null,
       this
     );
-    this.DesignUI2 = this.add.image(1700, 105, "UIRectangle");
-    this.DesignUI2.scaleX = 2.2;
-    this.DesignUI2.scaleY = 1.1;
-    this.DesignUI2.setVisible(false);
-    this.DesignUI2.setScrollFactor(0);
+    this.designUI2 = this.add.image(1700, 105, "UIRectangle");
+    this.designUI2.scaleX = 2.2;
+    this.designUI2.scaleY = 1.1;
+    this.designUI2.setVisible(false);
+    this.designUI2.setScrollFactor(0);
     this.physics.add.overlap(this.player, this.fox, this.mision2, null, this);
     this.cobrasKilledText = this.add.text(1350, 30, getPhrase(this.deadCobra), {
       fontSize: "35px",
@@ -206,20 +206,20 @@ export default class Desert extends Phaser.Scene {
     );
     this.physics.add.overlap(
       this.player,
-      this.CollectibleMision,
+      this.collectibleMision,
       this.ObjectCollected,
       null,
       this
     );
     this.physics.add.overlap(
       this.player,
-      this.Collectible,
+      this.collectible,
       this.heal,
       null,
       this
     );
     this.input.keyboard.on("keydown-F", () => {
-      const fullscreenElement = this.scale.fullscreenTarget;
+     this.scale.fullscreenTarget;
 
       if (this.scale.isFullscreen) {
         this.scale.stopFullscreen();
@@ -297,7 +297,7 @@ export default class Desert extends Phaser.Scene {
     this.scene.start("City", data);
   }
   mision2(player, fox) {
-    this.DesignUI2.setVisible(true);
+    this.designUI2.setVisible(true);
     this.mision2Text.setVisible(true);
     this.rectangle.setVisible(true);
     this.cobrasKilledText.setVisible(true);
@@ -332,7 +332,7 @@ export default class Desert extends Phaser.Scene {
       }
     }
     if (this.missionDesertComplete) {
-      this.DesignUI2.setVisible(false);
+      this.designUI2.setVisible(false);
       this.mision2Text.setText(getPhrase(this.desertEnd));
     }
   }
@@ -429,7 +429,7 @@ export default class Desert extends Phaser.Scene {
     }
   }
 
-  heal(player, Collectible) {
+  heal(player, collectible) {
     this.collectibleSound = this.sound.add("collectibleSound");
     if (this.hp < this.maxHp) {
       this.collectibleSound.play();
@@ -441,7 +441,7 @@ export default class Desert extends Phaser.Scene {
         this.hp = this.maxHp;
       }
       events.emit("UpdateHP", { hp: this.hp });
-      Collectible.disableBody(true, true);
+      collectible.disableBody(true, true);
     }
   }
 }

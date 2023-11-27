@@ -1,7 +1,5 @@
 import Phaser, { Scene } from "phaser";
-import Player from "./Player";
-import Rock from "./Rock";
-import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
+import { TODO } from "../enums/status";
 import { getPhrase } from "../services/translations";
 import keys from "../enums/keys";
 
