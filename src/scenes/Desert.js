@@ -53,8 +53,8 @@ export default class Desert extends Phaser.Scene {
     const map = this.make.tilemap({ key: "Desert" });
     const layerbackGround = map.addTilesetImage("desertTileset", "Mapdesert");
     map.createLayer("Ground", layerbackGround, 0, 0);
+    map.createLayer("Ground", layerbackGround, 0, 0);
     const layerObstacle = map.addTilesetImage("desertTileset", "Mapdesert");
-
     const obstacle = map.createLayer("Deco", layerObstacle, 0, 0);
 
     const objectsLayer = map.getObjectLayer("Objects");
@@ -95,7 +95,7 @@ export default class Desert extends Phaser.Scene {
       "c4",
       this.velocityPlayer
     );
-    map.createLayer("Top", layerbackGround, 0, 0);
+   map.createLayer("Top", layerbackGround, 0, 0);
     obstacle.setCollisionByProperty({ colision: true });
     this.playersGroup = this.physics.add.group();
     this.hitbox = new Hitbox(this, this.player);
@@ -221,8 +221,6 @@ export default class Desert extends Phaser.Scene {
       this
     );
     this.input.keyboard.on("keydown-F", () => {
-      this.scale.fullscreenTarget;
-
       if (this.scale.isFullscreen) {
         this.scale.stopFullscreen();
       } else {
