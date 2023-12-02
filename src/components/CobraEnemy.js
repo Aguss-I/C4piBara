@@ -38,15 +38,15 @@ export default class Enemies2 extends Phaser.GameObjects.Sprite {
 
       if (Math.abs(velocityX) > Math.abs(velocityY)) {
         if (velocityX > 0) {
-          this.anims.play("CobraRight", true);
+          this.anims.play("cobraRight", true);
         } else {
-          this.anims.play("CobraLeft", true);
+          this.anims.play("cobraLeft", true);
         }
       } else {
         if (velocityY > 0) {
-          this.anims.play("CobraDown", true);
+          this.anims.play("cobraDown", true);
         } else {
-          this.anims.play("CobraUp", true);
+          this.anims.play("cobraUp", true);
         }
       }
 

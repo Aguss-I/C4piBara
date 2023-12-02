@@ -20,6 +20,11 @@ export default class City extends Phaser.Scene {
       owlNoise,
       owlMesseage,
     } = keys.CityText;
+    const { move, attack, full, pause } = keys.tutorial;
+    this.move = move;
+    this.attack = attack;
+    this.full = full;
+    this.pause = pause;
     this.begin = cityMissionBegin;
     this.end = cityMissionEnd;
     this.save = savePoint;
@@ -100,14 +105,14 @@ export default class City extends Phaser.Scene {
         }
         case "desert": {
           this.exit = this.physics.add
-            .image(x, y, "ArrowUp")
+            .image(x, y, "arrowUp")
             .setScale(1)
             .setSize(200, 200);
           break;
         }
         case "boss": {
           this.door
-            .create(x, y, "ArrowDown")
+            .create(x, y, "arrowDown")
             .setScale(1)
             .setSize(200, 200)
             .setVisible(true)
@@ -123,15 +128,15 @@ export default class City extends Phaser.Scene {
     }
     this.savePlace = this.physics.add.sprite(4300, 2850, "savePoint");
     setTimeout(() => {
-      this.savePlace.anims.play("SavePoint", true);
+      this.savePlace.anims.play("savePoint", true);
     }, 2000);
-    this.jefeDoor = this.add.image(1600, 3900, "BossDoor");
+    this.jefeDoor = this.add.image(1600, 3900, "bossDoor");
 
     this.player = new Player(
       this,
       this.playerX,
       this.playerY,
-      "C4",
+      "c4",
       this.velocityPlayer
     );
     map.createLayer("Top", layerbackGround, 0, 0);
@@ -143,14 +148,14 @@ export default class City extends Phaser.Scene {
 
     this.hitbox = new Hitbox(this, this.player);
 
-    this.eagle = new Npc(this, 4550, 3290, "Eagle");
+    this.eagle = new Npc(this, 4550, 3290, "eagle");
 
     for (let i = 0; i < 6; i++) {
       const squirrel = new Enemies(
         this,
         this.initialX,
         this.initialY,
-        "Squirrel",
+        "squirrel",
         this.velocitySquirrel
       );
       this.squirrels.push(squirrel);
@@ -174,23 +179,23 @@ export default class City extends Phaser.Scene {
       this
     );
     if (this.showTutorial) {
-      this.tutorial = this.add.image(950, 500, "Tutorial").setScale(2);
-      this.moverseText = this.add.text(480, 600, "Moverse", {
+      this.tutorial = this.add.image(950, 500, "tutorial").setScale(2);
+      this.moverseText = this.add.text(480, 600, getPhrase(this.move), {
         color: "000000",
         fontSize: "35px",
         fontFamily: "Trebuchet MS",
       });
-      this.atacarText = this.add.text(880, 600, "Atacar", {
+      this.atacarText = this.add.text(880, 600, getPhrase(this.attack), {
         color: "000000",
         fontSize: "35px",
         fontFamily: "Trebuchet MS",
       });
-      this.fullScreentext = this.add.text(1360, 600, "Pantalla Completa", {
+      this.fullScreentext = this.add.text(1360, 600, getPhrase(this.full), {
         color: "000000",
         fontSize: "35px",
         fontFamily: "Trebuchet MS",
       });
-      this.pauseText = this.add.text(1165, 600, "Pausa", {
+      this.pauseText = this.add.text(1165, 600, getPhrase(this.pause), {
         color: "000000",
         fontSize: "35px",
         fontFamily: "Trebuchet MS",
@@ -260,7 +265,7 @@ export default class City extends Phaser.Scene {
 
     this.rectangle = this.add.image(957, 900, "rectangle");
     this.rectangle.scaleX = 1.1;
-    this.designUI2 = this.add.image(1700, 57, "UIRectangle");
+    this.designUI2 = this.add.image(1700, 57, "uiRectangle");
     this.designUI2.scaleX = 2.2;
     this.designUI2.setVisible(false);
     this.squirrelsKilledText = this.add.text(
@@ -314,13 +319,13 @@ export default class City extends Phaser.Scene {
     this.designUI = this.add.image(
       this.saveText.x + 145,
       this.saveText.y + 20,
-      "UIRectangle"
+      "uiRectangle"
     );
     this.designUI.setVisible(false);
     this.designUI.scaleY = 0.8;
     this.saveText.setVisible(false);
     this.saveText.setDepth(1);
-    this.owl = new Npc(this, 3700, 120, "Owl");
+    this.owl = new Npc(this, 3700, 120, "owl");
 
     this.owl.setVisible(false);
     if (this.missionComplete === true) {
@@ -411,7 +416,7 @@ export default class City extends Phaser.Scene {
 
   playerHitEnemy(hitbox, squirrel) {
     if (squirrel.active && hitbox.active) {
-      squirrel.anims.play("Damage", true);
+      squirrel.anims.play("damage", true);
       squirrel.takeDamage(this.hitbox.damageAmount);
 
       squirrel.stopMovement();
@@ -511,7 +516,7 @@ export default class City extends Phaser.Scene {
 
     this.rocksGroup.createMultiple({
       classType: Phaser.Physics.Arcade.Sprite,
-      key: "Rock",
+      key: "rock",
       frame: 0,
       visible: false,
       active: false,
@@ -578,15 +583,15 @@ export default class City extends Phaser.Scene {
 
     if (Math.abs(velocityX) < Math.abs(velocityY)) {
       if (velocityY < 0) {
-        squirrel.anims.play("AttackUpSquirrel", true);
+        squirrel.anims.play("attackUpSquirrel", true);
       } else {
-        squirrel.anims.play("AttackDownSquirrel", true);
+        squirrel.anims.play("attackDownSquirrel", true);
       }
     } else {
       if (velocityX < 0) {
-        squirrel.anims.play("AttackLeftSquirrel", true);
+        squirrel.anims.play("attackLeftSquirrel", true);
       } else {
-        squirrel.anims.play("AttackRightSquirrel", true);
+        squirrel.anims.play("attackRightSquirrel", true);
       }
     }
 

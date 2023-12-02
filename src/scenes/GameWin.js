@@ -9,7 +9,7 @@ export default class GameWin extends Phaser.Scene {
     const canvasHeight = this.sys.game.config.height;
 
     const theEnd = this.add
-      .video(960, 500, "Ending")
+      .video(960, 500, "ending")
       .setInteractive()
       .setDepth(1);
     theEnd.setScale(1.5);

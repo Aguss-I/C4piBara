@@ -21,24 +21,24 @@ export default class Preload extends Phaser.Scene {
     this.load.image("desertTemp", "./assets/images/desertTemp.jpg");
     this.load.image("musicOn", "./assets/images/onMusic.png");
     this.load.image("musicOff", "./assets/images/offMusic.png");
-    this.load.image("UIRectangle", "./assets/images/UIRectangle.png");
-    this.load.spritesheet("Boss", "./assets/images/BossWalk.png", {
+    this.load.image("uiRectangle", "./assets/images/UIRectangle.png");
+    this.load.spritesheet("boss", "./assets/images/BossWalk.png", {
       frameWidth: 629,
       frameHeight: 501,
     });
 
-    this.load.spritesheet("BossAttack", "./assets/images/BearAttack.png", {
+    this.load.spritesheet("bossAttack", "./assets/images/BearAttack.png", {
       frameWidth: 791,
       frameHeight: 600,
     });
 
     this.load.video("introScene", "./assets/videos/spaceIntro.mp4");
     this.load.video("logos", "./assets/videos/IntroLogos.mp4");
-    this.load.video("Ending", "./assets/videos/C4pyFinal.mp4");
+    this.load.video("ending", "./assets/videos/C4pyFinal.mp4");
 
-    this.load.image("ArrowUp", "./assets/images/ArrowUp.png");
-    this.load.image("ArrowDown", "./assets/images/ArrowDown.png");
-    this.load.image("BossDoor", "./assets/images/BossEntrada.png");
+    this.load.image("arrowUp", "./assets/images/ArrowUp.png");
+    this.load.image("arrowDown", "./assets/images/ArrowDown.png");
+    this.load.image("bossDoor", "./assets/images/BossEntrada.png");
 
     this.load.spritesheet("explosion", "./assets/images/EnemyDeath.png", {
       frameWidth: 221,
@@ -50,44 +50,44 @@ export default class Preload extends Phaser.Scene {
       frameHeight: 270,
     });
 
-    this.load.spritesheet("Eagle", "./assets/images/NPC.png", {
+    this.load.spritesheet("eagle", "./assets/images/NPC.png", {
       frameWidth: 230,
       frameHeight: 230,
     });
 
-    this.load.spritesheet("Owl", "./assets/images/Owl.png", {
+    this.load.spritesheet("owl", "./assets/images/Owl.png", {
       frameWidth: 129,
       frameHeight: 234,
     });
 
-    this.load.image("Tutorial", "./assets/images/TutorialImage.png");
+    this.load.image("tutorial", "./assets/images/TutorialImage.png");
 
-    this.load.spritesheet("Rock", "./assets/images/Rock.png", {
+    this.load.spritesheet("rock", "./assets/images/Rock.png", {
       frameWidth: 21,
       frameHeight: 21,
     });
 
-    this.load.spritesheet("BigBite", "./assets/images/imaginaryAttack.png", {
+    this.load.spritesheet("bigBite", "./assets/images/imaginaryAttack.png", {
       frameWidth: 50,
       frameHeight: 50,
     });
 
-    this.load.spritesheet("Squirrel", "./assets/images/Squirrel.png", {
+    this.load.spritesheet("squirrel", "./assets/images/Squirrel.png", {
       frameWidth: 221,
       frameHeight: 169,
     });
 
-    this.load.spritesheet("Cobra", "./assets/images/Cobra.png", {
+    this.load.spritesheet("cobra", "./assets/images/Cobra.png", {
       frameWidth: 270,
       frameHeight: 198,
     });
 
-    this.load.spritesheet("C4", "./assets/images/C4.png", {
+    this.load.spritesheet("c4", "./assets/images/C4.png", {
       frameWidth: 212,
       frameHeight: 200,
     });
 
-    this.load.spritesheet("Boulder", "./assets/images/BearAttackRock.png", {
+    this.load.spritesheet("boulder", "./assets/images/BearAttackRock.png", {
       frameWidth: 264,
       frameHeight: 254,
     });
@@ -95,7 +95,6 @@ export default class Preload extends Phaser.Scene {
     this.load.image("Mapdesert", "./assets/images/TilesetDesert.png");
     this.load.image("Mapcity", "./assets/images/CityTileset.png");
     this.load.image("BossAreaTileset", "./assets/images/BossAreaTileset.png");
-    this.load.image("Menupause", "./assets/images/MenuPausa.png");
 
     this.load.audio("citySFX", "./assets/Audio/citySFX.mp3");
     this.load.audio("swordAttack2", "./assets/Audio/swordAttack.wav");
@@ -106,12 +105,12 @@ export default class Preload extends Phaser.Scene {
     this.load.audio("owlSound", "./assets/Audio/OwlSound.mp3");
     this.load.audio("eagleSound", "./assets/Audio/eagleSound.mp3");
 
-    this.load.spritesheet("Fox", "./assets/images/Fox.png", {
+    this.load.spritesheet("fox", "./assets/images/Fox.png", {
       frameWidth: 174,
       frameHeight: 155,
     });
 
-    this.load.spritesheet("Gear", "./assets/images/ObjetoMision.png", {
+    this.load.spritesheet("gear", "./assets/images/ObjetoMision.png", {
       frameWidth: 113,
       frameHeight: 86,
     });
@@ -124,37 +123,28 @@ export default class Preload extends Phaser.Scene {
     logosScene.play();
 
     this.anims.create({
-      key: "BoulderLeft",
-      frames: [{ key: "Boulder", frame: 0 }],
+      key: "boulderLeft",
+      frames: [{ key: "boulder", frame: 0 }],
       frameRate: 1,
     });
     this.anims.create({
-      key: "BoulderRight",
-      frames: [{ key: "Boulder", frame: 1 }],
+      key: "boulderRight",
+      frames: [{ key: "boulder", frame: 1 }],
       frameRate: 1,
     });
     this.anims.create({
-      key: "BoulderUp",
-      frames: [{ key: "Boulder", frame: 2 }],
+      key: "boulderUp",
+      frames: [{ key: "boulder", frame: 2 }],
       frameRate: 1,
     });
     this.anims.create({
-      key: "BoulderDown",
-      frames: [{ key: "Boulder", frame: 2 }],
+      key: "boulderDown",
+      frames: [{ key: "boulder", frame: 2 }],
       frameRate: 1,
     });
 
     this.anims.create({
-      key: "BoulderLeft",
-      frames: this.anims.generateFrameNumbers("Boulder", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 15,
-      repeat: 0,
-    });
-    this.anims.create({
-      key: "SavePoint",
+      key: "savePoint",
       frames: this.anims.generateFrameNumbers("savePoint", {
         start: 0,
         end: 3,
@@ -164,7 +154,7 @@ export default class Preload extends Phaser.Scene {
     });
     this.anims.create({
       key: "gear-anim",
-      frames: this.anims.generateFrameNumbers("Gear", { start: 0, end: 1 }),
+      frames: this.anims.generateFrameNumbers("gear", { start: 0, end: 1 }),
       frameRate: 4,
       repeat: -1,
     });
@@ -175,52 +165,52 @@ export default class Preload extends Phaser.Scene {
       repeat: -1,
     });
     this.anims.create({
-      key: "Damage",
-      frames: [{ key: "Squirrel", frame: 33 }],
+      key: "damage",
+      frames: [{ key: "squirrel", frame: 33 }],
       frameRate: 1,
     });
     this.anims.create({
       key: "walkingUp",
-      frames: this.anims.generateFrameNumbers("C4", { start: 18, end: 23 }),
+      frames: this.anims.generateFrameNumbers("c4", { start: 18, end: 23 }),
       frameRate: 5,
       repeat: -1,
     });
 
     this.anims.create({
       key: "upStop",
-      frames: [{ key: "C4", frame: 17 }],
+      frames: [{ key: "c4", frame: 17 }],
       frameRate: 1,
     });
 
     this.anims.create({
       key: "walkingDown",
-      frames: this.anims.generateFrameNumbers("C4", { start: 11, end: 16 }),
+      frames: this.anims.generateFrameNumbers("c4", { start: 11, end: 16 }),
       frameRate: 5,
       repeat: -1,
     });
 
     this.anims.create({
       key: "downStop",
-      frames: [{ key: "C4", frame: 10 }],
+      frames: [{ key: "c4", frame: 10 }],
       frameRate: 10,
     });
 
     this.anims.create({
       key: "walkingRight",
-      frames: this.anims.generateFrameNumbers("C4", { start: 6, end: 9 }),
+      frames: this.anims.generateFrameNumbers("c4", { start: 6, end: 9 }),
       frameRate: 5,
       repeat: -1,
     });
 
     this.anims.create({
       key: "rightStop",
-      frames: [{ key: "C4", frame: 5 }],
+      frames: [{ key: "c4", frame: 5 }],
       frameRate: 1,
     });
 
     this.anims.create({
       key: "walkingLeft",
-      frames: this.anims.generateFrameNumbers("C4", { start: 3, end: 0 }),
+      frames: this.anims.generateFrameNumbers("c4", { start: 3, end: 0 }),
       frameRate: 5,
       repeat: -1,
     });
@@ -232,35 +222,35 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "AttackLeft",
-      frames: this.anims.generateFrameNumbers("C4", { start: 27, end: 29 }),
+      key: "attackLeft",
+      frames: this.anims.generateFrameNumbers("c4", { start: 27, end: 29 }),
       frameRate: 15,
       repeat: 0,
     });
 
     this.anims.create({
-      key: "AttackRight",
-      frames: this.anims.generateFrameNumbers("C4", { start: 24, end: 26 }),
+      key: "attackRight",
+      frames: this.anims.generateFrameNumbers("c4", { start: 24, end: 26 }),
       frameRate: 15,
       repeat: 0,
     });
 
     this.anims.create({
-      key: "AttackUp",
-      frames: this.anims.generateFrameNumbers("C4", { start: 33, end: 35 }),
+      key: "attackUp",
+      frames: this.anims.generateFrameNumbers("c4", { start: 33, end: 35 }),
       frameRate: 15,
       repeat: 0,
     });
 
     this.anims.create({
-      key: "AttackDown",
-      frames: this.anims.generateFrameNumbers("C4", { start: 30, end: 32 }),
+      key: "attackDown",
+      frames: this.anims.generateFrameNumbers("c4", { start: 30, end: 32 }),
       frameRate: 15,
       repeat: 0,
     });
     this.anims.create({
-      key: "AttackLeftSquirrel",
-      frames: this.anims.generateFrameNumbers("Squirrel", {
+      key: "attackLeftSquirrel",
+      frames: this.anims.generateFrameNumbers("squirrel", {
         start: 17,
         end: 20,
       }),
@@ -269,8 +259,8 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "AttackRightSquirrel",
-      frames: this.anims.generateFrameNumbers("Squirrel", {
+      key: "attackRightSquirrel",
+      frames: this.anims.generateFrameNumbers("squirrel", {
         start: 21,
         end: 24,
       }),
@@ -279,8 +269,8 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "AttackUpSquirrel",
-      frames: this.anims.generateFrameNumbers("Squirrel", {
+      key: "attackUpSquirrel",
+      frames: this.anims.generateFrameNumbers("squirrel", {
         start: 25,
         end: 28,
       }),
@@ -289,8 +279,8 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "AttackDownSquirrel",
-      frames: this.anims.generateFrameNumbers("Squirrel", {
+      key: "attackDownSquirrel",
+      frames: this.anims.generateFrameNumbers("squirrel", {
         start: 29,
         end: 31,
       }),
@@ -299,7 +289,7 @@ export default class Preload extends Phaser.Scene {
     });
     this.anims.create({
       key: "squirrelUp",
-      frames: this.anims.generateFrameNumbers("Squirrel", {
+      frames: this.anims.generateFrameNumbers("squirrel", {
         start: 9,
         end: 11,
       }),
@@ -309,7 +299,7 @@ export default class Preload extends Phaser.Scene {
 
     this.anims.create({
       key: "squirrelDown",
-      frames: this.anims.generateFrameNumbers("Squirrel", {
+      frames: this.anims.generateFrameNumbers("squirrel", {
         start: 13,
         end: 15,
       }),
@@ -319,20 +309,20 @@ export default class Preload extends Phaser.Scene {
 
     this.anims.create({
       key: "squirrelLeft",
-      frames: this.anims.generateFrameNumbers("Squirrel", { start: 2, end: 0 }),
+      frames: this.anims.generateFrameNumbers("squirrel", { start: 2, end: 0 }),
       frameRate: 5,
       repeat: -1,
     });
 
     this.anims.create({
       key: "squirrelRight",
-      frames: this.anims.generateFrameNumbers("Squirrel", { start: 5, end: 7 }),
+      frames: this.anims.generateFrameNumbers("squirrel", { start: 5, end: 7 }),
       frameRate: 5,
       repeat: -1,
     });
     this.anims.create({
-      key: "CobraUp",
-      frames: this.anims.generateFrameNumbers("Cobra", {
+      key: "cobraUp",
+      frames: this.anims.generateFrameNumbers("cobra", {
         start: 11,
         end: 14,
       }),
@@ -341,8 +331,8 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "CobraDown",
-      frames: this.anims.generateFrameNumbers("Cobra", {
+      key: "cobraDown",
+      frames: this.anims.generateFrameNumbers("cobra", {
         start: 16,
         end: 19,
       }),
@@ -351,21 +341,21 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "CobraLeft",
-      frames: this.anims.generateFrameNumbers("Cobra", { start: 1, end: 4 }),
+      key: "cobraLeft",
+      frames: this.anims.generateFrameNumbers("cobra", { start: 1, end: 4 }),
       frameRate: 5,
       repeat: -1,
     });
 
     this.anims.create({
-      key: "CobraRight",
-      frames: this.anims.generateFrameNumbers("Cobra", { start: 6, end: 9 }),
+      key: "cobraRight",
+      frames: this.anims.generateFrameNumbers("cobra", { start: 6, end: 9 }),
       frameRate: 5,
       repeat: -1,
     });
     this.anims.create({
-      key: "AttackLeftCobra",
-      frames: this.anims.generateFrameNumbers("Cobra", {
+      key: "attackLeftCobra",
+      frames: this.anims.generateFrameNumbers("cobra", {
         start: 20,
         end: 21,
       }),
@@ -374,8 +364,8 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "AttackRightCobra",
-      frames: this.anims.generateFrameNumbers("Cobra", {
+      key: "attackRightCobra",
+      frames: this.anims.generateFrameNumbers("cobra", {
         start: 22,
         end: 23,
       }),
@@ -384,8 +374,8 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "AttackUpCobra",
-      frames: this.anims.generateFrameNumbers("Cobra", {
+      key: "attackUpCobra",
+      frames: this.anims.generateFrameNumbers("cobra", {
         start: 24,
         end: 25,
       }),
@@ -394,8 +384,8 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "AttackDownCobra",
-      frames: this.anims.generateFrameNumbers("Cobra", {
+      key: "attackDownCobra",
+      frames: this.anims.generateFrameNumbers("cobra", {
         start: 26,
         end: 27,
       }),
@@ -405,18 +395,18 @@ export default class Preload extends Phaser.Scene {
 
     this.anims.create({
       key: "cobraDamage",
-      frames: [{ key: "Cobra", frame: 29 }],
+      frames: [{ key: "cobra", frame: 29 }],
       frameRate: 1,
     });
     this.anims.create({
       key: "bossDamage",
-      frames: [{ key: "Boss", frame: 18 }],
+      frames: [{ key: "boss", frame: 18 }],
       frameRate: 1,
     });
 
     this.anims.create({
-      key: "BearUp",
-      frames: this.anims.generateFrameNumbers("Boss", {
+      key: "bearUp",
+      frames: this.anims.generateFrameNumbers("boss", {
         start: 14,
         end: 17,
       }),
@@ -425,8 +415,8 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "BearDown",
-      frames: this.anims.generateFrameNumbers("Boss", {
+      key: "bearDown",
+      frames: this.anims.generateFrameNumbers("boss", {
         start: 10,
         end: 13,
       }),
@@ -435,21 +425,21 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "BearLeft",
-      frames: this.anims.generateFrameNumbers("Boss", { start: 0, end: 4 }),
+      key: "bearLeft",
+      frames: this.anims.generateFrameNumbers("boss", { start: 0, end: 4 }),
       frameRate: 5,
       repeat: -1,
     });
 
     this.anims.create({
-      key: "BearRight",
-      frames: this.anims.generateFrameNumbers("Boss", { start: 5, end: 9 }),
+      key: "bearRight",
+      frames: this.anims.generateFrameNumbers("boss", { start: 5, end: 9 }),
       frameRate: 5,
       repeat: -1,
     });
     this.anims.create({
-      key: "AttackLeftBear",
-      frames: this.anims.generateFrameNumbers("BossAttack", {
+      key: "attackLeftBear",
+      frames: this.anims.generateFrameNumbers("bossAttack", {
         start: 0,
         end: 2,
       }),
@@ -458,8 +448,8 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "AttackRightBear",
-      frames: this.anims.generateFrameNumbers("BossAttack", {
+      key: "attackRightBear",
+      frames: this.anims.generateFrameNumbers("bossAttack", {
         start: 3,
         end: 5,
       }),
@@ -468,8 +458,8 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "AttackUpBear",
-      frames: this.anims.generateFrameNumbers("BossAttack", {
+      key: "attackUpBear",
+      frames: this.anims.generateFrameNumbers("bossAttack", {
         start: 9,
         end: 11,
       }),
@@ -478,8 +468,8 @@ export default class Preload extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "AttackDownBear",
-      frames: this.anims.generateFrameNumbers("BossAttack", {
+      key: "attackDownBear",
+      frames: this.anims.generateFrameNumbers("bossAttack", {
         start: 6,
         end: 8,
       }),

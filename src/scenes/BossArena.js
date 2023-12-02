@@ -57,7 +57,7 @@ export default class BossArena extends Phaser.Scene {
       switch (name) {
         case "backcity": {
           this.backCity
-            .create(x, y, "ArrowUp")
+            .create(x, y, "arrowUp")
             .setScale(1)
             .setSize(200, 200)
             .setVisible(true);
@@ -76,7 +76,7 @@ export default class BossArena extends Phaser.Scene {
       }
     });
     this.createBoulder();
-    this.player = new Player(this, 500, 500, "C4", this.velocityPlayer);
+    this.player = new Player(this, 500, 500, "c4", this.velocityPlayer);
     this.playersGroup = this.physics.add.group();
     this.hitbox = new Hitbox(this, this.player);
     this.cameras.main.startFollow(this.player);
@@ -118,7 +118,7 @@ export default class BossArena extends Phaser.Scene {
         this,
         this.initialX,
         this.initialY,
-        "Boss",
+        "boss",
         this.bossVelocity
       );
       this.boss.push(boss);
@@ -129,7 +129,7 @@ export default class BossArena extends Phaser.Scene {
       this.scene.pause("BossArena");
     });
 
-    this.designUI = this.add.image(100, 1050, "UIRectangle");
+    this.designUI = this.add.image(100, 1050, "uiRectangle");
     this.designUI.scaleX = 10;
     this.designUI.scaleY = 1;
     this.designUI.setScrollFactor(0, 0);
@@ -213,7 +213,7 @@ export default class BossArena extends Phaser.Scene {
 
     this.boulderGroup.createMultiple({
       classType: Phaser.Physics.Arcade.Sprite,
-      key: "Boulder",
+      key: "boulder",
       frame: 0,
       visible: false,
       active: false,
@@ -278,15 +278,15 @@ export default class BossArena extends Phaser.Scene {
 
     if (Math.abs(velocityX) < Math.abs(velocityY)) {
       if (velocityY < 0) {
-        boss.anims.play("AttackUpBear", true);
+        boss.anims.play("attackUpBear", true);
       } else {
-        boss.anims.play("AttackDownBear", true);
+        boss.anims.play("attackDownBear", true);
       }
     } else {
       if (velocityX < 0) {
-        boss.anims.play("AttackLeftBear", true);
+        boss.anims.play("attackLeftBear", true);
       } else {
-        boss.anims.play("AttackRightBear", true);
+        boss.anims.play("attackRightBear", true);
       }
     }
     const boulder = this.boulderGroup.get(boss.x, boss.y);

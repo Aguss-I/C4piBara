@@ -31,15 +31,15 @@ export default class BearEnemy extends Phaser.GameObjects.Sprite {
 
       if (Math.abs(velocityX) > Math.abs(velocityY)) {
         if (velocityX > 0) {
-          this.anims.play("BearRight", true);
+          this.anims.play("bearRight", true);
         } else {
-          this.anims.play("BearLeft", true);
+          this.anims.play("bearLeft", true);
         }
       } else {
         if (velocityY > 0) {
-          this.anims.play("BearDown", true);
+          this.anims.play("bearDown", true);
         } else {
-          this.anims.play("BearUp", true);
+          this.anims.play("bearUp", true);
         }
       }
 

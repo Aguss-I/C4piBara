@@ -70,7 +70,7 @@ export default class Desert extends Phaser.Scene {
       switch (name) {
         case "collectible": {
           let collectibleMision1 = this.collectibleMision
-            .create(x, y, "Gear")
+            .create(x, y, "gear")
             .setScale(1)
             .setSize(200, 200);
           collectibleMision1.anims.play("gear-anim", true);
@@ -92,7 +92,7 @@ export default class Desert extends Phaser.Scene {
       this,
       this.playerX,
       this.playerY,
-      "C4",
+      "c4",
       this.velocityPlayer
     );
     map.createLayer("Top", layerbackGround, 0, 0);
@@ -112,7 +112,7 @@ export default class Desert extends Phaser.Scene {
       switch (name) {
         case "ciudad": {
           this.salidaDesierto
-            .create(x, y, "ArrowDown")
+            .create(x, y, "arrowDown")
             .setScale(1)
             .setSize(200, 200)
             .setVisible(true);
@@ -122,7 +122,7 @@ export default class Desert extends Phaser.Scene {
       }
     });
 
-    this.fox = new Npc(this, 3548, 150, "Fox");
+    this.fox = new Npc(this, 3548, 150, "fox");
     this.physics.add.overlap(
       this.player,
       this.salidaDesierto,
@@ -137,7 +137,7 @@ export default class Desert extends Phaser.Scene {
       null,
       this
     );
-    this.designUI2 = this.add.image(1700, 105, "UIRectangle");
+    this.designUI2 = this.add.image(1700, 105, "uiRectangle");
     this.designUI2.scaleX = 2.2;
     this.designUI2.scaleY = 1.1;
     this.designUI2.setVisible(false);
@@ -193,7 +193,7 @@ export default class Desert extends Phaser.Scene {
         this,
         this.initialX,
         this.initialY,
-        "Cobra",
+        "cobra",
         this.velocityCobra
       );
       this.cobras.push(cobra);
@@ -347,7 +347,7 @@ export default class Desert extends Phaser.Scene {
 
     this.biteGroup.createMultiple({
       classType: Phaser.Physics.Arcade.Sprite,
-      key: "BigBite",
+      key: "bigBite",
       frame: 0,
       visible: false,
       active: false,
@@ -392,15 +392,15 @@ export default class Desert extends Phaser.Scene {
 
     if (Math.abs(velocityX) < Math.abs(velocityY)) {
       if (velocityY < 0) {
-        cobra.anims.play("AttackUpCobra", true);
+        cobra.anims.play("attackUpCobra", true);
       } else {
-        cobra.anims.play("AttackDownCobra", true);
+        cobra.anims.play("attackDownCobra", true);
       }
     } else {
       if (velocityX < 0) {
-        cobra.anims.play("AttackLeftCobra", true);
+        cobra.anims.play("attackLeftCobra", true);
       } else {
-        cobra.anims.play("AttackRightCobra", true);
+        cobra.anims.play("attackRightCobra", true);
       }
     }
 

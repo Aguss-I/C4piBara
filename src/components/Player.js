@@ -77,23 +77,23 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.playerState = "attacking";
         switch (this.facingDirection) {
           case "left":
-            this.anims.play("AttackLeft");
+            this.anims.play("attackLeft");
             this.body.setVelocity(0);
             break;
           case "right":
-            this.anims.play("AttackRight");
+            this.anims.play("attackRight");
             this.body.setVelocity(0);
             break;
           case "up":
-            this.anims.play("AttackUp");
+            this.anims.play("attackUp");
             this.body.setVelocity(0);
             break;
           case "down":
-            this.anims.play("AttackDown");
+            this.anims.play("attackDown");
             this.body.setVelocity(0);
             break;
           default:
-            this.anims.play("AttackDown");
+            this.anims.play("attackDown");
         }
       }
 

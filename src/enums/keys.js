@@ -3,6 +3,13 @@ const Enemy = {
   cobrasKill: "Cobras derrotadas",
 };
 
+const tutorial = {
+  move: "Moverse",
+  attack: "Atacar",
+  full: "Pantalla Completa",
+  pause: "Pausa",
+}
+
 const MainMenu = {
   play: "Jugar",
   credits: "Créditos",
@@ -59,5 +66,6 @@ export default {
   CreditsMenu,
   GameEnd,
   CityText,
+  tutorial,
   DesertText,
 };
