@@ -26,8 +26,6 @@ export default class LanguageSelector extends Phaser.Scene {
 
   create() {
     this.click = this.sound.add("click", { volume: 0.3 });
-    
-    const { width, height } = this.scale;
 
     const canvasWidth = this.sys.game.config.width;
     const canvasHeight = this.sys.game.config.height;

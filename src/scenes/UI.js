@@ -29,7 +29,7 @@ export default class UI extends Phaser.Scene {
       fontFamily: "Roboto Mono",
     });
 
-    this.hpTexto = this.add.text(252, 68, `${this.hp}`, {
+    this.hpText = this.add.text(252, 68, `${this.hp}`, {
       fontSize: "34px",
       fontFamily: "Roboto Mono",
       fill: "#FFFFFF",
@@ -40,7 +40,7 @@ export default class UI extends Phaser.Scene {
   }
   UpdateHP(data) {
     this.hp = data.hp;
-    this.hpTexto.setText(`${this.hp}`);
+    this.hpText.setText(`${this.hp}`);
   }
   UpdateLVL(data) {
     this.lvl = data.lvl;

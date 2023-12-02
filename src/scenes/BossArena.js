@@ -21,7 +21,7 @@ export default class BossArena extends Phaser.Scene {
     this.exp = data.exp || 0;
     this.missionComplete = data.missionComplete || false;
     this.damageAmount = data.damageAmount || 100;
-    this.Bossvelocity = 200;
+    this.bossVelocity = 200;
     this.bossEnemyHp = data.bossEnemyHp || 30000;
     this.initialX = 1500;
     this.initialY = 900;
@@ -56,7 +56,8 @@ export default class BossArena extends Phaser.Scene {
       const { x = 0, y = 0, name } = objData;
       switch (name) {
         case "backcity": {
-          this.backCity.create(x, y, "ArrowUp")
+          this.backCity
+            .create(x, y, "ArrowUp")
             .setScale(1)
             .setSize(200, 200)
             .setVisible(true);
@@ -64,7 +65,8 @@ export default class BossArena extends Phaser.Scene {
           break;
         }
         case "health": {
-          let collectible1 = this.collectibleBoss.create(x, y, "health")
+          let collectible1 = this.collectibleBoss
+            .create(x, y, "health")
             .setScale(1)
             .setSize(200, 200);
           collectible1.anims.play("health-anim", true);
@@ -117,7 +119,7 @@ export default class BossArena extends Phaser.Scene {
         this.initialX,
         this.initialY,
         "Boss",
-        this.Bossvelocity
+        this.bossVelocity
       );
       this.boss.push(boss);
     }
@@ -191,7 +193,7 @@ export default class BossArena extends Phaser.Scene {
       boss.anims.play("bossDamage", true);
     }
   }
-  takeDamage(damageAmount, boss) {
+  takeDamage(boss) {
     this.bossEnemyHp = this.bossEnemyHp - this.damageAmount;
 
     if (this.bossEnemyHp <= 0) {
@@ -237,7 +239,8 @@ export default class BossArena extends Phaser.Scene {
       );
     });
   }
-  goBack(player, backCity) {
+
+  goBack() {
     const data = {
       lvl: this.lvl,
       hp: this.hp,

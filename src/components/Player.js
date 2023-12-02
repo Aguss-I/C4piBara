@@ -13,7 +13,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     this.xKey = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
     this.xKeyIsPressed = false;
-    this.KeySave = null;
+    this.keySave = null;
     this.facingDirection = null;
 
     this.playerState = "idle";
@@ -35,23 +35,23 @@ export default class Player extends Phaser.GameObjects.Sprite {
       if (this.cursor.left.isDown) {
         this.body.setVelocityX(-this.velocity);
         this.anims.play("walkingLeft", true);
-        this.KeySave = "left";
+        this.keySave = "left";
       } else if (this.cursor.right.isDown) {
         this.body.setVelocityX(this.velocity);
         this.anims.play("walkingRight", true);
-        this.KeySave = "right";
+        this.keySave = "right";
       } else if (this.cursor.up.isDown) {
         this.body.setVelocityY(-this.velocity);
         this.anims.play("walkingUp", true);
-        this.KeySave = "up";
+        this.keySave = "up";
       } else if (this.cursor.down.isDown) {
         this.body.setVelocityY(this.velocity);
         this.anims.play("walkingDown", true);
-        this.KeySave = "down";
+        this.keySave = "down";
       }
 
-      if (this.KeySave !== null) {
-        this.facingDirection = this.KeySave;
+      if (this.keySave !== null) {
+        this.facingDirection = this.keySave;
       }
     }
 

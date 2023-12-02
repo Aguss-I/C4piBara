@@ -53,6 +53,7 @@ export default class Desert extends Phaser.Scene {
     const map = this.make.tilemap({ key: "Desert" });
     const layerbackGround = map.addTilesetImage("desertTileset", "Mapdesert");
     map.createLayer("Ground", layerbackGround, 0, 0);
+    map.createLayer("Ground", layerbackGround, 0, 0);
     const layerObstacle = map.addTilesetImage("desertTileset", "Mapdesert");
     const obstacle = map.createLayer("Deco", layerObstacle, 0, 0);
 
@@ -76,7 +77,8 @@ export default class Desert extends Phaser.Scene {
           break;
         }
         case "health": {
-          let collectible1 = this.collectible.create(x, y, "health")
+          let collectible1 = this.collectible
+            .create(x, y, "health")
             .setScale(1)
             .setSize(200, 200);
           collectible1.anims.play("health-anim", true);
@@ -293,7 +295,7 @@ export default class Desert extends Phaser.Scene {
 
     this.scene.start("City", data);
   }
-  mision2(player, fox) {
+  mision2() {
     this.designUI2.setVisible(true);
     this.mision2Text.setVisible(true);
     this.rectangle.setVisible(true);

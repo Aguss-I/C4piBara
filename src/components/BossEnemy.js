@@ -1,4 +1,4 @@
-import Phaser, { Scene } from "phaser";
+import Phaser from "phaser";
 export default class BearEnemy extends Phaser.GameObjects.Sprite {
   timer;
   constructor(scene, x, y, texture, velocity) {

@@ -106,7 +106,11 @@ export default class City extends Phaser.Scene {
           break;
         }
         case "boss": {
+<<<<<<< HEAD
          this.door
+=======
+          this.door
+>>>>>>> 4b776b7dd37f1a8ff12384039dbd235fba5ba5e7
             .create(x, y, "ArrowDown")
             .setScale(1)
             .setSize(200, 200)
@@ -422,7 +426,7 @@ export default class City extends Phaser.Scene {
     }
   }
 
-  mision(player, eagle) {
+  mision() {
     if (!this.eagleSoundCanHear) {
       this.eagleSound = this.sound.add("eagleSound");
       this.eagleSound.play();
@@ -537,7 +541,7 @@ export default class City extends Phaser.Scene {
       );
     });
   }
-  owlInteraction(player, owl) {
+  owlInteraction() {
     if (!this.owlSoundCanHear) {
       this.owlSound = this.sound.add("owlSound");
       this.owlSound.play();

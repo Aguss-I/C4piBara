@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { FETCHED,TODO } from "../enums/status";
+import { FETCHED, TODO } from "../enums/status";
 import { getPhrase } from "../services/translations";
 import keys from "../enums/keys";
 export default class Credits extends Phaser.Scene {

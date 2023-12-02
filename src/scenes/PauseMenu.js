@@ -40,7 +40,7 @@ export default class MenuPause extends Phaser.Scene {
     });
 
     loadButton.on("pointerdown", () => {
-      this.scene.resume(this.obtenerNivelEnPausa());
+      this.scene.resume(this.getPausedLevel());
       this.scene.stop("Menupause");
     });
 
@@ -66,11 +66,11 @@ export default class MenuPause extends Phaser.Scene {
     });
 
     this.input.keyboard.on("keydown-P", () => {
-      this.scene.resume(this.obtenerNivelEnPausa());
+      this.scene.resume(this.getPausedLevel());
       this.scene.stop("Menupause");
     });
   }
-  obtenerNivelEnPausa() {
+  getPausedLevel() {
     const nivelEnPausa = this.scene.manager.scenes.find((scene) =>
       scene.scene.isPaused()
     );

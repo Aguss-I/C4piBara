@@ -1,4 +1,4 @@
-import Phaser, { Scene } from "phaser";
+import Phaser from "phaser";
 import { TODO } from "../enums/status";
 import { getPhrase } from "../services/translations";
 import keys from "../enums/keys";
@@ -73,7 +73,7 @@ export default class Enemies2 extends Phaser.GameObjects.Sprite {
     this.patrolling = true;
   }
 
-  takeDamage(damageAmount) {
+  takeDamage() {
     if (this.active) {
       this.enemyCobraHp = this.enemyCobraHp - this.scene.damageAmount;
       if (this.enemyCobraHp <= 0) {
