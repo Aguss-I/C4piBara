@@ -52,9 +52,8 @@ export default class Desert extends Phaser.Scene {
 
     const map = this.make.tilemap({ key: "Desert" });
     const layerbackGround = map.addTilesetImage("desertTileset", "Mapdesert");
-    const background = map.createLayer("Ground", layerbackGround, 0, 0);
+    map.createLayer("Ground", layerbackGround, 0, 0);
     const layerObstacle = map.addTilesetImage("desertTileset", "Mapdesert");
-
     const obstacle = map.createLayer("Deco", layerObstacle, 0, 0);
 
     const objectsLayer = map.getObjectLayer("Objects");
@@ -69,7 +68,7 @@ export default class Desert extends Phaser.Scene {
 
       switch (name) {
         case "collectible": {
-          let collectibleMision1 = this.collectibleMision.create(x, y, "Gear")
+          let collectibleMision1 = this.collectibleMision.create(x, y, "gear")
             .setScale(1)
             .setSize(200, 200);
           collectibleMision1.anims.play("gear-anim", true);
@@ -90,10 +89,10 @@ export default class Desert extends Phaser.Scene {
       this,
       this.playerX,
       this.playerY,
-      "C4",
+      "c4",
       this.velocityPlayer
     );
-    const top = map.createLayer("Top", layerbackGround, 0, 0);
+   map.createLayer("Top", layerbackGround, 0, 0);
     obstacle.setCollisionByProperty({ colision: true });
     this.playersGroup = this.physics.add.group();
     this.hitbox = new Hitbox(this, this.player);
@@ -110,7 +109,7 @@ export default class Desert extends Phaser.Scene {
       switch (name) {
         case "ciudad": {
           let salida = this.salidaDesierto
-            .create(x, y, "ArrowDown")
+            .create(x, y, "arrowDown")
             .setScale(1)
             .setSize(200, 200)
             .setVisible(true);
@@ -120,7 +119,7 @@ export default class Desert extends Phaser.Scene {
       }
     });
 
-    this.fox = new Npc(this, 3548, 150, "Fox");
+    this.fox = new Npc(this, 3548, 150, "fox");
     this.physics.add.overlap(
       this.player,
       this.salidaDesierto,
@@ -135,7 +134,7 @@ export default class Desert extends Phaser.Scene {
       null,
       this
     );
-    this.designUI2 = this.add.image(1700, 105, "UIRectangle");
+    this.designUI2 = this.add.image(1700, 105, "uiRectangle");
     this.designUI2.scaleX = 2.2;
     this.designUI2.scaleY = 1.1;
     this.designUI2.setVisible(false);
@@ -207,7 +206,7 @@ export default class Desert extends Phaser.Scene {
     this.physics.add.overlap(
       this.player,
       this.collectibleMision,
-      this.ObjectCollected,
+      this.gearCollected,
       null,
       this
     );
@@ -219,8 +218,6 @@ export default class Desert extends Phaser.Scene {
       this
     );
     this.input.keyboard.on("keydown-F", () => {
-     this.scale.fullscreenTarget;
-
       if (this.scale.isFullscreen) {
         this.scale.stopFullscreen();
       } else {
@@ -265,7 +262,7 @@ export default class Desert extends Phaser.Scene {
     }
   }
 
-  ObjectCollected(player, collectible) {
+  gearCollected(player, collectible) {
     this.objectCollected = this.objectCollected + 1;
     this.objectCollectedText.setText(
       `${getPhrase(this.partCollected)}: ${this.objectCollected} /4`

@@ -86,8 +86,6 @@ export default class Preload extends Phaser.Scene {
     this.load.image("Mapcity", "./assets/images/CityTileset.png");
     this.load.image("BossAreaTileset", "./assets/images/BossAreaTileset.png");
     this.load.image("Menupause", "./assets/images/MenuPausa.png");
-    this.load.image("Mapcity", "./assets/images/CityTileset.png");
-
     this.load.audio("citySFX", "./assets/Audio/citySFX.mp3");
     this.load.audio("swordAttack2", "./assets/Audio/swordAttack.wav");
     this.load.audio("menuMusic", "./assets/Audio/menuMusic.mp3");
@@ -132,16 +130,6 @@ export default class Preload extends Phaser.Scene {
       key: "BoulderDown",
       frames: [{ key: "Boulder", frame: 2 }],
       frameRate: 1,
-    });
-
-    this.anims.create({
-      key: "BoulderLeft",
-      frames: this.anims.generateFrameNumbers("Boulder", {
-        start: 0,
-        end: 3,
-      }),
-      frameRate: 15,
-      repeat: 0,
     });
     this.anims.create({
       key: "SavePoint",

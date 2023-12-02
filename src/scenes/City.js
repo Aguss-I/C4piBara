@@ -106,7 +106,7 @@ export default class City extends Phaser.Scene {
           break;
         }
         case "boss": {
-          let boss = this.door
+         this.door
             .create(x, y, "ArrowDown")
             .setScale(1)
             .setSize(200, 200)
@@ -131,7 +131,7 @@ export default class City extends Phaser.Scene {
       this,
       this.playerX,
       this.playerY,
-      "C4",
+      "c4",
       this.velocityPlayer
     );
     map.createLayer("Top", layerbackGround, 0, 0);
@@ -143,14 +143,14 @@ export default class City extends Phaser.Scene {
 
     this.hitbox = new Hitbox(this, this.player);
 
-    this.eagle = new Npc(this, 4550, 3290, "Eagle");
+    this.eagle = new Npc(this, 4550, 3290, "eagle");
 
     for (let i = 0; i < 6; i++) {
       const squirrel = new Enemies(
         this,
         this.initialX,
         this.initialY,
-        "Squirrel",
+        "squirrel",
         this.velocitySquirrel
       );
       this.squirrels.push(squirrel);
@@ -174,7 +174,7 @@ export default class City extends Phaser.Scene {
       this
     );
     if (this.showTutorial) {
-      this.tutorial = this.add.image(950, 500, "Tutorial").setScale(2);
+      this.tutorial = this.add.image(950, 500, "tutorial").setScale(2);
       this.moverseText = this.add.text(480, 600, "Moverse", {
         color: "000000",
         fontSize: "35px",
@@ -260,7 +260,7 @@ export default class City extends Phaser.Scene {
 
     this.rectangle = this.add.image(957, 900, "rectangle");
     this.rectangle.scaleX = 1.1;
-    this.designUI2 = this.add.image(1700, 57, "UIRectangle");
+    this.designUI2 = this.add.image(1700, 57, "uiRectangle");
     this.designUI2.scaleX = 2.2;
     this.designUI2.setVisible(false);
     this.squirrelsKilledText = this.add.text(
@@ -320,7 +320,7 @@ export default class City extends Phaser.Scene {
     this.designUI.scaleY = 0.8;
     this.saveText.setVisible(false);
     this.saveText.setDepth(1);
-    this.owl = new Npc(this, 3700, 120, "Owl");
+    this.owl = new Npc(this, 3700, 120, "owl");
 
     this.owl.setVisible(false);
     if (this.missionComplete === true) {

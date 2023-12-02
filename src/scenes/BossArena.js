@@ -276,14 +276,18 @@ export default class BossArena extends Phaser.Scene {
     if (Math.abs(velocityX) < Math.abs(velocityY)) {
       if (velocityY < 0) {
         boss.anims.play("AttackUpBear", true);
+       
       } else {
         boss.anims.play("AttackDownBear", true);
+        
       }
     } else {
       if (velocityX < 0) {
         boss.anims.play("AttackLeftBear", true);
+        
       } else {
         boss.anims.play("AttackRightBear", true);
+       
       }
     }
     const boulder = this.boulderGroup.get(boss.x, boss.y);
