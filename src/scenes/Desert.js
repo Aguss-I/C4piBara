@@ -53,7 +53,6 @@ export default class Desert extends Phaser.Scene {
     const map = this.make.tilemap({ key: "Desert" });
     const layerbackGround = map.addTilesetImage("desertTileset", "Mapdesert");
     map.createLayer("Ground", layerbackGround, 0, 0);
-    map.createLayer("Ground", layerbackGround, 0, 0);
     const layerObstacle = map.addTilesetImage("desertTileset", "Mapdesert");
     const obstacle = map.createLayer("Deco", layerObstacle, 0, 0);
 

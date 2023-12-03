@@ -18,7 +18,6 @@ export default class Preload extends Phaser.Scene {
     this.load.image("title", "./assets/images/title.png");
     this.load.image("rectangle", "./assets/images/Rectangle.png");
     this.load.image("gameover", "./assets/images/Gameover.png");
-    this.load.image("desertTemp", "./assets/images/desertTemp.jpg");
     this.load.image("musicOn", "./assets/images/onMusic.png");
     this.load.image("musicOff", "./assets/images/offMusic.png");
     this.load.image("uiRectangle", "./assets/images/UIRectangle.png");
@@ -217,7 +216,7 @@ export default class Preload extends Phaser.Scene {
 
     this.anims.create({
       key: "leftStop",
-      frames: [{ key: "C4", frame: 4 }],
+      frames: [{ key: "c4", frame: 4 }],
       frameRate: 1,
     });
 
