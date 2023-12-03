@@ -313,12 +313,10 @@ export default class Desert extends Phaser.Scene {
         this.lvl++;
         this.maxHp += 25;
         events.emit("UpdateMaxHp", { maxHp: this.maxHp });
+        events.emit("UpdateLVL", { lvl: this.lvl });
         this.levelUpSound = this.sound.add("levelup");
         this.levelUpSound.play();
-        this.maxHp += 25;
         this.damageAmount += 50;
-        events.emit("UpdateMaxHp", { maxHp: this.maxHp });
-        events.emit("UpdateLVL", { lvl: this.lvl });
         this.cobrasKilled = 0;
         this.objectCollected = 0;
         this.cobrasKilledText.setText("");
