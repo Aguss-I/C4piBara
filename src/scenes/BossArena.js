@@ -113,7 +113,7 @@ export default class BossArena extends Phaser.Scene {
       this
     );
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 1; i+=1) {
       const boss = new BearEnemy(
         this,
         this.initialX,
@@ -151,7 +151,7 @@ export default class BossArena extends Phaser.Scene {
   update() {
     this.player.update();
     this.hitbox.update();
-    for (let i = 0; i < this.boss.length; i++) {
+    for (let i = 0; i < this.boss.length; i+=1) {
       const boss = this.boss[i];
       boss.update();
       if (!boss.active) continue;
