@@ -53,7 +53,6 @@ export default class Desert extends Phaser.Scene {
     const map = this.make.tilemap({ key: "Desert" });
     const layerbackGround = map.addTilesetImage("desertTileset", "Mapdesert");
     map.createLayer("Ground", layerbackGround, 0, 0);
-    map.createLayer("Ground", layerbackGround, 0, 0);
     const layerObstacle = map.addTilesetImage("desertTileset", "Mapdesert");
     const obstacle = map.createLayer("Deco", layerObstacle, 0, 0);
 
@@ -314,12 +313,10 @@ export default class Desert extends Phaser.Scene {
         this.lvl += 1;
         this.maxHp += 25;
         events.emit("UpdateMaxHp", { maxHp: this.maxHp });
+        events.emit("UpdateLVL", { lvl: this.lvl });
         this.levelUpSound = this.sound.add("levelup");
         this.levelUpSound.play();
-        this.maxHp += 25;
         this.damageAmount += 50;
-        events.emit("UpdateMaxHp", { maxHp: this.maxHp });
-        events.emit("UpdateLVL", { lvl: this.lvl });
         this.cobrasKilled = 0;
         this.objectCollected = 0;
         this.cobrasKilledText.setText("");
