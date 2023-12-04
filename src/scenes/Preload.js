@@ -217,7 +217,7 @@ export default class Preload extends Phaser.Scene {
 
     this.anims.create({
       key: "leftStop",
-      frames: [{ key: "C4", frame: 4 }],
+      frames: [{ key: "c4", frame: 4 }],
       frameRate: 1,
     });
 

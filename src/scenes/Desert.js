@@ -188,7 +188,7 @@ export default class Desert extends Phaser.Scene {
     });
     this.cobraGroup = this.physics.add.group();
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i+=1) {
       const cobra = new Enemies2(
         this,
         this.initialX,
@@ -235,7 +235,7 @@ export default class Desert extends Phaser.Scene {
     this.hitbox.update();
 
     this.inAttackRange = false;
-    for (let i = 0; i < this.cobras.length; i++) {
+    for (let i = 0; i < this.cobras.length; i+=1) {
       const cobra = this.cobras[i];
       cobra.update();
       if (!cobra.active) continue;
@@ -311,7 +311,7 @@ export default class Desert extends Phaser.Scene {
     }, 2000);
     if (this.objectCollected >= 3) {
       if (this.cobrasKilled >= 6) {
-        this.lvl++;
+        this.lvl += 1;
         this.maxHp += 25;
         events.emit("UpdateMaxHp", { maxHp: this.maxHp });
         this.levelUpSound = this.sound.add("levelup");
@@ -384,10 +384,6 @@ export default class Desert extends Phaser.Scene {
       cobra.resumeMovement();
     }, 500);
 
-    setTimeout(() => {
-      biting.destroy(true);
-    }, 500);
-
     if (Math.abs(velocityX) < Math.abs(velocityY)) {
       if (velocityY < 0) {
         cobra.anims.play("attackUpCobra", true);
@@ -408,6 +404,11 @@ export default class Desert extends Phaser.Scene {
       biting.setVisible(true);
       this.physics.moveTo(biting, player.x, player.y, Math.abs(velocityX));
     }
+
+    setTimeout(() => {
+      biting.destroy(true);
+    }, 500);
+
   }
   damage(player, biting, cobra) {
     this.hp = this.hp - 25;

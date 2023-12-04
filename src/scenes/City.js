@@ -150,7 +150,7 @@ export default class City extends Phaser.Scene {
 
     this.eagle = new Npc(this, 4550, 3290, "eagle");
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i+=1) {
       const squirrel = new Enemies(
         this,
         this.initialX,
@@ -356,7 +356,7 @@ export default class City extends Phaser.Scene {
     this.player.update();
     this.hitbox.update();
 
-    for (let i = 0; i < this.squirrels.length; i++) {
+    for (let i = 0; i < this.squirrels.length; i+=1) {
       const squirrel = this.squirrels[i];
       squirrel.update();
       if (!squirrel.active) continue;
@@ -448,7 +448,7 @@ export default class City extends Phaser.Scene {
     }, 2000);
 
     if (this.squirrelsKilled >= 4) {
-      this.lvl++;
+      this.lvl += 1;
       this.maxHp += 25;
       events.emit("UpdateMaxHp", { maxHp: this.maxHp });
       this.levelUpSound = this.sound.add("levelup");
@@ -577,10 +577,6 @@ export default class City extends Phaser.Scene {
       squirrel.resumeMovement();
     }, 500);
 
-    setTimeout(() => {
-      rock.destroy(true);
-    }, 2000);
-
     if (Math.abs(velocityX) < Math.abs(velocityY)) {
       if (velocityY < 0) {
         squirrel.anims.play("attackUpSquirrel", true);
@@ -601,6 +597,10 @@ export default class City extends Phaser.Scene {
       rock.setVisible(true);
       this.physics.moveTo(rock, player.x, player.y, Math.abs(velocityX));
     }
+
+    setTimeout(() => {
+      rock.destroy(true);
+    }, 2000);
   }
   bossEntrance() {
     const data = {
