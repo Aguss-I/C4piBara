@@ -26,7 +26,6 @@ export default class BossArena extends Phaser.Scene {
     this.initialX = 1500;
     this.initialY = 900;
     this.velocityBoulder = data.velocityBoulder || 900;
-    this.missionComplete = data.missionComplete;
     this.missionDesertComplete = data.missionDesertComplete;
   }
   create() {
@@ -72,7 +71,11 @@ export default class BossArena extends Phaser.Scene {
           collectible1.anims.play("health-anim", true);
 
           break;
+          
         }
+        default:
+
+        break;
       }
     });
     this.createBoulder();
@@ -189,11 +192,11 @@ export default class BossArena extends Phaser.Scene {
 
   playerHitEnemy(hitbox, boss) {
     if (boss.active && hitbox.active) {
-      this.takeDamage(this.hitbox.damageAmount);
+      this.takeDamage();
       boss.anims.play("bossDamage", true);
     }
   }
-  takeDamage(boss) {
+  takeDamage() {
     this.bossEnemyHp = this.bossEnemyHp - this.damageAmount;
 
     if (this.bossEnemyHp <= 0) {
@@ -223,21 +226,6 @@ export default class BossArena extends Phaser.Scene {
         y: 0,
       },
     });
-    this.boulderGroup.children.entries.forEach((bullet) => {
-      bullet.setCollideWorldBounds(true);
-      bullet.body.onWorldBounds = true;
-      bullet.setSize(150, 150);
-      bullet.body.world.on(
-        "worldbounds",
-        function (body) {
-          if (body.gameObject === this) {
-            this.setActive(false);
-            this.setVisible(false);
-          }
-        },
-        bullet
-      );
-    });
   }
 
   goBack() {
@@ -252,10 +240,8 @@ export default class BossArena extends Phaser.Scene {
       y: 3600,
       showtutorial: false,
     };
-    for (const b of this.boss) {
-      b.destroy(true, true);
-    }
     this.boss = [];
+    Object.values(this.boss).forEach(b => b.destroy(true, true));
     this.scene.start("City", data);
     this.scene.pause("BossArena");
   }
@@ -272,9 +258,7 @@ export default class BossArena extends Phaser.Scene {
     setTimeout(() => {
       boss.resumeMovement();
     }, 500);
-    setTimeout(() => {
-      boulder.destroy(true);
-    }, 2000);
+    
 
     if (Math.abs(velocityX) < Math.abs(velocityY)) {
       if (velocityY < 0) {
@@ -295,8 +279,12 @@ export default class BossArena extends Phaser.Scene {
       boulder.setVisible(true);
       this.physics.moveTo(boulder, player.x, player.y, Math.abs(velocityX));
     }
+
+    setTimeout(() => {
+      boulder.destroy(true);
+    }, 2000);    
   }
-  damage(player, boulder, boss) {
+  damage(player, boulder) {
     this.hp = this.hp - 75;
     events.emit("UpdateHP", { hp: this.hp });
     this.scene.get("UI").updateHealthBar();
@@ -305,9 +293,7 @@ export default class BossArena extends Phaser.Scene {
 
     if (this.hp <= 0) {
       this.player.setVisible(false).setActive(false);
-      for (const b of this.boss) {
-        b.destroy(true, true);
-      }
+      Object.values(this.boss).forEach(b => b.destroy(true, true));
       this.boss = [];
       this.scene.launch("GameEnd", { fromScene: "BossArena" });
       this.scene.pause("BossArena");

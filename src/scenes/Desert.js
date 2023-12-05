@@ -85,6 +85,9 @@ export default class Desert extends Phaser.Scene {
 
           break;
         }
+        default:
+          
+        break;
       }
     });
     this.player = new Player(
@@ -118,6 +121,9 @@ export default class Desert extends Phaser.Scene {
 
           break;
         }
+        default:
+          
+        break;
       }
     });
 
@@ -288,10 +294,8 @@ export default class Desert extends Phaser.Scene {
       squirrelsKilled: this.squirrelsKilled,
       showtutorial: false,
     };
-    for (const c of this.cobras) {
-      c.destroy(true, true);
-    }
     this.cobras = [];
+    Object.values(this.cobras).forEach(c => c.destroy(true, true));
 
     this.scene.start("City", data);
   }
@@ -321,9 +325,6 @@ export default class Desert extends Phaser.Scene {
         this.objectCollected = 0;
         this.cobrasKilledText.setText("");
         this.objectCollectedText.setText("");
-        for (const c of this.cobras) {
-          c.destroy(true, true);
-        }
         this.cobras = [];
         this.missionDesertComplete = true;
       }
@@ -351,20 +352,6 @@ export default class Desert extends Phaser.Scene {
         x: 0,
         y: 0,
       },
-    });
-    this.biteGroup.children.entries.forEach((bullet) => {
-      bullet.setCollideWorldBounds(true);
-      bullet.body.onWorldBounds = true;
-      bullet.body.world.on(
-        "worldbounds",
-        function (body) {
-          if (body.gameObject === this) {
-            this.setActive(false);
-            this.setVisible(false);
-          }
-        },
-        bullet
-      );
     });
   }
 
@@ -407,7 +394,7 @@ export default class Desert extends Phaser.Scene {
     }, 500);
 
   }
-  damage(player, biting, cobra) {
+  damage(player, biting) {
     this.hp = this.hp - 25;
     events.emit("UpdateHP", { hp: this.hp });
     this.scene.get("UI").updateHealthBar();
@@ -416,11 +403,8 @@ export default class Desert extends Phaser.Scene {
 
     if (this.hp <= 0) {
       this.player.setVisible(false).setActive(false);
-
-      for (const c of this.cobras) {
-        c.destroy(true, true);
-      }
       this.cobras = [];
+      Object.values(this.cobras).forEach(c => c.destroy(true, true));
       this.scene.stop("UI");
       this.scene.launch("GameEnd", { fromScene: "Desert" });
       this.scene.pause("Desert");

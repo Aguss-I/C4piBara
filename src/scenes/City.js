@@ -120,6 +120,9 @@ export default class City extends Phaser.Scene {
 
           break;
         }
+        default:
+
+        break;
       }
     });
 
@@ -234,9 +237,7 @@ export default class City extends Phaser.Scene {
       this.player,
       this.eagle,
       this.mision,
-      () => {
-        this.eagleSoundCanHear === true;
-      },
+      null,
       this
     );
     this.physics.add.overlap(
@@ -346,9 +347,7 @@ export default class City extends Phaser.Scene {
       this.player,
       this.owl,
       this.owlInteraction,
-      () => {
-        this.owlSoundCanHear === true;
-      },
+      null,
       this
     );
   }
@@ -451,12 +450,10 @@ export default class City extends Phaser.Scene {
       this.lvl += 1;
       this.maxHp += 25;
       events.emit("UpdateMaxHp", { maxHp: this.maxHp });
+      events.emit("UpdateLVL", { lvl: this.lvl });
       this.levelUpSound = this.sound.add("levelup");
       this.levelUpSound.play();
-      this.maxHp += 25;
       this.damageAmount += 50;
-      events.emit("UpdateMaxHp", { maxHp: this.maxHp });
-      events.emit("UpdateLVL", { lvl: this.lvl });
       this.missionComplete = true;
       this.misionText.setText(getPhrase(this.end));
       this.squirrelsKilled = 0;
@@ -498,10 +495,8 @@ export default class City extends Phaser.Scene {
         missionComplete: this.missionComplete,
         squirrelsKilled: this.squirrelsKilled,
       };
-      for (const s of this.squirrels) {
-        s.destroy(true, true);
-      }
       this.squirrels = [];
+      Object.values(this.squirrels).forEach(s => s.destroy(true, true));
 
       this.scene.start("Desert", data);
       this.scene.pause("City");
@@ -525,21 +520,6 @@ export default class City extends Phaser.Scene {
         x: 1500,
         y: 1200,
       },
-    });
-
-    this.rocksGroup.children.entries.forEach((bullet) => {
-      bullet.setCollideWorldBounds(true);
-      bullet.body.onWorldBounds = true;
-      bullet.body.world.on(
-        "worldbounds",
-        function (body) {
-          if (body.gameObject === this) {
-            this.setActive(false);
-            this.setVisible(false);
-          }
-        },
-        bullet
-      );
     });
   }
   owlInteraction() {
@@ -613,10 +593,8 @@ export default class City extends Phaser.Scene {
       missionComplete: this.missionComplete,
       missionDesertComplete: this.missionDesertComplete,
     };
-    for (const s of this.squirrels) {
-      s.destroy(true, true);
-    }
     this.squirrels = [];
+    Object.values(this.squirrels).forEach(s => s.destroy(true, true));
 
     this.scene.start("BossArena", data);
     this.scene.pause("City");
@@ -634,11 +612,8 @@ export default class City extends Phaser.Scene {
       if (squirrel && squirrel.anims.isPlaying) {
         squirrel.anims.pause();
       }
-
-      for (const s of this.squirrels) {
-        s.destroy(true, true);
-      }
       this.squirrels = [];
+      Object.values(this.squirrels).forEach(s => s.destroy(true, true));
       this.scene.launch("GameEnd", { fromScene: "City" });
       this.scene.pause("City");
     }
