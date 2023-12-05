@@ -1,6 +1,8 @@
 import Phaser from "phaser";
+
 export default class BearEnemy extends Phaser.GameObjects.Sprite {
   timer;
+
   constructor(scene, x, y, texture, velocity) {
     super(scene, x, y, texture);
 
@@ -8,7 +10,7 @@ export default class BearEnemy extends Phaser.GameObjects.Sprite {
     scene.physics.add.existing(this);
     this.body.allowGravity = false;
     this.velocity = velocity;
-    this.targetX = 1500;
+    this.targetX = 1400;
     this.targetY = 900;
     this.bossEnemyHp = 30000;
     this.bossVelocity = 200;
@@ -35,13 +37,11 @@ export default class BearEnemy extends Phaser.GameObjects.Sprite {
         } else {
           this.anims.play("bearLeft", true);
         }
-      } else {
-        if (velocityY > 0) {
+      } else if (velocityY > 0) {
           this.anims.play("bearDown", true);
         } else {
           this.anims.play("bearUp", true);
         }
-      }
 
       const distanceToTarget = Phaser.Math.Distance.Between(
         this.x,
