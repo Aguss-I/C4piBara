@@ -10,7 +10,7 @@ export default class BearEnemy extends Phaser.GameObjects.Sprite {
     scene.physics.add.existing(this);
     this.body.allowGravity = false;
     this.velocity = velocity;
-    this.targetX = 1400;
+    this.targetX = 1500;
     this.targetY = 900;
     this.bossEnemyHp = 30000;
     this.bossVelocity = 200;
