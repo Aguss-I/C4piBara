@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 import Phaser from "phaser";
 import events from "./EventCenter";
 import Player from "../components/Player";
@@ -7,8 +8,10 @@ import Npc from "../components/Npc";
 import { TODO } from "../enums/status";
 import { getPhrase } from "../services/translations";
 import keys from "../enums/keys";
+
 export default class Desert extends Phaser.Scene {
   #wasChangedLanguage = TODO;
+
   constructor() {
     super("Desert");
     const { cobrasKill } = keys.Enemy;
@@ -68,7 +71,7 @@ export default class Desert extends Phaser.Scene {
 
       switch (name) {
         case "collectible": {
-          let collectibleMision1 = this.collectibleMision
+          const collectibleMision1 = this.collectibleMision
             .create(x, y, "gear")
             .setScale(1)
             .setSize(200, 200);
@@ -77,7 +80,7 @@ export default class Desert extends Phaser.Scene {
           break;
         }
         case "health": {
-          let collectible1 = this.collectible
+          const collectible1 = this.collectible
             .create(x, y, "health")
             .setScale(1)
             .setSize(200, 200);
@@ -271,7 +274,7 @@ export default class Desert extends Phaser.Scene {
   }
 
   gearCollected(player, collectible) {
-    this.objectCollected = this.objectCollected + 1;
+    this.objectCollected += 1;
     this.objectCollectedText.setText(
       `${getPhrase(this.partCollected)}: ${this.objectCollected} /4`
     );
@@ -299,6 +302,7 @@ export default class Desert extends Phaser.Scene {
 
     this.scene.start("City", data);
   }
+
   mision2() {
     this.designUI2.setVisible(true);
     this.mision2Text.setVisible(true);
@@ -374,15 +378,13 @@ export default class Desert extends Phaser.Scene {
       } else {
         cobra.anims.play("attackDownCobra", true);
       }
-    } else {
-      if (velocityX < 0) {
+    } else if (velocityX < 0) {
         cobra.anims.play("attackLeftCobra", true);
       } else {
         cobra.anims.play("attackRightCobra", true);
       }
-    }
 
-    let biting = this.biteGroup.get(cobra.x, cobra.y);
+    const biting = this.biteGroup.get(cobra.x, cobra.y);
     if (biting) {
       biting.setActive(true);
       biting.setVisible(true);
@@ -394,8 +396,9 @@ export default class Desert extends Phaser.Scene {
     }, 500);
 
   }
+
   damage(player, biting) {
-    this.hp = this.hp - 25;
+    this.hp -= 25;
     events.emit("UpdateHP", { hp: this.hp });
     this.scene.get("UI").updateHealthBar();
     biting.destroy(true);
@@ -417,7 +420,7 @@ export default class Desert extends Phaser.Scene {
       this.collectibleSound.play();
     }
     if (this.hp < this.maxHp) {
-      this.hp = this.hp + 50;
+      this.hp += 50;
 
       if (this.hp > this.maxHp) {
         this.hp = this.maxHp;

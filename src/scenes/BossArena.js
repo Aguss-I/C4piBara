@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 import Phaser from "phaser";
 import events from "./EventCenter";
 import Player from "../components/Player";
@@ -28,6 +29,7 @@ export default class BossArena extends Phaser.Scene {
     this.velocityBoulder = data.velocityBoulder || 900;
     this.missionDesertComplete = data.missionDesertComplete;
   }
+
   create() {
     this.scene.launch("UI", {
       lvl: this.lvl,
@@ -64,7 +66,7 @@ export default class BossArena extends Phaser.Scene {
           break;
         }
         case "health": {
-          let collectible1 = this.collectibleBoss
+          const collectible1 = this.collectibleBoss
             .create(x, y, "health")
             .setScale(1)
             .setSize(200, 200);
@@ -151,6 +153,7 @@ export default class BossArena extends Phaser.Scene {
     bossMaxHpBar.setScrollFactor(0, 0);
     bossCurrentHpBar.setScrollFactor(0, 0);
   }
+
   update() {
     this.player.update();
     this.hitbox.update();
@@ -174,13 +177,14 @@ export default class BossArena extends Phaser.Scene {
       }
     }
   }
+
   heal(player, collectible) {
     this.collectibleSound = this.sound.add("collectibleSound");
     if (this.hp < this.maxHp) {
       this.collectibleSound.play();
     }
     if (this.hp < this.maxHp) {
-      this.hp = this.hp + 75;
+      this.hp += 75;
 
       if (this.hp > this.maxHp) {
         this.hp = this.maxHp;
@@ -196,8 +200,9 @@ export default class BossArena extends Phaser.Scene {
       boss.anims.play("bossDamage", true);
     }
   }
+
   takeDamage() {
-    this.bossEnemyHp = this.bossEnemyHp - this.damageAmount;
+    this.bossEnemyHp -= this.damageAmount;
 
     if (this.bossEnemyHp <= 0) {
       this.scene.stop("UI");
@@ -208,6 +213,7 @@ export default class BossArena extends Phaser.Scene {
     const currentHpWidth = (this.bossEnemyHp / 30000) * maxWidth;
     this.bossHpBars.getChildren()[1].setScale(currentHpWidth / maxWidth, 1);
   }
+
   createBoulder() {
     this.boulderGroup = this.physics.add.group({
       inmovable: true,
@@ -266,13 +272,11 @@ export default class BossArena extends Phaser.Scene {
       } else {
         boss.anims.play("attackDownBear", true);
       }
-    } else {
-      if (velocityX < 0) {
+    } else if (velocityX < 0) {
         boss.anims.play("attackLeftBear", true);
       } else {
         boss.anims.play("attackRightBear", true);
       }
-    }
     const boulder = this.boulderGroup.get(boss.x, boss.y);
     if (boulder) {
       boulder.setActive(true);
@@ -284,8 +288,9 @@ export default class BossArena extends Phaser.Scene {
       boulder.destroy(true);
     }, 2000);    
   }
+
   damage(player, boulder) {
-    this.hp = this.hp - 75;
+    this.hp -= 75;
     events.emit("UpdateHP", { hp: this.hp });
     this.scene.get("UI").updateHealthBar();
     boulder.destroy(true);

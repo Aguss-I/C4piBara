@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 import Phaser from "phaser";
 import events from "./EventCenter";
 import Player from "../components/Player";
@@ -7,8 +8,10 @@ import Npc from "../components/Npc";
 import { TODO } from "../enums/status";
 import { getPhrase } from "../services/translations";
 import keys from "../enums/keys";
+
 export default class City extends Phaser.Scene {
   #wasChangedLanguage = TODO;
+
   constructor() {
     super("City");
     const { squirrelsKill } = keys.Enemy;
@@ -56,7 +59,7 @@ export default class City extends Phaser.Scene {
     this.pKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P);
     this.eKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     this.user = this.firebase.getUser();
-    this.showTutorial = data.showTutorial === false ? false : true;
+    this.showTutorial = data.showTutorial !== false;
   }
 
   create() {
@@ -95,7 +98,7 @@ export default class City extends Phaser.Scene {
 
       switch (name) {
         case "health": {
-          let collectible1 = this.collectible
+          const collectible1 = this.collectible
             .create(x, y, "health")
             .setScale(1)
             .setSize(200, 200);
@@ -351,6 +354,7 @@ export default class City extends Phaser.Scene {
       this
     );
   }
+
   update() {
     this.player.update();
     this.hitbox.update();
@@ -472,7 +476,7 @@ export default class City extends Phaser.Scene {
     }
 
     if (this.hp < this.maxHp) {
-      this.hp = this.hp + 50;
+      this.hp += 50;
 
       if (this.hp > this.maxHp) {
         this.hp = this.maxHp;
@@ -522,6 +526,7 @@ export default class City extends Phaser.Scene {
       },
     });
   }
+
   owlInteraction() {
     if (!this.owlSoundCanHear) {
       this.owlSound = this.sound.add("owlSound");
@@ -563,13 +568,11 @@ export default class City extends Phaser.Scene {
       } else {
         squirrel.anims.play("attackDownSquirrel", true);
       }
-    } else {
-      if (velocityX < 0) {
+    } else if (velocityX < 0) {
         squirrel.anims.play("attackLeftSquirrel", true);
       } else {
         squirrel.anims.play("attackRightSquirrel", true);
       }
-    }
 
     const rock = this.rocksGroup.get(squirrel.x, squirrel.y);
     if (rock) {
@@ -582,6 +585,7 @@ export default class City extends Phaser.Scene {
       rock.destroy(true);
     }, 2000);
   }
+
   bossEntrance() {
     const data = {
       lvl: this.lvl,
@@ -601,7 +605,7 @@ export default class City extends Phaser.Scene {
   }
 
   damage(player, rock, squirrel) {
-    this.hp = this.hp - 25;
+    this.hp -= 25;
     events.emit("UpdateHP", { hp: this.hp });
     this.scene.get("UI").updateHealthBar();
     rock.destroy(true);
